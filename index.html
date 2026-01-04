@@ -1,21 +1,54 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>Kenzou – Links</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Kenzou — Links</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body class="dark">
-  <div class="container">
-    <img src="avatar.png" class="avatar">
-    <h1>Kenzou</h1>
-    <p>Créateur • Discord • YouTube</p>
+<body>
+  <main class="page">
+    <header class="profile">
+      <img src="profile.jpg" alt="Photo de profil de Kenzou" class="avatar">
+      <h1 class="name">Kenzou</h1>
+      <p class="bio">Créateur • Discord • YouTube</p>
+    </header>
 
-    <a class="link" href="#">YouTube</a>
-    <a class="link" href="#">Discord</a>
-    <a class="link" href="#">TikTok</a>
+    <nav class="links">
+      <a class="link" href="#" target="_blank" rel="noopener">YouTube</a>
+      <a class="link" href="#" target="_blank" rel="noopener">Discord</a>
+      <a class="link" href="#" target="_blank" rel="noopener">TikTok</a>
+      <a class="link" href="#" target="_blank" rel="noopener">Mon site / Merch</a>
+    </nav>
+  </main>
 
-    <button id="themeToggle">Changer le thème</button>
+  <!-- Bouton thème (bas gauche) -->
+  <button id="themeToggle" class="floating-btn left" aria-label="Changer le thème" title="Changer le thème">
+    <!-- icône : sera actualisée par le script selon le thème -->
+    <svg id="themeIcon" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+      <path d="M12 3a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0V4a1 1 0 0 1 1-1zM6.22 6.22a1 1 0 0 1 1.41 0l.7.7a1 1 0 1 1-1.41 1.41l-.7-.7a1 1 0 0 1 0-1.41zM3 13a1 1 0 0 1 1-1h1a1 1 0 1 1 0 2H4a1 1 0 0 1-1-1zm8 7a1 1 0 0 1 1-1h0a1 1 0 1 1 0 2 1 1 0 0 1-1-1zM17.78 6.22a1 1 0 0 1 0 1.41l-.7.7a1 1 0 1 1-1.41-1.41l.7-.7a1 1 0 0 1 1.41 0zM20 12a1 1 0 0 1-1 1h-1a1 1 0 1 1 0-2h1a1 1 0 0 1 1 1zM6.22 17.78a1 1 0 0 1 0-1.41l.7-.7a1 1 0 1 1 1.41 1.41l-.7.7a1 1 0 0 1-1.41 0zM17.78 17.78a1 1 0 0 1 0-1.41l.7-.7a1 1 0 1 1 1.41 1.41l-.7.7a1 1 0 0 1-1.41 0zM12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10z"/>
+    </svg>
+  </button>
+
+  <!-- Bouton signaler (bas droite) -->
+  <button id="reportBtn" class="floating-btn right" aria-label="Signaler un problème" title="Signaler un problème">
+    <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+    </svg>
+  </button>
+
+  <!-- Modal signalement -->
+  <div id="reportModal" class="modal" aria-hidden="true">
+    <div class="modal-panel" role="dialog" aria-labelledby="modalTitle">
+      <h2 id="modalTitle">Signaler un problème</h2>
+      <p>Explique brièvement ce qu'il se passe :</p>
+      <textarea id="reportText" placeholder="Description (ex : lien cassé, spam, etc.)"></textarea>
+      <div class="modal-actions">
+        <button id="cancelReport" class="btn small">Annuler</button>
+        <button id="sendReport" class="btn small primary">Préparer l'email</button>
+      </div>
+      <button class="modal-close" id="closeModal" aria-label="Fermer la fenêtre">×</button>
+    </div>
   </div>
 
   <script src="script.js"></script>
