@@ -1,99 +1,33 @@
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  transition: 0.3s;
-}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Kenzou – Links</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark">
 
-/* thèmes */
-body.dark {
-  background: #0f0f0f;
-  color: white;
-}
-body.light {
-  background: #f5f5f5;
-  color: black;
-}
+  <div class="container">
+    <img src="profile.jpg" class="avatar" alt="Photo de profil">
+    <h1>Kenzou</h1>
+    <p class="bio">Créateur • Discord • YouTube</p>
 
-.container {
-  max-width: 400px;
-  margin: auto;
-  text-align: center;
-  padding: 50px 20px;
-}
+    <a class="link" href="https://www.youtube.com/@Kenzou_TV" target="_blank">
+      YouTube
+    </a>
 
-.avatar {
-  width: 120px;
-  border-radius: 50%;
-  margin-bottom: 15px;
-}
+    <a class="link" href="https://discord.gg/bRZqsCbPPE" target="_blank">
+      Discord
+    </a>
 
-.bio {
-  opacity: 0.8;
-  font-size: 14px;
-}
+    <p class="soon">D’autres liens arriveront par la suite</p>
+  </div>
 
-/* liens */
-.link {
-  display: block;
-  margin: 12px 0;
-  padding: 15px;
-  border-radius: 12px;
-  background: #1e1e1e;
-  color: white;
-  text-decoration: none;
-  transition: transform 0.2s;
-}
+  <div class="theme-zone">
+    <button id="themeToggle">🌙</button>
+    <span>kenzoutv@outlook.fr</span>
+  </div>
 
-body.light .link {
-  background: white;
-  color: black;
-}
-
-.link:hover,
-.floating:hover {
-  transform: scale(1.07);
-}
-
-.soon {
-  margin-top: 20px;
-  font-size: 13px;
-  opacity: 0.6;
-}
-
-/* zone thème + email */
-.theme-area {
-  position: fixed;
-  bottom: 20px;
-  left: 20px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-/* bouton thème */
-.floating {
-  width: 50px;
-  height: 50px;
-  border-radius: 12px;
-  border: none;
-  cursor: pointer;
-  background: #1e1e1e;
-  font-size: 22px;
-  transition: transform 0.2s;
-}
-
-body.dark .floating {
-  color: white;
-}
-
-body.light .floating {
-  background: white;
-  color: black;
-}
-
-/* email */
-.email {
-  font-size: 13px;
-  opacity: 0.7;
-  white-space: nowrap;
-}
+  <script src="script.js"></script>
+</body>
+</html>
