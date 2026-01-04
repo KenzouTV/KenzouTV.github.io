@@ -1,13 +1,115 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  transition: background 0.3s, color 0.3s;
+}
+
+/* thèmes */
+body.dark {
+  background: #0e0e0e;
+  color: white;
+}
+body.light {
+  background: #f4f4f4;
+  color: black;
+}
+
+/* Container */
+.container {
+  max-width: 500px;
+  margin: auto;
+  padding: 40px 15px;
+  text-align: center;
+}
+
+/* Avatar */
+.avatar {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  margin-bottom: 20px;
+  object-fit: cover;
+}
+
+/* Bio */
+.bio {
+  font-size: 14px;
+  opacity: 0.7;
+  margin-bottom: 30px;
+}
+
+/* Liens / boutons larges */
+.link {
+  display: block;
+  width: 100%;
+  padding: 18px;
+  margin: 12px 0;
+  border-radius: 14px;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  background: #1b1b1b;
+  color: white;
+  transition: transform 0.2s, background 0.3s;
+  border: none;
+  cursor: pointer;
+}
+
+body.light .link {
+  background: white;
+  color: black;
+}
+
+.link:hover {
+  transform: scale(1.05);
+}
+
+/* Texte "bientôt" */
+.soon {
+  margin-top: 20px;
+  font-size: 13px;
+  opacity: 0.6;
+}
+
+/* cache / affiche pages */
 .hidden {
   display: none;
 }
 
-button.link {
-  border: none;
-  cursor: pointer;
-  font-family: inherit;
+/* zone thème + email */
+.theme-zone {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
-.back {
-  opacity: 0.8;
+/* bouton thème */
+#themeToggle {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  font-size: 22px;
+  background: #1b1b1b;
+  color: white;
+  transition: transform 0.2s;
+}
+
+body.light #themeToggle {
+  background: white;
+  color: black;
+}
+
+#themeToggle:hover {
+  transform: scale(1.1);
+}
+
+.theme-zone span {
+  font-size: 13px;
+  opacity: 0.7;
 }
