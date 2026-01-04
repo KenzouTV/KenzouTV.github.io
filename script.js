@@ -5,17 +5,15 @@ const backBtn = document.getElementById("backBtn");
 const mainLinks = document.getElementById("mainLinks");
 const minecraftLinks = document.getElementById("minecraftLinks");
 
-/* thème */
+/* Thème */
 themeBtn.addEventListener("click", () => {
   document.body.classList.toggle("dark");
   document.body.classList.toggle("light");
 
-  themeBtn.textContent = document.body.classList.contains("dark")
-    ? "🌙"
-    : "☀️";
+  themeBtn.textContent = document.body.classList.contains("dark") ? "🌙" : "☀️";
 });
 
-/* navigation fake pages */
+/* Navigation fausse page Minecraft */
 minecraftBtn.addEventListener("click", () => {
   mainLinks.classList.add("hidden");
   minecraftLinks.classList.remove("hidden");
