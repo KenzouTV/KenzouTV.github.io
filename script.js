@@ -1,11 +1,27 @@
-const btn = document.getElementById("themeToggle");
+const themeBtn = document.getElementById("themeToggle");
+const minecraftBtn = document.getElementById("minecraftBtn");
+const backBtn = document.getElementById("backBtn");
 
-btn.addEventListener("click", () => {
+const mainLinks = document.getElementById("mainLinks");
+const minecraftLinks = document.getElementById("minecraftLinks");
+
+/* thème */
+themeBtn.addEventListener("click", () => {
   document.body.classList.toggle("dark");
   document.body.classList.toggle("light");
 
-  // emoji toujours visible
-  btn.textContent = document.body.classList.contains("dark")
+  themeBtn.textContent = document.body.classList.contains("dark")
     ? "🌙"
     : "☀️";
+});
+
+/* navigation fake pages */
+minecraftBtn.addEventListener("click", () => {
+  mainLinks.classList.add("hidden");
+  minecraftLinks.classList.remove("hidden");
+});
+
+backBtn.addEventListener("click", () => {
+  minecraftLinks.classList.add("hidden");
+  mainLinks.classList.remove("hidden");
 });
