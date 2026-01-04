@@ -1,10 +1,11 @@
-const themeBtn = document.getElementById("themeToggle");
+const btn = document.getElementById("themeToggle");
 
-themeBtn.onclick = () => {
+btn.addEventListener("click", () => {
   document.body.classList.toggle("dark");
   document.body.classList.toggle("light");
 
-  // change emoji pour rester visible
-  themeBtn.textContent =
-    document.body.classList.contains("dark") ? "🌙" : "☀️";
-};
+  // emoji toujours visible
+  btn.textContent = document.body.classList.contains("dark")
+    ? "🌙"
+    : "☀️";
+});
