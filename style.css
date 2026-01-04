@@ -1,83 +1,104 @@
+/* ===============================
+   BASE
+=============================== */
 body {
   margin: 0;
   font-family: Arial, sans-serif;
   transition: background 0.3s, color 0.3s;
 }
 
-/* thèmes */
+/* ===============================
+   THÈME
+=============================== */
 body.dark {
-  background: #0e0e0e;
+  background-color: #0e0e0e;
   color: white;
 }
+
 body.light {
-  background: #f4f4f4;
+  background-color: #f4f4f4;
   color: black;
 }
 
-/* Container */
+/* ===============================
+   CONTAINER
+=============================== */
 .container {
   max-width: 500px;
-  margin: auto;
-  padding: 40px 15px;
+  margin: 50px auto 80px auto; /* bottom margin pour le thème */
   text-align: center;
+  padding: 0 20px;
 }
 
-/* Avatar */
+/* ===============================
+   AVATAR
+=============================== */
 .avatar {
   width: 150px;
   height: 150px;
   border-radius: 50%;
-  margin-bottom: 20px;
   object-fit: cover;
+  margin-bottom: 20px;
+  border: 3px solid #444; /* contour léger pour contraste */
 }
 
-/* Bio */
+/* ===============================
+   BIO
+=============================== */
 .bio {
   font-size: 14px;
   opacity: 0.7;
   margin-bottom: 30px;
 }
 
-/* Liens / boutons larges */
+/* ===============================
+   LIENS / BOUTONS
+=============================== */
 .link {
   display: block;
   width: 100%;
-  padding: 18px;
+  padding: 18px 0;
   margin: 12px 0;
   border-radius: 14px;
   text-decoration: none;
   font-size: 16px;
   font-weight: bold;
   text-align: center;
-  background: #1b1b1b;
+  background-color: #1b1b1b;
   color: white;
-  transition: transform 0.2s, background 0.3s;
   border: none;
   cursor: pointer;
-}
-
-body.light .link {
-  background: white;
-  color: black;
+  transition: transform 0.2s, background 0.3s;
 }
 
 .link:hover {
   transform: scale(1.05);
 }
 
-/* Texte "bientôt" */
+body.light .link {
+  background-color: white;
+  color: black;
+}
+
+/* ===============================
+   TEXTE "Bientôt"
+=============================== */
 .soon {
   margin-top: 20px;
   font-size: 13px;
   opacity: 0.6;
 }
 
-/* cache / affiche pages */
+/* ===============================
+   CACHE / AFFICHE FAUSSE PAGE
+=============================== */
 .hidden {
   display: none;
 }
 
-/* zone thème + email */
+/* ===============================
+   ZONE THEME + EMAIL
+=============================== */
 .theme-zone {
   position: fixed;
   bottom: 20px;
@@ -87,7 +108,7 @@ body.light .link {
   gap: 12px;
 }
 
-/* bouton thème */
+/* BOUTON THEME */
 #themeToggle {
   width: 50px;
   height: 50px;
@@ -95,21 +116,37 @@ body.light .link {
   border: none;
   cursor: pointer;
   font-size: 22px;
-  background: #1b1b1b;
+  background-color: #1b1b1b;
   color: white;
-  transition: transform 0.2s;
-}
-
-body.light #themeToggle {
-  background: white;
-  color: black;
+  transition: transform 0.2s, background 0.3s;
 }
 
 #themeToggle:hover {
   transform: scale(1.1);
 }
 
+body.light #themeToggle {
+  background-color: white;
+  color: black;
+}
+
+/* EMAIL */
 .theme-zone span {
   font-size: 13px;
   opacity: 0.7;
+}
+
+/* ===============================
+   PAGE MINECRAFT
+=============================== */
+#minecraftLinks .link {
+  margin-top: 15px;
+}
+
+#backBtn {
+  background-color: #444;
+}
+
+#backBtn:hover {
+  background-color: #555;
 }
