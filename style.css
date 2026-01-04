@@ -150,3 +150,20 @@ body.light #themeToggle {
 #backBtn:hover {
   background-color: #555;
 }
+
+/* ===============================
+   Mise à Jour
+=============================== */
+.last-update {
+  position: fixed;
+  bottom: 20px;   /* même hauteur que le thème/email */
+  right: 20px;    /* coller à droite */
+  font-size: 12px;
+  color: #aaa;    /* couleur discrète */
+  background: rgba(255, 255, 255, 0.1); /* léger fond pour lisibilité */
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-weight: 500;
+  z-index: 1000;
+}
+
