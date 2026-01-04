@@ -1,99 +1,13 @@
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  transition: background 0.3s, color 0.3s;
+.hidden {
+  display: none;
 }
 
-/* thèmes */
-body.dark {
-  background: #0e0e0e;
-  color: white;
-}
-body.light {
-  background: #f4f4f4;
-  color: black;
-}
-
-.container {
-  max-width: 500px;
-  margin: auto;
-  padding: 40px 15px;
-  text-align: center;
-}
-
-.avatar {
-  width: 120px;
-  border-radius: 50%;
-  margin-bottom: 15px;
-}
-
-.bio {
-  font-size: 14px;
-  opacity: 0.7;
-}
-
-/* BOUTONS LARGES */
-.link {
-  display: block;
-  width: 100%;
-  padding: 18px;
-  margin: 14px 0;
-  border-radius: 14px;
-  text-decoration: none;
-  font-size: 16px;
-  font-weight: bold;
-  background: #1b1b1b;
-  color: white;
-  transition: transform 0.2s;
-}
-
-body.light .link {
-  background: white;
-  color: black;
-}
-
-.link:hover {
-  transform: scale(1.05);
-}
-
-.soon {
-  margin-top: 20px;
-  font-size: 13px;
-  opacity: 0.6;
-}
-
-/* zone thème */
-.theme-zone {
-  position: fixed;
-  bottom: 20px;
-  left: 20px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-#themeToggle {
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
+button.link {
   border: none;
   cursor: pointer;
-  font-size: 22px;
-  background: #1b1b1b;
-  color: white;
-  transition: transform 0.2s;
+  font-family: inherit;
 }
 
-body.light #themeToggle {
-  background: white;
-  color: black;
-}
-
-#themeToggle:hover {
-  transform: scale(1.1);
-}
-
-.theme-zone span {
-  font-size: 13px;
-  opacity: 0.7;
+.back {
+  opacity: 0.8;
 }
