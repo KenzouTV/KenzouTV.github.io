@@ -159,11 +159,22 @@ body.light #themeToggle {
   bottom: 20px;   /* même hauteur que le thème/email */
   right: 20px;    /* coller à droite */
   font-size: 12px;
-  color: #aaa;    /* couleur discrète */
-  background: rgba(255, 255, 255, 0.1); /* léger fond pour lisibilité */
   padding: 4px 8px;
   border-radius: 8px;
   font-weight: 500;
   z-index: 1000;
+  transition: background 0.3s, color 0.3s; /* transition douce lors du changement de thème */
+}
+
+/* Thème sombre */
+body.dark .last-update {
+  color: #aaa;                         /* texte clair mais pas trop */
+  background: rgba(255, 255, 255, 0.1); /* fond léger pour contraste */
+}
+
+/* Thème clair */
+body.light .last-update {
+  color: #333;                         /* texte visible sur fond clair */
+  background: rgba(0, 0, 0, 0.05);     /* fond très léger pour lisibilité */
 }
 
