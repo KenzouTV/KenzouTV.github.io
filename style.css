@@ -1,7 +1,16 @@
 * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
 
+/* ANIMATION DE FOND */
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
 body.dark {
-  background: linear-gradient(160deg, #0e0e0e, #1b1b2f);
+  background: linear-gradient(120deg, #0e0e0e, #1b1b2f, #0e0e0e);
+  background-size: 300% 300%;
+  animation: gradientBG 15s ease infinite;
   color: white;
   height: 100vh;
   overflow: hidden;
@@ -24,11 +33,42 @@ body.dark {
   object-fit: cover;
   margin-bottom: 12px;
   border: 3px solid #0ff;
-  box-shadow: 0 0 12px rgba(0,255,255,0.3);
+  box-shadow: 0 0 15px rgba(0,255,255,0.5);
+  transition: all 0.5s ease;
 }
 
-h1 { margin-bottom: 4px; text-shadow: 0 0 6px cyan; }
+.avatar:hover {
+  box-shadow: 0 0 25px rgba(0,255,255,0.9);
+  transform: scale(1.05);
+}
+
+h1 { margin-bottom: 4px; text-shadow: 0 0 8px cyan; transition: all 0.5s; }
+h1:hover { text-shadow: 0 0 20px cyan, 0 0 40px #0ff; }
+
 .subtitle { color: #aaa; margin-bottom: 16px; }
+
+/* TAGS ACTIFS */
+.active-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.active-tag {
+  background: #0ff;
+  color: #000;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.active-tag:hover {
+  background: cyan;
+  transform: scale(1.1);
+}
 
 /* RECHERCHE */
 #searchInput {
@@ -101,7 +141,7 @@ h1 { margin-bottom: 4px; text-shadow: 0 0 6px cyan; }
   box-shadow: 0 0 12px cyan;
 }
 
-/* TAGS */
+/* TAGS DANS BOUTONS */
 .tags {
   display: block;
   font-size: 12px;
