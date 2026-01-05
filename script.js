@@ -8,7 +8,8 @@ document.addEventListener("DOMContentLoaded", () => {
     "YouTube": "https://www.youtube.com/@Kenzou_TV",
     "Discord": "https://discord.gg/bRZqsCbPPE",
     "Twitch": "https://www.twitch.tv/kenzoutv_mc",
-    "Minecraft": "https://fr.namemc.com/profile/Kenzo0025.1",
+    "Minecraft Java": "https://fr.namemc.com/profile/Kenzo0025.1",
+    "Minecraft Bedrock": "https://launch.minecraft.net/profile/FR%20KenzoYTB",
     "Instagram": "https://www.instagram.com/kenzoutv/"
   };
 
@@ -22,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Recherche en direct
+  // Recherche en direct avec fade
   searchInput.addEventListener("input", () => {
     const value = searchInput.value.toLowerCase();
     let found = false;
@@ -33,16 +34,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (key.includes(value) || tags.includes(value)) {
         btn.style.display = "block";
+        setTimeout(() => btn.style.opacity = 1, 50);
         found = true;
       } else {
-        btn.style.display = "none";
+        btn.style.opacity = 0;
+        setTimeout(() => btn.style.display = "none", 200);
       }
     });
 
     noResult.classList.toggle("hidden", found);
   });
 
-  // Optionnel : appuyer sur "Entrée" dans la recherche ouvre le premier résultat
+  // Enter ouvre le premier lien visible
   searchInput.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
       const firstVisible = Array.from(buttons).find(btn => btn.style.display !== "none");
