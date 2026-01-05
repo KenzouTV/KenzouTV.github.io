@@ -1,13 +1,7 @@
 const body = document.body;
 const themeToggle = document.getElementById("themeToggle");
-
-const mainLinks = document.getElementById("mainLinks");
-const minecraftLinks = document.getElementById("minecraftLinks");
-
-const minecraftBtn = document.getElementById("minecraftBtn");
-const backBtn = document.getElementById("backBtn");
-
 const search = document.getElementById("search");
+const linksZone = document.getElementById("linksZone");
 
 /* ===== THEME ===== */
 function setTheme(theme) {
@@ -16,29 +10,22 @@ function setTheme(theme) {
   localStorage.setItem("theme", theme);
 }
 
-themeToggle.addEventListener("click", () => {
-  setTheme(body.classList.contains("dark") ? "light" : "dark");
-});
-
 setTheme(localStorage.getItem("theme") || "dark");
 
-/* ===== NAV MINECRAFT ===== */
-minecraftBtn.addEventListener("click", () => {
-  mainLinks.classList.add("hidden");
-  minecraftLinks.classList.remove("hidden");
-});
+themeToggle.onclick = () => {
+  setTheme(body.classList.contains("dark") ? "light" : "dark");
+};
 
-backBtn.addEventListener("click", () => {
-  minecraftLinks.classList.add("hidden");
-  mainLinks.classList.remove("hidden");
-});
-
-/* ===== RECHERCHE ===== */
+/* ===== TAG SEARCH PRIORITY ===== */
 search.addEventListener("input", () => {
   const value = search.value.toLowerCase();
-  document.querySelectorAll(".link").forEach(link => {
-    link.style.display = link.textContent.toLowerCase().includes(value)
-      ? "block"
-      : "none";
+
+  const links = Array.from(linksZone.querySelectorAll(".link"));
+
+  links.forEach(link => {
+    const tags = link.dataset.tags || "";
+    const match = tags.includes(value) || link.textContent.toLowerCase().includes(value);
+    link.style.order = match ? -1 : 1;
+    link.style.display = value === "" || match ? "block" : "none";
   });
 });
