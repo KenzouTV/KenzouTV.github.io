@@ -4,7 +4,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const searchInput = document.getElementById("searchInput");
   const noResult = document.getElementById("noResult");
 
-  // Liens associés à chaque bouton
   const links = {
     "YouTube": "https://www.youtube.com/@Kenzou_TV",
     "Discord": "https://discord.gg/bRZqsCbPPE",
@@ -16,7 +15,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // Clic sur les boutons
   buttons.forEach(btn => {
     btn.addEventListener("click", () => {
-      // On utilise le dataset "link" pour être sûr
       const key = btn.dataset.link;
       if (links[key]) {
         window.open(links[key], "_blank");
@@ -42,6 +40,17 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     noResult.classList.toggle("hidden", found);
+  });
+
+  // Optionnel : appuyer sur "Entrée" dans la recherche ouvre le premier résultat
+  searchInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      const firstVisible = Array.from(buttons).find(btn => btn.style.display !== "none");
+      if (firstVisible) {
+        const key = firstVisible.dataset.link;
+        window.open(links[key], "_blank");
+      }
+    }
   });
 
 });
