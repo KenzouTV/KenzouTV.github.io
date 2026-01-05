@@ -1,7 +1,12 @@
-/* ===== BASE ===== */
+/* ===== RESET SCROLL PAGE ===== */
+html, body {
+  height: 100%;
+}
+
 body {
   margin: 0;
   font-family: Arial, sans-serif;
+  overflow: hidden; /* 🔥 PLUS DE SCROLL PAGE */
   transition: background 0.3s, color 0.3s;
 }
 
@@ -19,9 +24,11 @@ body.light {
 /* ===== CONTAINER ===== */
 .container {
   max-width: 480px;
-  margin: 40px auto 120px;
+  height: 100%;
+  margin: 0 auto;
   text-align: center;
-  padding: 0 20px;
+  padding: 30px 20px 120px;
+  box-sizing: border-box;
 }
 
 /* ===== AVATAR ===== */
@@ -38,16 +45,38 @@ body.light {
 .bio {
   font-size: 14px;
   opacity: 0.7;
-  margin-bottom: 25px;
+  margin-bottom: 15px;
+}
+
+/* ===== SEARCH (EPINGLÉ) ===== */
+#search {
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 10px;
+  border-radius: 12px;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: #1b1b1b;
+  color: white;
+}
+
+body.light #search {
+  background: white;
+  color: black;
 }
 
 /* ===== ZONE BOUTONS SCROLLABLE ===== */
 .links-container {
-  max-height: 320px;
-  overflow-y: auto;
+  max-height: 280px;
+  overflow-y: auto; /* ✅ SCROLL ICI SEULEMENT */
   padding-right: 6px;
 }
 
+/* scrollbar */
 .links-container::-webkit-scrollbar {
   width: 6px;
 }
@@ -75,7 +104,7 @@ body.light .links-container::-webkit-scrollbar-thumb {
   font-weight: bold;
   text-decoration: none;
   cursor: pointer;
-  transition: transform 0.2s, background 0.3s;
+  transition: transform 0.2s;
 }
 
 .link:hover {
@@ -87,10 +116,15 @@ body.light .link {
   color: black;
 }
 
-/* ===== TEXTE SOON ===== */
+/* ===== TEXTE ===== */
 .soon {
   font-size: 13px;
   opacity: 0.6;
+}
+
+.update {
+  font-size: 12px;
+  opacity: 0.5;
   margin-top: 15px;
 }
 
@@ -118,11 +152,6 @@ body.light .link {
   font-size: 22px;
   background: #1b1b1b;
   color: white;
-  transition: transform 0.2s;
-}
-
-#themeToggle:hover {
-  transform: scale(1.1);
 }
 
 body.light #themeToggle {
