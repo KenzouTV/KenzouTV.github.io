@@ -1,72 +1,79 @@
-/* ===============================
-   BASE
-=============================== */
+/* ===== BASE ===== */
 body {
   margin: 0;
   font-family: Arial, sans-serif;
   transition: background 0.3s, color 0.3s;
 }
 
-/* ===============================
-   THÈME
-=============================== */
+/* ===== THEMES ===== */
 body.dark {
-  background-color: #0e0e0e;
+  background: #0e0e0e;
   color: white;
 }
 
 body.light {
-  background-color: #f4f4f4;
+  background: #f4f4f4;
   color: black;
 }
 
-/* ===============================
-   CONTAINER
-=============================== */
+/* ===== CONTAINER ===== */
 .container {
-  max-width: 500px;
-  margin: 50px auto 80px auto; /* bottom margin pour le thème */
+  max-width: 480px;
+  margin: 40px auto 120px;
   text-align: center;
   padding: 0 20px;
 }
 
-/* ===============================
-   AVATAR
-=============================== */
+/* ===== AVATAR ===== */
 .avatar {
-  width: 150px;
-  height: 150px;
+  width: 140px;
+  height: 140px;
   border-radius: 50%;
   object-fit: cover;
-  margin-bottom: 20px;
-  border: 3px solid #444; /* contour léger pour contraste */
+  border: 3px solid #444;
+  margin-bottom: 15px;
 }
 
-/* ===============================
-   BIO
-=============================== */
+/* ===== BIO ===== */
 .bio {
   font-size: 14px;
   opacity: 0.7;
-  margin-bottom: 30px;
+  margin-bottom: 25px;
 }
 
-/* ===============================
-   LIENS / BOUTONS
-=============================== */
+/* ===== ZONE BOUTONS SCROLLABLE ===== */
+.links-container {
+  max-height: 320px;
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+.links-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.links-container::-webkit-scrollbar-thumb {
+  background: #444;
+  border-radius: 10px;
+}
+
+body.light .links-container::-webkit-scrollbar-thumb {
+  background: #bbb;
+}
+
+/* ===== BOUTONS ===== */
 .link {
   display: block;
   width: 100%;
-  padding: 18px 0;
+  padding: 18px;
   margin: 12px 0;
   border-radius: 14px;
-  text-decoration: none;
+  border: none;
+  background: #1b1b1b;
+  color: white;
   font-size: 16px;
   font-weight: bold;
-  text-align: center;
-  background-color: #1b1b1b;
-  color: white;
-  border: none;
+  text-decoration: none;
   cursor: pointer;
   transition: transform 0.2s, background 0.3s;
 }
@@ -76,29 +83,23 @@ body.light {
 }
 
 body.light .link {
-  background-color: white;
+  background: white;
   color: black;
 }
 
-/* ===============================
-   TEXTE "Bientôt"
-=============================== */
+/* ===== TEXTE SOON ===== */
 .soon {
-  margin-top: 20px;
   font-size: 13px;
   opacity: 0.6;
+  margin-top: 15px;
 }
 
-/* ===============================
-   CACHE / AFFICHE FAUSSE PAGE
-=============================== */
+/* ===== CACHE ===== */
 .hidden {
   display: none;
 }
 
-/* ===============================
-   ZONE THEME + EMAIL
-=============================== */
+/* ===== THEME ZONE ===== */
 .theme-zone {
   position: fixed;
   bottom: 20px;
@@ -108,17 +109,16 @@ body.light .link {
   gap: 12px;
 }
 
-/* BOUTON THEME */
 #themeToggle {
-  width: 50px;
-  height: 50px;
+  width: 48px;
+  height: 48px;
   border-radius: 12px;
   border: none;
   cursor: pointer;
   font-size: 22px;
-  background-color: #1b1b1b;
+  background: #1b1b1b;
   color: white;
-  transition: transform 0.2s, background 0.3s;
+  transition: transform 0.2s;
 }
 
 #themeToggle:hover {
@@ -126,55 +126,11 @@ body.light .link {
 }
 
 body.light #themeToggle {
-  background-color: white;
+  background: white;
   color: black;
 }
 
-/* EMAIL */
 .theme-zone span {
   font-size: 13px;
   opacity: 0.7;
 }
-
-/* ===============================
-   PAGE MINECRAFT
-=============================== */
-#minecraftLinks .link {
-  margin-top: 15px;
-}
-
-#backBtn {
-  background-color: #444;
-}
-
-#backBtn:hover {
-  background-color: #555;
-}
-
-/* ===============================
-   Mise à Jour
-=============================== */
-.last-update {
-  position: fixed;
-  bottom: 20px;   /* même hauteur que le thème/email */
-  right: 20px;    /* coller à droite */
-  font-size: 12px;
-  padding: 4px 8px;
-  border-radius: 8px;
-  font-weight: 500;
-  z-index: 1000;
-  transition: background 0.3s, color 0.3s; /* transition douce lors du changement de thème */
-}
-
-/* Thème sombre */
-body.dark .last-update {
-  color: #aaa;                         /* texte clair mais pas trop */
-  background: rgba(255, 255, 255, 0.1); /* fond léger pour contraste */
-}
-
-/* Thème clair */
-body.light .last-update {
-  color: #333;                         /* texte visible sur fond clair */
-  background: rgba(0, 0, 0, 0.05);     /* fond très léger pour lisibilité */
-}
-
