@@ -12,10 +12,11 @@ document.addEventListener("DOMContentLoaded", () => {
     "Twitch": "https://www.twitch.tv/kenzoutv_mc",
     "Minecraft Java": "https://fr.namemc.com/profile/Kenzo0025.1",
     "Minecraft Bedrock": "https://launch.minecraft.net/profile/FR%20KenzoYTB",
-    "Instagram": "https://www.instagram.com/kenzoutv/"
+    "Instagram": "https://www.instagram.com/kenzoutv/",
+    "PayPal": "https://paypal.me/KenzoYT1"
   };
 
-  // Animation d’entrée des boutons (slide-up + fade-in)
+  // Animation d’entrée des boutons
   buttons.forEach((btn, index) => {
     btn.style.opacity = 0;
     btn.style.transform = "translateY(20px)";
