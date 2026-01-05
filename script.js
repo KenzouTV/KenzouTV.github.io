@@ -13,6 +13,17 @@ document.addEventListener("DOMContentLoaded", () => {
     "Instagram": "https://www.instagram.com/kenzoutv/"
   };
 
+  // Animation d’entrée des boutons
+  buttons.forEach((btn, index) => {
+    btn.style.opacity = 0;
+    btn.style.transform = "translateY(20px)";
+    setTimeout(() => {
+      btn.style.transition = "opacity 0.4s ease, transform 0.4s ease";
+      btn.style.opacity = 1;
+      btn.style.transform = "translateY(0)";
+    }, index * 150); // 150ms de décalage entre chaque bouton
+  });
+
   // Clic sur les boutons
   buttons.forEach(btn => {
     btn.addEventListener("click", () => {
