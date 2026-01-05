@@ -1,41 +1,41 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  const search = document.getElementById("search");
-  const links = document.querySelectorAll(".link");
+  const buttons = document.querySelectorAll(".link-btn");
+  const searchInput = document.getElementById("searchInput");
   const noResult = document.getElementById("noResult");
-  const btn = document.getElementById("themeToggle");
 
-  /* sécurité : si un élément manque, on évite le crash */
-  if (!search || !btn) return;
+  const links = {
+    "YouTube": "https://www.youtube.com/@Kenzou_TV",
+    "Discord": "https://discord.gg/bRZqsCbPPE",
+    "Twitch": "https://www.twitch.tv/kenzoutv_mc",
+    "Minecraft": "https://fr.namemc.com/profile/Kenzo0025.1",
+    "Instagram": "https://www.instagram.com/kenzoutv/"
+  };
 
-  search.addEventListener("input", () => {
-    const value = search.value.toLowerCase();
+  buttons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const text = btn.childNodes[0].textContent.trim();
+      window.open(links[text], "_blank");
+    });
+  });
+
+  searchInput.addEventListener("input", () => {
+    const value = searchInput.value.toLowerCase();
     let found = false;
 
-    links.forEach(link => {
-      const tags = link.dataset.tags || "";
-      if (tags.includes(value)) {
-        link.style.display = "block";
+    buttons.forEach(btn => {
+      const tags = btn.dataset.tags;
+      const text = btn.innerText.toLowerCase();
+
+      if (text.includes(value) || tags.includes(value)) {
+        btn.style.display = "block";
         found = true;
       } else {
-        link.style.display = "none";
+        btn.style.display = "none";
       }
     });
 
-    noResult.style.display = found ? "none" : "block";
-  });
-
-  /* thème */
-  let dark = true;
-
-  btn.addEventListener("click", () => {
-    dark = !dark;
-
-    document.body.style.background = dark ? "#0e0e0e" : "#f1f1f1";
-    document.body.style.color = dark ? "white" : "black";
-
-    btn.textContent = dark ? "🌙" : "☀️";
-    btn.style.color = dark ? "white" : "black";
+    noResult.classList.toggle("hidden", found);
   });
 
 });
