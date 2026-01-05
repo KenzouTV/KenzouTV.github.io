@@ -7,53 +7,65 @@ body {
   font-family: Arial, sans-serif;
   background: #0e0e0e;
   color: white;
-  overflow: hidden; /* IMPORTANT : la page ne scroll PAS */
+  height: 100vh;
+  overflow: hidden;
 }
 
+/* CONTAINER PRINCIPAL */
 .container {
   max-width: 420px;
+  height: 100vh;
   margin: auto;
-  text-align: center;
-  padding-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 16px 80px;
 }
 
+/* AVATAR */
 .avatar {
   width: 140px;
   height: 140px;
   border-radius: 50%;
   object-fit: cover;
+  margin-bottom: 12px;
+}
+
+h1 {
+  margin: 0;
 }
 
 .subtitle {
   color: #aaa;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
-/* Recherche */
+/* RECHERCHE (épinglée) */
 #searchInput {
   width: 100%;
-  padding: 12px;
-  border-radius: 12px;
+  padding: 12px 14px;
+  border-radius: 14px;
   border: none;
   background: #1c1c1c;
   color: white;
   margin-bottom: 12px;
 }
 
-/* Scroll UNIQUEMENT ici */
+/* ZONE BOUTONS (SEULE ZONE QUI SCROLL) */
 .links-scroll {
-  max-height: 320px;
+  width: 100%;
+  flex: 1;
   overflow-y: auto;
   padding-right: 6px;
 }
 
-/* Boutons */
+/* BOUTONS */
 .link-btn {
   width: 100%;
   background: #1a1a1a;
   border: none;
   color: white;
-  padding: 14px;
+  padding: 14px 16px;
   margin-bottom: 10px;
   border-radius: 14px;
   font-size: 16px;
@@ -65,7 +77,7 @@ body {
   background: #2a2a2a;
 }
 
-/* Tags */
+/* TAGS */
 .tags {
   display: block;
   font-size: 12px;
@@ -73,8 +85,9 @@ body {
   margin-top: 4px;
 }
 
-/* Aucun résultat */
+/* AUCUN RESULTAT */
 #noResult {
+  text-align: center;
   margin-top: 20px;
   color: #777;
 }
@@ -83,10 +96,10 @@ body {
   display: none;
 }
 
-/* Footer */
+/* FOOTER */
 .footer-left {
   position: fixed;
-  bottom: 12px;
+  bottom: 14px;
   left: 16px;
   font-size: 13px;
   color: #888;
@@ -94,7 +107,7 @@ body {
 
 .footer-right {
   position: fixed;
-  bottom: 12px;
+  bottom: 14px;
   right: 16px;
   font-size: 13px;
   color: #888;
