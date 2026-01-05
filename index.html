@@ -3,45 +3,49 @@
 <head>
   <meta charset="UTF-8">
   <title>KenzouTV – Links</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <link rel="stylesheet" href="style.css">
 </head>
 <body class="dark">
 
   <div class="container">
-    <img src="profile.jpg" class="avatar" alt="Photo de profil">
+
+    <img src="profile.jpg" alt="KenzouTV" class="avatar">
+
     <h1>KenzouTV</h1>
     <p class="bio">Créateur • Discord • YouTube</p>
 
     <!-- PAGE PRINCIPALE -->
-    <div id="mainLinks">
+    <div id="mainLinks" class="links-container">
       <a class="link" href="https://www.youtube.com/@Kenzou_TV" target="_blank">YouTube</a>
       <a class="link" href="https://discord.gg/bRZqsCbPPE" target="_blank">Discord</a>
+      <a class="link" href="https://www.twitch.tv/kenzoutv_mc" target="_blank">Twitch</a>
+
       <button class="link" id="minecraftBtn">Minecraft</button>
 
       <p class="soon">D’autres liens arriveront par la suite</p>
     </div>
 
     <!-- PAGE MINECRAFT -->
-    <div id="minecraftLinks" class="hidden">
+    <div id="minecraftLinks" class="links-container hidden">
       <a class="link" href="https://fr.namemc.com/profile/Kenzo0025.1" target="_blank">
         Minecraft Java
       </a>
+
       <a class="link" href="https://launch.minecraft.net/profile/FR%20KenzoYTB" target="_blank">
         Minecraft Bedrock
       </a>
+
       <button class="link" id="backBtn">← Retour</button>
     </div>
+
   </div>
 
-  <!-- zone thème + email -->
+  <!-- BOUTON THEME + EMAIL -->
   <div class="theme-zone">
     <button id="themeToggle">🌙</button>
-    <span>Email pro : kenzoutv@outlook.fr</span>
-  </div>
-
-  <!-- dernière mise à jour -->
-  <div class="last-update">
-    Dernière Mise à Jour le 04/01/2026 à 19h40
+    <span>email pro : kenzoutv@outlook.fr</span>
   </div>
 
   <script src="script.js"></script>
