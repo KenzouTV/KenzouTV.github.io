@@ -1,19 +1,26 @@
-const themeBtn = document.getElementById("themeToggle");
-const minecraftBtn = document.getElementById("minecraftBtn");
-const backBtn = document.getElementById("backBtn");
+const body = document.body;
+const themeToggle = document.getElementById("themeToggle");
 
 const mainLinks = document.getElementById("mainLinks");
 const minecraftLinks = document.getElementById("minecraftLinks");
 
-/* Thème */
-themeBtn.addEventListener("click", () => {
-  document.body.classList.toggle("dark");
-  document.body.classList.toggle("light");
+const minecraftBtn = document.getElementById("minecraftBtn");
+const backBtn = document.getElementById("backBtn");
 
-  themeBtn.textContent = document.body.classList.contains("dark") ? "🌙" : "☀️";
+/* ===== THEME ===== */
+function setTheme(theme) {
+  body.className = theme;
+  themeToggle.textContent = theme === "dark" ? "🌙" : "☀️";
+  localStorage.setItem("theme", theme);
+}
+
+themeToggle.addEventListener("click", () => {
+  setTheme(body.classList.contains("dark") ? "light" : "dark");
 });
 
-/* Navigation fausse page Minecraft */
+setTheme(localStorage.getItem("theme") || "dark");
+
+/* ===== NAVIGATION MINECRAFT ===== */
 minecraftBtn.addEventListener("click", () => {
   mainLinks.classList.add("hidden");
   minecraftLinks.classList.remove("hidden");
