@@ -4,47 +4,48 @@
   <meta charset="UTF-8" />
   <title>KenzouTV - Links</title>
   <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 <body class="dark">
 
   <div class="container">
 
+    <!-- AVATAR & TITRE -->
     <img src="profile.jpg" alt="KenzouTV" class="avatar" />
-
     <h1>KenzouTV</h1>
     <p class="subtitle">Créateur · Discord · YouTube</p>
 
-    <!-- RECHERCHE (épinglée) -->
+    <!-- RECHERCHE -->
     <input
       type="text"
       id="searchInput"
       placeholder="Rechercher un lien ou un tag..."
     />
 
-    <!-- ZONE SCROLLABLE UNIQUEMENT -->
+    <!-- ZONE SCROLLABLE -->
     <div class="links-scroll" id="linksContainer">
 
-      <button class="link-btn" data-tags="youtube video live">
+      <button class="link-btn" data-link="YouTube" data-tags="youtube video live">
         YouTube
         <span class="tags">#youtube #vidéo #live</span>
       </button>
 
-      <button class="link-btn" data-tags="discord serveur">
+      <button class="link-btn" data-link="Discord" data-tags="discord serveur">
         Discord
         <span class="tags">#discord #serveur</span>
       </button>
 
-      <button class="link-btn" data-tags="twitch live stream">
+      <button class="link-btn" data-link="Twitch" data-tags="twitch live stream">
         Twitch
         <span class="tags">#twitch #live</span>
       </button>
 
-      <button class="link-btn" id="minecraftBtn" data-tags="minecraft jeu profil">
+      <button class="link-btn" data-link="Minecraft" data-tags="minecraft jeu profil">
         Minecraft
         <span class="tags">#minecraft #jeu</span>
       </button>
 
-      <button class="link-btn" data-tags="instagram reseaux">
+      <button class="link-btn" data-link="Instagram" data-tags="instagram reseaux">
         Instagram
         <span class="tags">#instagram #réseaux</span>
       </button>
@@ -64,5 +65,6 @@
   </div>
 
   <script src="script.js"></script>
+
 </body>
 </html>
