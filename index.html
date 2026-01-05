@@ -1,72 +1,57 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>KenzouTV</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <title>KenzouTV – Links</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
-
-<body class="dark">
+<body>
 
   <div class="page">
 
-    <div class="header">
-      <img src="profile.jpg" class="avatar">
+    <div class="profile">
+      <img src="profile.jpg" alt="Profile">
       <h1>KenzouTV</h1>
-      <p class="bio">Créateur • Discord • YouTube</p>
+      <p>Créateur · Discord · YouTube</p>
     </div>
 
-    <!-- RECHERCHE ÉPINGLÉE -->
-    <div class="search-zone">
-      <input id="search" placeholder="Rechercher (ex: live, youtube, minecraft)">
-    </div>
+    <input 
+      type="text" 
+      id="search" 
+      placeholder="Rechercher un lien ou un tag..."
+    />
 
-    <!-- ZONE SCROLLABLE UNIQUEMENT -->
-    <div class="links-zone" id="linksZone">
+    <div class="links-container" id="linksContainer">
 
-      <a class="link"
-         href="https://www.youtube.com/@Kenzou_TV"
-         target="_blank"
-         data-tags="youtube video live">
-         YouTube
+      <a class="link" data-tags="youtube video live" href="https://www.youtube.com/@Kenzou_TV" target="_blank">
+        YouTube
       </a>
 
-      <a class="link"
-         href="https://www.twitch.tv/kenzoutv_mc"
-         target="_blank"
-         data-tags="twitch live stream">
-         Twitch
+      <a class="link" data-tags="discord communauté" href="https://discord.gg/bRZqsCbPPE" target="_blank">
+        Discord
       </a>
 
-      <a class="link"
-         href="https://discord.gg/bRZqsCbPPE"
-         target="_blank"
-         data-tags="discord communauté chat">
-         Discord
+      <a class="link" data-tags="twitch live stream" href="https://www.twitch.tv/kenzoutv_mc" target="_blank">
+        Twitch
       </a>
 
-      <button class="link"
-              id="minecraftBtn"
-              data-tags="minecraft java bedrock jeu">
-              Minecraft
-      </button>
+      <div class="link fake" data-tags="minecraft jeu">
+        Minecraft
+      </div>
 
-      <p class="soon">D’autres liens arriveront par la suite</p>
+      <div id="noResult">Aucun lien trouvé</div>
 
-    </div>
-
-    <!-- MISE À JOUR -->
-    <div class="footer">
-      <span class="update">Dernière mise à jour : 05/01/2026 – 19h</span>
     </div>
 
   </div>
 
-  <!-- THEME + MAIL -->
-  <div class="theme-zone">
+  <div class="bottom-left">
     <button id="themeToggle">🌙</button>
     <span>email pro : kenzoutv@outlook.fr</span>
+  </div>
+
+  <div class="update">
+    Dernière mise à jour : 05/01/2026 à 19h
   </div>
 
   <script src="script.js"></script>
