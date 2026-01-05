@@ -1,160 +1,126 @@
-/* ===== RESET TOTAL SCROLL PAGE ===== */
-html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  overflow: hidden; /* 🔒 PLUS JAMAIS DE SCROLL PAGE */
-  font-family: Arial, sans-serif;
+* {
+  box-sizing: border-box;
+  font-family: system-ui, sans-serif;
 }
 
-/* ===== THEMES ===== */
-body.dark {
+body {
+  margin: 0;
   background: #0e0e0e;
   color: white;
-}
-
-body.light {
-  background: #f4f4f4;
-  color: black;
-}
-
-/* ===== STRUCTURE ===== */
-.page {
   height: 100vh;
-  max-width: 480px;
-  margin: auto;
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
-  box-sizing: border-box;
+  overflow: hidden; /* IMPORTANT */
 }
 
-/* ===== HEADER ===== */
-.header {
+.page {
+  max-width: 420px;
+  margin: auto;
+  padding: 30px 20px;
+}
+
+.profile {
   text-align: center;
 }
 
-.avatar {
-  width: 130px;
-  height: 130px;
+.profile img {
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid #444;
 }
 
-.bio {
-  font-size: 14px;
+.profile h1 {
+  margin: 15px 0 5px;
+}
+
+.profile p {
   opacity: 0.7;
-}
-
-/* ===== SEARCH ===== */
-.search-zone {
-  margin: 15px 0;
+  font-size: 14px;
 }
 
 #search {
   width: 100%;
-  padding: 16px;
+  padding: 14px;
+  margin: 20px 0;
   border-radius: 14px;
   border: none;
-  outline: none;
-  background: #1b1b1b;
+  background: #1a1a1a;
   color: white;
-  font-weight: bold;
+  outline: none;
 }
 
-body.light #search {
-  background: white;
-  color: black;
-}
-
-/* ===== LINKS ZONE (SEUL SCROLL) ===== */
-.links-zone {
-  flex: 1;
-  overflow-y: auto; /* ✅ SCROLL UNIQUE */
+.links-container {
+  max-height: 300px;
+  overflow-y: auto;
   padding-right: 6px;
 }
 
 /* scrollbar clean */
-.links-zone::-webkit-scrollbar {
+.links-container::-webkit-scrollbar {
   width: 6px;
 }
-.links-zone::-webkit-scrollbar-thumb {
+.links-container::-webkit-scrollbar-thumb {
   background: #444;
   border-radius: 10px;
 }
 
-/* ===== BOUTONS ===== */
 .link {
   display: block;
   width: 100%;
   padding: 18px;
-  margin: 12px 0;
-  border-radius: 14px;
+  margin-bottom: 14px;
   background: #1b1b1b;
-  color: white;
+  border-radius: 16px;
   text-align: center;
-  font-weight: bold;
   text-decoration: none;
-  border: none;
-  cursor: pointer;
-  transition: transform 0.2s;
+  color: white;
+  font-size: 18px;
+  transition: transform 0.2s, background 0.2s;
 }
 
 .link:hover {
-  transform: scale(1.05);
+  transform: scale(1.03);
+  background: #242424;
 }
 
-body.light .link {
-  background: white;
-  color: black;
+.fake {
+  cursor: pointer;
 }
 
-/* ===== TEXTES ===== */
-.soon {
-  font-size: 13px;
-  opacity: 0.6;
+#noResult {
+  display: none;
   text-align: center;
+  opacity: 0.6;
+  margin-top: 20px;
 }
 
-/* ===== FOOTER ===== */
-.footer {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.update {
-  font-size: 12px;
-  opacity: 0.5;
-}
-
-/* ===== THEME ZONE ===== */
-.theme-zone {
+.bottom-left {
   position: fixed;
   bottom: 20px;
   left: 20px;
   display: flex;
-  gap: 12px;
   align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  opacity: 0.8;
 }
 
 #themeToggle {
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
+  background: none;
   border: none;
-  background: #1b1b1b;
-  color: white;
   font-size: 22px;
   cursor: pointer;
+  color: white;
+  transition: transform 0.2s;
 }
 
-body.light #themeToggle {
-  background: white;
-  color: black;
+#themeToggle:hover {
+  transform: scale(1.2);
 }
 
-.theme-zone span {
+.update {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
   font-size: 13px;
-  opacity: 0.7;
+  opacity: 0.5;
 }
