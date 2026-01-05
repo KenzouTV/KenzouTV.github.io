@@ -2,57 +2,68 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>KenzouTV – Links</title>
+  <title>KenzouTV</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body class="dark">
 
-  <div class="container">
+  <div class="page">
 
-    <img src="profile.jpg" alt="KenzouTV" class="avatar">
+    <div class="header">
+      <img src="profile.jpg" class="avatar">
+      <h1>KenzouTV</h1>
+      <p class="bio">Créateur • Discord • YouTube</p>
+    </div>
 
-    <h1>KenzouTV</h1>
-    <p class="bio">Créateur • Discord • YouTube</p>
+    <!-- RECHERCHE ÉPINGLÉE -->
+    <div class="search-zone">
+      <input id="search" placeholder="Rechercher (ex: live, youtube, minecraft)">
+    </div>
 
-    <!-- BARRE RECHERCHE (EPINGLÉE) -->
-    <input
-      type="text"
-      id="search"
-      placeholder="Rechercher un lien..."
-    >
+    <!-- ZONE SCROLLABLE UNIQUEMENT -->
+    <div class="links-zone" id="linksZone">
 
-    <!-- PAGE PRINCIPALE -->
-    <div id="mainLinks" class="links-container">
-      <a class="link" href="https://www.youtube.com/@Kenzou_TV" target="_blank">YouTube</a>
-      <a class="link" href="https://discord.gg/bRZqsCbPPE" target="_blank">Discord</a>
-      <a class="link" href="https://www.twitch.tv/kenzoutv_mc" target="_blank">Twitch</a>
+      <a class="link"
+         href="https://www.youtube.com/@Kenzou_TV"
+         target="_blank"
+         data-tags="youtube video live">
+         YouTube
+      </a>
 
-      <button class="link" id="minecraftBtn">Minecraft</button>
+      <a class="link"
+         href="https://www.twitch.tv/kenzoutv_mc"
+         target="_blank"
+         data-tags="twitch live stream">
+         Twitch
+      </a>
+
+      <a class="link"
+         href="https://discord.gg/bRZqsCbPPE"
+         target="_blank"
+         data-tags="discord communauté chat">
+         Discord
+      </a>
+
+      <button class="link"
+              id="minecraftBtn"
+              data-tags="minecraft java bedrock jeu">
+              Minecraft
+      </button>
 
       <p class="soon">D’autres liens arriveront par la suite</p>
+
     </div>
 
-    <!-- PAGE MINECRAFT -->
-    <div id="minecraftLinks" class="links-container hidden">
-      <a class="link" href="https://fr.namemc.com/profile/Kenzo0025.1" target="_blank">
-        Minecraft Java
-      </a>
-
-      <a class="link" href="https://launch.minecraft.net/profile/FR%20KenzoYTB" target="_blank">
-        Minecraft Bedrock
-      </a>
-
-      <button class="link" id="backBtn">← Retour</button>
+    <!-- MISE À JOUR -->
+    <div class="footer">
+      <span class="update">Dernière mise à jour : 05/01/2026 – 19h</span>
     </div>
-
-    <!-- DERNIERE MISE A JOUR -->
-    <p class="update">Dernière mise à jour : 05/01/2026 à 19h</p>
 
   </div>
 
-  <!-- THEME + EMAIL -->
+  <!-- THEME + MAIL -->
   <div class="theme-zone">
     <button id="themeToggle">🌙</button>
     <span>email pro : kenzoutv@outlook.fr</span>
