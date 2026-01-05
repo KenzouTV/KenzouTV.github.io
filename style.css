@@ -149,6 +149,16 @@ h1:hover { text-shadow: 0 0 20px cyan, 0 0 40px #0ff; }
   margin-top: 4px;
 }
 
+/* BOUTON PAYPAL */
+.paypal-btn {
+  background: #ff5ca2;
+}
+
+.paypal-btn:hover {
+  background: #ff79b0;
+  box-shadow: 0 0 12px #ff5ca2;
+}
+
 /* AUCUN RESULTAT */
 #noResult {
   text-align: center;
