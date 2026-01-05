@@ -7,6 +7,8 @@ const minecraftLinks = document.getElementById("minecraftLinks");
 const minecraftBtn = document.getElementById("minecraftBtn");
 const backBtn = document.getElementById("backBtn");
 
+const search = document.getElementById("search");
+
 /* ===== THEME ===== */
 function setTheme(theme) {
   body.className = theme;
@@ -20,7 +22,7 @@ themeToggle.addEventListener("click", () => {
 
 setTheme(localStorage.getItem("theme") || "dark");
 
-/* ===== NAVIGATION MINECRAFT ===== */
+/* ===== NAV MINECRAFT ===== */
 minecraftBtn.addEventListener("click", () => {
   mainLinks.classList.add("hidden");
   minecraftLinks.classList.remove("hidden");
@@ -29,4 +31,14 @@ minecraftBtn.addEventListener("click", () => {
 backBtn.addEventListener("click", () => {
   minecraftLinks.classList.add("hidden");
   mainLinks.classList.remove("hidden");
+});
+
+/* ===== RECHERCHE ===== */
+search.addEventListener("input", () => {
+  const value = search.value.toLowerCase();
+  document.querySelectorAll(".link").forEach(link => {
+    link.style.display = link.textContent.toLowerCase().includes(value)
+      ? "block"
+      : "none";
+  });
 });
