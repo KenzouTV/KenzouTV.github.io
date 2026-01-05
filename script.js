@@ -1,31 +1,32 @@
-const body = document.body;
-const themeToggle = document.getElementById("themeToggle");
 const search = document.getElementById("search");
-const linksZone = document.getElementById("linksZone");
+const links = document.querySelectorAll(".link");
+const noResult = document.getElementById("noResult");
 
-/* ===== THEME ===== */
-function setTheme(theme) {
-  body.className = theme;
-  themeToggle.textContent = theme === "dark" ? "🌙" : "☀️";
-  localStorage.setItem("theme", theme);
-}
-
-setTheme(localStorage.getItem("theme") || "dark");
-
-themeToggle.onclick = () => {
-  setTheme(body.classList.contains("dark") ? "light" : "dark");
-};
-
-/* ===== TAG SEARCH PRIORITY ===== */
 search.addEventListener("input", () => {
   const value = search.value.toLowerCase();
-
-  const links = Array.from(linksZone.querySelectorAll(".link"));
+  let found = false;
 
   links.forEach(link => {
-    const tags = link.dataset.tags || "";
-    const match = tags.includes(value) || link.textContent.toLowerCase().includes(value);
-    link.style.order = match ? -1 : 1;
-    link.style.display = value === "" || match ? "block" : "none";
+    const tags = link.dataset.tags;
+    if (tags.includes(value)) {
+      link.style.display = "block";
+      found = true;
+    } else {
+      link.style.display = "none";
+    }
   });
+
+  noResult.style.display = found ? "none" : "block";
 });
+
+/* thème */
+const btn = document.getElementById("themeToggle");
+let dark = true;
+
+btn.onclick = () => {
+  dark = !dark;
+  document.body.style.background = dark ? "#0e0e0e" : "#f1f1f1";
+  document.body.style.color = dark ? "white" : "black";
+  btn.textContent = dark ? "🌙" : "☀️";
+  btn.style.color = dark ? "white" : "black";
+};
