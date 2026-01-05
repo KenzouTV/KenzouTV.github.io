@@ -2,55 +2,64 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>KenzouTV – Links</title>
+  <title>KenzouTV - Links</title>
   <link rel="stylesheet" href="style.css" />
 </head>
-<body>
+<body class="dark">
 
-  <div class="page">
+  <div class="container">
 
-    <div class="profile">
-      <img src="profile.jpg" alt="Profile">
-      <h1>KenzouTV</h1>
-      <p>Créateur · Discord · YouTube</p>
-    </div>
+    <img src="profile.jpg" alt="KenzouTV" class="avatar" />
 
-    <input 
-      type="text" 
-      id="search" 
+    <h1>KenzouTV</h1>
+    <p class="subtitle">Créateur · Discord · YouTube</p>
+
+    <!-- RECHERCHE (épinglée) -->
+    <input
+      type="text"
+      id="searchInput"
       placeholder="Rechercher un lien ou un tag..."
     />
 
-    <div class="links-container" id="linksContainer">
+    <!-- ZONE SCROLLABLE UNIQUEMENT -->
+    <div class="links-scroll" id="linksContainer">
 
-      <a class="link" data-tags="youtube video live" href="https://www.youtube.com/@Kenzou_TV" target="_blank">
+      <button class="link-btn" data-tags="youtube video live">
         YouTube
-      </a>
+        <span class="tags">#youtube #vidéo #live</span>
+      </button>
 
-      <a class="link" data-tags="discord communauté" href="https://discord.gg/bRZqsCbPPE" target="_blank">
+      <button class="link-btn" data-tags="discord serveur">
         Discord
-      </a>
+        <span class="tags">#discord #serveur</span>
+      </button>
 
-      <a class="link" data-tags="twitch live stream" href="https://www.twitch.tv/kenzoutv_mc" target="_blank">
+      <button class="link-btn" data-tags="twitch live stream">
         Twitch
-      </a>
+        <span class="tags">#twitch #live</span>
+      </button>
 
-      <div class="link fake" data-tags="minecraft jeu">
+      <button class="link-btn" id="minecraftBtn" data-tags="minecraft jeu profil">
         Minecraft
-      </div>
+        <span class="tags">#minecraft #jeu</span>
+      </button>
 
-      <div id="noResult">Aucun lien trouvé</div>
+      <button class="link-btn" data-tags="instagram reseaux">
+        Instagram
+        <span class="tags">#instagram #réseaux</span>
+      </button>
 
+      <p id="noResult" class="hidden">Aucun lien trouvé</p>
     </div>
 
   </div>
 
-  <div class="bottom-left">
-    <button id="themeToggle">🌙</button>
-    <span>email pro : kenzoutv@outlook.fr</span>
+  <!-- FOOTER -->
+  <div class="footer-left">
+    email pro : kenzoutv@outlook.fr
   </div>
 
-  <div class="update">
+  <div class="footer-right">
     Dernière mise à jour : 05/01/2026 à 19h
   </div>
 
