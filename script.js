@@ -1,6 +1,6 @@
-// script.js — Version complète pour index.html, links.html et studio.html
+// script.js - version robuste (évite les erreurs si un élément manque)
 document.addEventListener('DOMContentLoaded', () => {
-  // éléments potentiels (s'ils existent sur la page)
+  // récupération optionnelle
   const linksContainer = document.getElementById('linksContainer');
   const searchInput = document.getElementById('searchInput');
   const activeTags = document.getElementById('activeTags');
@@ -8,96 +8,90 @@ document.addEventListener('DOMContentLoaded', () => {
   const dateBanner = document.getElementById('dateBanner');
   const avatar = document.getElementById('avatar');
 
-  /* ---------------------- utilitaires ---------------------- */
-  function flashMessage(txt, ms = 1200) {
-    const d = document.createElement('div');
-    d.textContent = txt;
-    Object.assign(d.style, {
-      position: 'fixed',
-      left: '50%',
-      top: '18px',
-      transform: 'translateX(-50%)',
-      background: 'rgba(0,0,0,0.75)',
-      color: '#fff',
-      padding: '8px 12px',
-      borderRadius: '8px',
-      zIndex: 9999,
-      transition: 'opacity .25s',
-    });
-    document.body.appendChild(d);
-    setTimeout(() => { d.style.opacity = '0'; }, ms - 220);
-    setTimeout(() => { d.remove(); }, ms);
-  }
-
-  /* ---------------------- clics / ouverture liens ---------------------- */
-  function setupClickTargets() {
-    document.querySelectorAll('[data-link]').forEach(el => {
-      // évite d'ajouter plusieurs fois
-      if (el.__clickAttached) return;
-      el.__clickAttached = true;
-      el.style.cursor = 'pointer';
-      el.addEventListener('click', (e) => {
-        const url = el.dataset.link;
-        // SHIFT + clic => copie le lien
-        if (e.shiftKey) {
-          navigator.clipboard?.writeText(url || '').then(() => {
-            flashMessage('Lien copié !');
-          }).catch(() => { flashMessage('Impossible de copier'); });
-          return;
-        }
-        if (!url || url === '#') {
-          flashMessage('Lien non configuré (placeholder)', 1400);
-          return;
-        }
-        // ouvre dans un nouvel onglet
-        window.open(url, '_blank');
+  /* petit helper d'affichage */
+  function flashMessage(txt, ms = 1300) {
+    try {
+      const d = document.createElement('div');
+      d.textContent = txt;
+      Object.assign(d.style, {
+        position: 'fixed',
+        left: '50%',
+        top: '18px',
+        transform: 'translateX(-50%)',
+        background: 'rgba(0,0,0,0.78)',
+        color: '#fff',
+        padding: '8px 12px',
+        borderRadius: '8px',
+        zIndex: 9999,
       });
-    });
+      document.body.appendChild(d);
+      setTimeout(() => { d.style.opacity = '0'; }, ms - 200);
+      setTimeout(() => d.remove(), ms);
+    } catch (err) { console.warn('flashMessage error', err); }
   }
 
+  /* Setup safe pour tous les éléments portant data-link */
+  function setupClickTargets() {
+    try {
+      const els = Array.from(document.querySelectorAll('[data-link]'));
+      els.forEach(el => {
+        if (el.__clickAttached) return;
+        el.__clickAttached = true;
+        el.style.cursor = 'pointer';
+        el.addEventListener('click', (e) => {
+          const url = el.dataset.link;
+          if (e.shiftKey) {
+            navigator.clipboard?.writeText(url || '').then(()=> flashMessage('Lien copié !')).catch(()=> flashMessage('Impossible de copier'));
+            return;
+          }
+          if (!url || url === '#') { flashMessage('Lien non configuré (placeholder)'); return; }
+          window.open(url, '_blank');
+        });
+      });
+    } catch (err) { console.warn('setupClickTargets error', err); }
+  }
   setupClickTargets();
 
-  /* ---------------------- recherche + filtrage par tags ---------------------- */
-  // sélectionne tous les éléments filtrables (ayant data-link ET data-tags)
-  function getFilterableElements() {
+  /* Recherche + filtres (s'il y a une zone de liens avec data-tags) */
+  function getFilterable() {
     return Array.from(document.querySelectorAll('[data-link][data-tags]'));
   }
 
   function filterLinks(query = '', selectedTags = []) {
-    const q = (query || '').trim().toLowerCase();
-    const btns = getFilterableElements();
-    let visible = 0;
-    btns.forEach(el => {
-      const text = (el.textContent || '').toLowerCase();
-      const tags = (el.dataset.tags || '').toLowerCase();
-      const matchQuery = !q || text.includes(q) || tags.includes(q);
-      const matchTags = selectedTags.length === 0 || selectedTags.every(t => tags.includes(t));
-      if (matchQuery && matchTags) {
-        el.style.display = '';
-        visible++;
-      } else {
-        el.style.display = 'none';
-      }
-    });
-    if (noResult) noResult.classList.toggle('hidden', visible !== 0);
+    try {
+      const q = (query || '').trim().toLowerCase();
+      const items = getFilterable();
+      let visible = 0;
+      items.forEach(it => {
+        const text = (it.textContent || '').toLowerCase();
+        const tags = (it.dataset.tags || '').toLowerCase();
+        const okQ = !q || text.includes(q) || tags.includes(q);
+        const okTags = selectedTags.length === 0 || selectedTags.every(t => tags.includes(t));
+        if (okQ && okTags) { it.style.display = ''; visible++; }
+        else { it.style.display = 'none'; }
+      });
+      if (noResult) noResult.classList.toggle('hidden', visible !== 0);
+    } catch (err) { console.warn('filterLinks error', err); }
   }
 
   if (searchInput) {
     searchInput.addEventListener('input', () => {
-      const tags = activeTags ? [...activeTags.querySelectorAll('.tag-pill')].map(t => t.dataset.tag) : [];
+      const tags = activeTags ? [...activeTags.querySelectorAll('.tag-pill')].map(t=>t.dataset.tag) : [];
       filterLinks(searchInput.value, tags);
     });
   }
 
-  // clic dans la liste pour ajouter un tag filtre (clic simple sur un lien)
+  /* clique sur la liste pour ajouter tag filtrant */
   if (linksContainer && activeTags) {
     linksContainer.addEventListener('click', (e) => {
-      const el = e.target.closest('[data-tags]');
-      if (!el) return;
-      const firstTag = (el.dataset.tags || '').split(' ')[0] || '';
-      const tag = firstTag.replace('#','');
-      if (!tag) return;
-      toggleTag(tag);
+      try {
+        const el = e.target.closest('[data-tags]');
+        if (!el) return;
+        const firstTag = (el.dataset.tags || '').split(' ')[0] || '';
+        const tag = firstTag.replace('#','');
+        if (!tag) return;
+        toggleTag(tag);
+      } catch (err) { console.warn('linksContainer click error', err); }
     });
   }
 
@@ -120,79 +114,80 @@ document.addEventListener('DOMContentLoaded', () => {
     filterLinks(searchInput ? searchInput.value : '', tags);
   }
 
-  /* ---------------------- bandeau date (1er janvier) ---------------------- */
-  (function showDateBanner(){
+  /* date banner (1er janvier) */
+  (function dateBannerInit(){
     if (!dateBanner) return;
     try {
-      const today = new Date();
-      if (today.getDate() === 1 && (today.getMonth() + 1) === 1) {
+      const d = new Date();
+      if (d.getDate() === 1 && (d.getMonth()+1) === 1) {
         dateBanner.classList.remove('hidden');
         dateBanner.classList.add('yellow');
-        dateBanner.textContent = `Bonne année ${today.getFullYear()} ! 🎉`;
+        dateBanner.textContent = `Bonne année ${d.getFullYear()} ! 🎉`;
         dateBanner.style.opacity = '0';
         dateBanner.style.transform = 'translate(-50%,-8px) scale(.98)';
-        setTimeout(()=> { dateBanner.style.transition = 'all .45s cubic-bezier(.2,.9,.3,1)'; dateBanner.style.opacity='1'; dateBanner.style.transform='translate(-50%,0) scale(1)'; }, 20);
+        setTimeout(()=> { dateBanner.style.transition = 'all .45s'; dateBanner.style.opacity='1'; dateBanner.style.transform='translate(-50%,0) scale(1)'; }, 20);
         setTimeout(()=> dateBanner.classList.add('hidden'), 7000);
       }
-    } catch (err) { console.warn('Date banner error', err); }
+    } catch (err) { console.warn('dateBannerInit error', err); }
   })();
 
-  /* ---------------------- avatar tilt (souris) ---------------------- */
+  /* avatar tilt */
   if (avatar) {
     avatar.addEventListener('mousemove', e => {
-      const rect = avatar.getBoundingClientRect();
-      const cx = rect.left + rect.width/2;
-      const cy = rect.top + rect.height/2;
-      const dx = (e.clientX - cx) / rect.width;
-      const dy = (e.clientY - cy) / rect.height;
-      avatar.style.transform = `perspective(900px) rotateY(${dx*8}deg) rotateX(${-dy*8}deg) translateZ(6px)`;
+      try {
+        const rect = avatar.getBoundingClientRect();
+        const cx = rect.left + rect.width/2;
+        const cy = rect.top + rect.height/2;
+        const dx = (e.clientX - cx) / rect.width;
+        const dy = (e.clientY - cy) / rect.height;
+        avatar.style.transform = `perspective(900px) rotateY(${dx*8}deg) rotateX(${-dy*8}deg) translateZ(6px)`;
+      } catch(e){/* silencieux */}
     });
-    avatar.addEventListener('mouseleave', () => { avatar.style.transform = ''; });
+    avatar.addEventListener('mouseleave', () => avatar.style.transform = '');
   }
 
-  /* ---------------------- idle animations (stagger) ---------------------- */
-  (function staggerIdle(){
-    const idles = Array.from(document.querySelectorAll('.idle'));
-    idles.forEach((el, i) => {
-      const r = (Math.random()*1.6).toFixed(2);
-      el.style.animationDelay = `${r}s`;
-      const dur = 5 + Math.random()*3;
-      el.style.animationDuration = `${dur}s`;
-      // Pour éviter trop de mouvement sur mobile
-      if (window.matchMedia && window.matchMedia('(hover: none)').matches) {
-        el.style.animation = 'none';
-      }
-    });
+  /* idle animation stagger (safe) */
+  (function idleStagger(){
+    try {
+      const idles = Array.from(document.querySelectorAll('.idle'));
+      idles.forEach((el) => {
+        const r = (Math.random()*1.6).toFixed(2);
+        el.style.animationDelay = `${r}s`;
+        const dur = 5 + Math.random()*3;
+        el.style.animationDuration = `${dur}s`;
+        if (window.matchMedia && window.matchMedia('(hover: none)').matches) el.style.animation = 'none';
+      });
+    } catch (err) { console.warn('idleStagger error', err); }
   })();
 
-  /* ---------------------- tilt 3D sur .card (au survol) ---------------------- */
-  document.querySelectorAll('.card').forEach(card => {
-    // souris
-    card.addEventListener('mousemove', (e) => {
-      const r = card.getBoundingClientRect();
-      const dx = (e.clientX - r.left - r.width/2) / r.width;
-      const dy = (e.clientY - r.top - r.height/2) / r.height;
-      card.style.transform = `perspective(900px) rotateX(${ -dy * 6 }deg) rotateY(${ dx * 8 }deg) translateZ(6px)`;
-      card.style.transition = 'transform .08s';
+  /* tilt 3D sur cartes (au survol) */
+  try {
+    document.querySelectorAll('.card').forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const r = card.getBoundingClientRect();
+        const dx = (e.clientX - r.left - r.width/2) / r.width;
+        const dy = (e.clientY - r.top - r.height/2) / r.height;
+        card.style.transform = `perspective(900px) rotateX(${ -dy * 6 }deg) rotateY(${ dx * 8 }deg) translateZ(6px)`;
+        card.style.transition = 'transform .08s';
+      });
+      card.addEventListener('mouseleave', () => { card.style.transform = ''; });
     });
-    // reset
-    card.addEventListener('mouseleave', () => { card.style.transform = ''; });
-  });
+  } catch (err) { /* ignore */ }
 
-  /* ---------------------- contact form (studio) ---------------------- */
+  /* contact form (studio) */
   const contactForm = document.getElementById('contactForm');
   if (contactForm) {
     contactForm.addEventListener('submit', e => {
       e.preventDefault();
-      const formMsg = document.getElementById('formMsg');
-      if (formMsg) formMsg.textContent = 'Message envoyé (simulé) — merci !';
+      const fm = document.getElementById('formMsg');
+      if (fm) fm.textContent = 'Message envoyé (simulé)';
       contactForm.reset();
-      setTimeout(()=> { if (formMsg) formMsg.textContent = ''; }, 3000);
-      flashMessage('Message envoyé ✅', 1300);
+      flashMessage('Message envoyé ✅');
+      setTimeout(()=> { if (fm) fm.textContent = ''; }, 3000);
     });
   }
 
-  /* ---------------------- BlockFrame : rejoindre / demande d'accès ---------------------- */
+  /* BlockFrame handlers (join / request access) */
   const joinBtn = document.getElementById('joinBlock');
   const requestAccessBtn = document.getElementById('requestAccessBtn');
   const accessForm = document.getElementById('accessForm');
@@ -200,24 +195,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (joinBtn) {
     joinBtn.addEventListener('click', () => {
-      // mets ton lien d'invite réel ici :
       const invite = 'https://discord.gg/TON_INVITE_ICI';
       if (!invite || invite === '#' || invite.includes('TON_INVITE_ICI')) {
-        flashMessage('Serveur restreint — utilise "Demander l\'accès".', 2000);
+        flashMessage("Serveur restreint — utilise 'Demander l'accès'.");
         return;
       }
       window.open(invite, '_blank');
     });
   }
-
   if (requestAccessBtn) {
     requestAccessBtn.addEventListener('click', () => {
-      const pseudoInput = document.querySelector('#accessForm input[name="pseudo"]');
-      if (pseudoInput) pseudoInput.focus();
-      flashMessage('Remplis le formulaire pour demander l’accès', 1600);
+      const p = document.querySelector('#accessForm input[name="pseudo"]');
+      if (p) p.focus();
+      flashMessage('Remplis le formulaire pour demander l’accès');
     });
   }
-
   if (accessForm) {
     accessForm.addEventListener('submit', (e) => {
       e.preventDefault();
@@ -225,27 +217,19 @@ document.addEventListener('DOMContentLoaded', () => {
       const pseudo = data.get('pseudo') || 'Anonyme';
       const role = data.get('role') || '—';
       const msg = data.get('msg') || '';
-      // simulation : ici tu pourrais envoyer vers un webhook si tu veux
-      console.log('Demande accès BlockFrame:', { pseudo, role, msg, time: new Date().toISOString() });
-      if (accessFeedback) accessFeedback.textContent = 'Demande envoyée — je vérifierai et te répondrai sur Discord si accepté.';
+      console.log('Demande accès BlockFrame :', { pseudo, role, msg, t: new Date().toISOString() });
+      if (accessFeedback) accessFeedback.textContent = "Demande envoyée — je te répondrai sur Discord si accepté.";
       accessForm.reset();
-      flashMessage('Demande envoyée ✅', 1600);
+      flashMessage('Demande envoyée ✅');
       setTimeout(()=> { if (accessFeedback) accessFeedback.textContent = ''; }, 6000);
     });
   }
 
+  // reset button
   const resetFormBtn = document.getElementById('resetForm');
-  if (resetFormBtn) {
-    resetFormBtn.addEventListener('click', () => {
-      const f = document.getElementById('accessForm');
-      if (f) f.reset();
-      flashMessage('Formulaire réinitialisé', 900);
-    });
-  }
+  if (resetFormBtn) resetFormBtn.addEventListener('click', () => { const f = document.getElementById('accessForm'); if (f) f.reset(); flashMessage('Formulaire réinitialisé'); });
 
-  /* ---------------------- final setup / initial filter ---------------------- */
-  // s'assure que les click targets sont prêtes (après potentiels ajouts dynamiques)
+  // Dernière passe : setup click targets et filtre initial
   setupClickTargets();
-  // filtre initial (vide)
   filterLinks('', []);
 });
