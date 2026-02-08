@@ -1,94 +1,81 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>KenzouTV - Links</title>
+  <title>KenzouTV — Accueil</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body class="theme-orange">
-  <!-- bandeau date (ex : 1er janvier) -->
   <div id="dateBanner" class="date-banner hidden"></div>
 
-  <main class="page">
-    <header class="header">
+  <header class="topbar">
+    <div class="logo-row">
+      <img id="avatar" src="profile.jpg" alt="KenzouTV" class="avatar" />
       <div class="brand">
-        <img src="profile.jpg" alt="KenzouTV" class="avatar" id="avatar" />
-        <div class="brand-text">
-          <h1>KenzouTV</h1>
-          <p class="subtitle">Chaîne · Discord · À venir</p>
+        <h1>KenzouTV</h1>
+        <p class="subtitle">Chaîne · Discord · À venir</p>
+      </div>
+    </div>
+
+    <nav class="main-nav">
+      <a class="nav-link" href="index.html">Accueil</a>
+      <a class="nav-link" href="links.html">Liens</a>
+      <a class="nav-link" href="studio.html">Studio</a>
+    </nav>
+  </header>
+
+  <main class="page container">
+    <section class="left-col">
+      <div class="card intro idle">
+        <h2>KenzouTV</h2>
+        <p>Landing simple pour tes vidéos et ton Discord. Clique pour rejoindre, t’abonner, ou me soutenir.</p>
+        <div class="small-tags">
+          <span class="pill">#discord</span>
+          <span class="pill">#youtube</span>
+          <span class="pill">#tutos</span>
         </div>
       </div>
 
-      <nav class="top-nav">
-        <button class="btn small" data-link="Discord">Discord</button>
-        <button class="btn small" data-link="YouTube">YouTube</button>
-      </nav>
-    </header>
+      <div class="card search-card idle">
+        <input id="searchInput" placeholder="Recherche de lien ou tag (ex : discord, youtube)" />
+        <div id="activeTags" class="active-tags"></div>
+      </div>
 
-    <section class="content">
-      <aside class="left">
-        <div class="intro card">
-          <h2>Rejoins le Discord & reste au courant</h2>
-          <p>Un landing simple pour rediriger tes viewers : liens, réseaux, vidéos à venir.</p>
+      <div class="card links-list idle">
+        <h3>Tous les liens rapides</h3>
+        <div id="linksContainer">
+          <!-- boutons : change les data-link ici -->
+          <button class="link-btn" data-link="https://youtube.com/" data-tags="youtube vidéo">YouTube <span>#youtube</span></button>
+          <button class="link-btn" data-link="https://discord.gg/" data-tags="discord serveur">Discord <span>#discord</span></button>
+          <button class="link-btn" data-link="https://twitch.tv/" data-tags="twitch live">Twitch <span>#twitch</span></button>
+          <button class="link-btn" data-link="https://instagram.com/" data-tags="instagram réseaux">Instagram <span>#instagram</span></button>
+          <button class="link-btn paypal" data-link="#" data-tags="soutien donation">Me soutenir 💖 <span>#donation</span></button>
         </div>
-
-        <div class="search-wrap card">
-          <input id="searchInput" type="search" placeholder="Recherche (ex : discord, youtube, minecraft)" />
-          <div id="activeTags" class="active-tags"></div>
-        </div>
-
-        <div class="links card">
-          <div id="linksContainer" class="links-grid">
-            <!-- boutons ajoutés ici (JS peut être étendu) -->
-            <button class="link-btn" data-link="https://youtube.com/" data-tags="youtube vidéo live">
-              YouTube <span class="tags">#youtube #vidéo</span>
-            </button>
-
-            <button class="link-btn" data-link="https://discord.gg/" data-tags="discord serveur">
-              Discord <span class="tags">#discord #serveur</span>
-            </button>
-
-            <button class="link-btn" data-link="https://twitch.tv/" data-tags="twitch live">
-              Twitch <span class="tags">#twitch #live</span>
-            </button>
-
-            <button class="link-btn" data-link="https://instagram.com/" data-tags="instagram réseaux">
-              Instagram <span class="tags">#instagram</span>
-            </button>
-
-            <button class="link-btn paypal" data-link="#" data-tags="soutien donation">
-              Me soutenir 💖 <span class="tags">#donation #paypal</span>
-            </button>
-          </div>
-
-          <p id="noResult" class="muted hidden">Aucun lien trouvé</p>
-        </div>
-      </aside>
-
-      <aside class="right">
-        <div class="big-card card">
-          <div class="big-cta">
-            <h3 class="big-title">PROCHAINS TUTOS & VIDÉOS</h3>
-            <p class="muted">Abonne-toi pour ne rien rater — clique sur Discord pour rejoindre.</p>
-            <div class="big-buttons">
-              <button class="btn" data-link="https://discord.gg/">Rejoindre Discord</button>
-              <button class="btn ghost" data-link="https://youtube.com/">S'abonner</button>
-            </div>
-          </div>
-        </div>
-
-        <div class="floating-note card">
-          <strong>Astuce :</strong> passe ta souris sur les boutons — tout bouge 😎
-        </div>
-      </aside>
+        <p id="noResult" class="muted hidden">Aucun lien trouvé</p>
+      </div>
     </section>
 
-    <footer class="site-footer">
-      <div>email : kenzoutv@outlook.fr</div>
-      <div id="updated">Dernière mise à jour : 05/01/2026</div>
-    </footer>
+    <aside class="right-col">
+      <div class="card big-cta idle">
+        <h3 class="big-title">PROCHAINES VIDÉOS</h3>
+        <p class="muted">Tutos, montages, et p'tits hacks Minecraft — abonne-toi !</p>
+        <div class="btn-row">
+          <button class="btn" data-link="https://discord.gg/">Rejoindre Discord</button>
+          <button class="btn ghost" data-link="https://youtube.com/">S'abonner</button>
+        </div>
+      </div>
+
+      <div class="card mini idle">
+        <strong>Astuce :</strong> shift+clic sur un lien → copie l’URL.
+      </div>
+    </aside>
   </main>
+
+  <footer class="site-footer">
+    <div>email : kenzoutv@outlook.fr</div>
+    <div id="updated">Dernière mise à jour : 05/01/2026</div>
+  </footer>
 
   <script src="script.js"></script>
 </body>
