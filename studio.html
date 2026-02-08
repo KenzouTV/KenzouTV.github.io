@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>KenzouTV — Studio</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="theme-neon">
+  <header class="topbar small">
+    <a href="index.html" class="back">← Accueil</a>
+    <h1>Studio</h1>
+  </header>
+
+  <main class="container studio-page">
+    <section class="card idle">
+      <h2>Projets en cours</h2>
+      <ul class="muted">
+        <li>Tuto PvP Bedrock — montage & astuces</li>
+        <li>Série : Tricks Redstone rapides</li>
+        <li>Compilation fails & highlights</li>
+      </ul>
+    </section>
+
+    <section class="card gallery idle">
+      <h3>Petite galerie</h3>
+      <div class="thumbs">
+        <div class="thumb idle">Img1</div>
+        <div class="thumb idle">Img2</div>
+        <div class="thumb idle">Img3</div>
+      </div>
+    </section>
+
+    <section class="card contact idle">
+      <h3>Envie de proposer un collab ?</h3>
+      <form id="contactForm">
+        <input name="name" placeholder="Ton pseudo" />
+        <input name="email" placeholder="Email (optionnel)" />
+        <textarea name="msg" placeholder="Message"></textarea>
+        <div class="btn-row">
+          <button type="submit" class="btn">Envoyer</button>
+        </div>
+      </form>
+      <p id="formMsg" class="muted"></p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div>Studio — KenzouTV</div>
+    <div><a href="index.html">Retour</a></div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
