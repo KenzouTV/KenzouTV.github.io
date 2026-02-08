@@ -1,81 +1,94 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>KenzouTV - Links</title>
   <link rel="stylesheet" href="style.css" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
-<body class="dark">
+<body class="theme-orange">
+  <!-- bandeau date (ex : 1er janvier) -->
+  <div id="dateBanner" class="date-banner hidden"></div>
 
-  <div class="container">
+  <main class="page">
+    <header class="header">
+      <div class="brand">
+        <img src="profile.jpg" alt="KenzouTV" class="avatar" id="avatar" />
+        <div class="brand-text">
+          <h1>KenzouTV</h1>
+          <p class="subtitle">Chaîne · Discord · À venir</p>
+        </div>
+      </div>
 
-    <!-- AVATAR & TITRE -->
-    <img src="profile.jpg" alt="KenzouTV" class="avatar" />
-    <h1>KenzouTV</h1>
-    <p class="subtitle">Créateur · Discord · YouTube</p>
+      <nav class="top-nav">
+        <button class="btn small" data-link="Discord">Discord</button>
+        <button class="btn small" data-link="YouTube">YouTube</button>
+      </nav>
+    </header>
 
-    <!-- TAGS ACTIFS -->
-    <div id="activeTags" class="active-tags"></div>
+    <section class="content">
+      <aside class="left">
+        <div class="intro card">
+          <h2>Rejoins le Discord & reste au courant</h2>
+          <p>Un landing simple pour rediriger tes viewers : liens, réseaux, vidéos à venir.</p>
+        </div>
 
-    <!-- RECHERCHE -->
-    <input
-      type="text"
-      id="searchInput"
-      placeholder="Rechercher un lien ou un tag..."
-    />
+        <div class="search-wrap card">
+          <input id="searchInput" type="search" placeholder="Recherche (ex : discord, youtube, minecraft)" />
+          <div id="activeTags" class="active-tags"></div>
+        </div>
 
-    <!-- ZONE SCROLLABLE -->
-    <div class="links-scroll" id="linksContainer">
+        <div class="links card">
+          <div id="linksContainer" class="links-grid">
+            <!-- boutons ajoutés ici (JS peut être étendu) -->
+            <button class="link-btn" data-link="https://youtube.com/" data-tags="youtube vidéo live">
+              YouTube <span class="tags">#youtube #vidéo</span>
+            </button>
 
-      <button class="link-btn" data-link="YouTube" data-tags="youtube video live">
-        YouTube
-        <span class="tags">#youtube #vidéo #live</span>
-      </button>
+            <button class="link-btn" data-link="https://discord.gg/" data-tags="discord serveur">
+              Discord <span class="tags">#discord #serveur</span>
+            </button>
 
-      <button class="link-btn" data-link="Discord" data-tags="discord serveur">
-        Discord
-        <span class="tags">#discord #serveur</span>
-      </button>
+            <button class="link-btn" data-link="https://twitch.tv/" data-tags="twitch live">
+              Twitch <span class="tags">#twitch #live</span>
+            </button>
 
-      <button class="link-btn" data-link="Twitch" data-tags="twitch live stream">
-        Twitch
-        <span class="tags">#twitch #live</span>
-      </button>
+            <button class="link-btn" data-link="https://instagram.com/" data-tags="instagram réseaux">
+              Instagram <span class="tags">#instagram</span>
+            </button>
 
-      <button class="link-btn" data-link="Minecraft Java" data-tags="minecraft java jeu profil">
-        Minecraft Java
-        <span class="tags">#minecraft #java #jeu</span>
-      </button>
+            <button class="link-btn paypal" data-link="#" data-tags="soutien donation">
+              Me soutenir 💖 <span class="tags">#donation #paypal</span>
+            </button>
+          </div>
 
-      <button class="link-btn" data-link="Minecraft Bedrock" data-tags="minecraft bedrock jeu profil">
-        Minecraft Bedrock
-        <span class="tags">#minecraft #bedrock #jeu</span>
-      </button>
+          <p id="noResult" class="muted hidden">Aucun lien trouvé</p>
+        </div>
+      </aside>
 
-      <button class="link-btn" data-link="Instagram" data-tags="instagram reseaux">
-        Instagram
-        <span class="tags">#instagram #réseaux</span>
-      </button>
+      <aside class="right">
+        <div class="big-card card">
+          <div class="big-cta">
+            <h3 class="big-title">PROCHAINS TUTOS & VIDÉOS</h3>
+            <p class="muted">Abonne-toi pour ne rien rater — clique sur Discord pour rejoindre.</p>
+            <div class="big-buttons">
+              <button class="btn" data-link="https://discord.gg/">Rejoindre Discord</button>
+              <button class="btn ghost" data-link="https://youtube.com/">S'abonner</button>
+            </div>
+          </div>
+        </div>
 
-      <button class="link-btn paypal-btn" data-link="PayPal" data-tags="paypal donation soutien">
-        Me soutenir ! 💖
-        <span class="tags">#paypal #donation #soutien</span>
-      </button>
+        <div class="floating-note card">
+          <strong>Astuce :</strong> passe ta souris sur les boutons — tout bouge 😎
+        </div>
+      </aside>
+    </section>
 
-      <p id="noResult" class="hidden">Aucun lien trouvé</p>
-    </div>
-
-  </div>
-
-  <!-- FOOTER -->
-  <div class="footer-left">
-    email pro : kenzoutv@outlook.fr
-  </div>
-
-  <div class="footer-right">
-    Dernière mise à jour : 05/01/2026 à 19h
-  </div>
+    <footer class="site-footer">
+      <div>email : kenzoutv@outlook.fr</div>
+      <div id="updated">Dernière mise à jour : 05/01/2026</div>
+    </footer>
+  </main>
 
   <script src="script.js"></script>
 </body>
