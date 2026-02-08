@@ -1,118 +1,155 @@
-/* script.js - gestion recherche, tags, clics, et bandeau date */
+// script.js
 document.addEventListener('DOMContentLoaded', () => {
+  // elements communs
   const linksContainer = document.getElementById('linksContainer');
   const searchInput = document.getElementById('searchInput');
   const activeTags = document.getElementById('activeTags');
   const noResult = document.getElementById('noResult');
   const dateBanner = document.getElementById('dateBanner');
 
-  // ouvre les boutons link dans un nouvel onglet
-  document.querySelectorAll('.link-btn, .btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      const url = btn.dataset.link;
-      if (!url || url === '#') return;
-      window.open(url, '_blank');
+  // ouvrir les éléments cliqués (link-btn, link-card, btn)
+  function setupClickTargets() {
+    document.querySelectorAll('[data-link]').forEach(el => {
+      el.style.cursor = 'pointer';
+      el.addEventListener('click', (e) => {
+        const url = el.dataset.link;
+        // shift pour copier
+        if (e.shiftKey) {
+          navigator.clipboard?.writeText(url || '').then(()=> alert('Lien copié !')).catch(()=>{});
+          return;
+        }
+        if (!url || url === '#') {
+          // placeholder : peut ouvrir modal
+          flashMessage('Lien temporaire', 1200);
+          return;
+        }
+        window.open(url, '_blank');
+      });
     });
-  });
+  }
 
-  // recherche live
+  setupClickTargets();
+
+  // recherche live (si présent)
   function filterLinks(query, selectedTags = []) {
-    const btns = Array.from(linksContainer.querySelectorAll('.link-btn'));
+    if (!linksContainer) return;
+    const btns = Array.from(linksContainer.querySelectorAll('[data-link]'));
     const q = (query || '').trim().toLowerCase();
     let visible = 0;
-    btns.forEach(btn => {
-      const text = btn.textContent.toLowerCase();
-      const tags = (btn.dataset.tags || '').toLowerCase();
+    btns.forEach(el => {
+      const text = (el.textContent || '').toLowerCase();
+      const tags = (el.dataset.tags || '').toLowerCase();
       const matchQuery = !q || text.includes(q) || tags.includes(q);
       const matchTags = selectedTags.length === 0 || selectedTags.every(t => tags.includes(t));
       if (matchQuery && matchTags) {
-        btn.classList.remove('hidden');
-        btn.style.display = 'flex';
+        el.style.display = '';
         visible++;
       } else {
-        btn.style.display = 'none';
+        el.style.display = 'none';
       }
     });
-    noResult.classList.toggle('hidden', visible !== 0);
+    if (noResult) noResult.classList.toggle('hidden', visible !== 0);
   }
 
-  // ajouter tags quand on clique sur une tag (ex. dans .tags)
-  linksContainer.addEventListener('click', e => {
-    const btn = e.target.closest('.link-btn');
-    if (!btn) return;
-    const tagsText = btn.dataset.tags || '';
-    // si shift clique => copie lien
-    if (e.shiftKey) {
-      navigator.clipboard?.writeText(btn.dataset.link || '').then(()=> {
-        alert('Lien copié !');
-      }).catch(()=>{});
-      return;
-    }
-    // sinon on ajoute la première tag comme filtre rapide
-    const tag = (tagsText.split(' ')[0] || '').replace('#','');
-    if (!tag) return;
-    addTagFilter(tag);
-  });
-
-  function addTagFilter(tag) {
-    // si déjà présent, la supprime
-    const existing = activeTags.querySelector(`[data-tag="${tag}"]`);
-    const selectedTags = [...activeTags.querySelectorAll('.tag-pill')].map(t=>t.dataset.tag);
-    if (existing) {
-      existing.remove();
-      filterLinks(searchInput.value, selectedTags.filter(t => t !== tag));
-      return;
-    }
-    const el = document.createElement('div');
-    el.className = 'tag-pill';
-    el.dataset.tag = tag;
-    el.textContent = `#${tag} ✕`;
-    el.addEventListener('click', () => {
-      el.remove();
+  if (searchInput) {
+    searchInput.addEventListener('input', () => {
       filterLinks(searchInput.value, [...activeTags.querySelectorAll('.tag-pill')].map(t=>t.dataset.tag));
     });
-    activeTags.appendChild(el);
-    filterLinks(searchInput.value, [...activeTags.querySelectorAll('.tag-pill')].map(t=>t.dataset.tag));
   }
 
-  // recherche input
-  searchInput.addEventListener('input', () => filterLinks(searchInput.value, [...activeTags.querySelectorAll('.tag-pill')].map(t=>t.dataset.tag)));
+  // tags cliquables (créer / supprimer)
+  if (linksContainer && activeTags) {
+    linksContainer.addEventListener('click', e => {
+      const el = e.target.closest('[data-tags]');
+      if (!el) return;
+      const tagsText = (el.dataset.tags || '').split(' ')[0] || '';
+      const tag = tagsText.replace('#','');
+      if (!tag) return;
+      toggleTag(tag);
+    });
+  }
 
-  // affiche bandeau "Bonne année" le 1er janvier
+  function toggleTag(tag) {
+    const existing = activeTags.querySelector(`[data-tag="${tag}"]`);
+    if (existing) { existing.remove(); updateFilter(); return; }
+    const pill = document.createElement('div');
+    pill.className = 'tag-pill';
+    pill.dataset.tag = tag;
+    pill.textContent = `#${tag} ✕`;
+    pill.addEventListener('click', () => { pill.remove(); updateFilter(); });
+    activeTags.appendChild(pill);
+    updateFilter();
+  }
+  function updateFilter() {
+    const tags = [...activeTags.querySelectorAll('.tag-pill')].map(t=>t.dataset.tag);
+    filterLinks(searchInput ? searchInput.value : '', tags);
+  }
+
+  // date banner (1er janvier)
   (function showDateBanner(){
+    if (!dateBanner) return;
     const today = new Date();
-    const d = today.getDate();
-    const m = today.getMonth() + 1;
-    const y = today.getFullYear();
-    if (d === 1 && m === 1) {
+    if (today.getDate() === 1 && (today.getMonth()+1) === 1) {
       dateBanner.classList.remove('hidden');
       dateBanner.classList.add('yellow');
-      dateBanner.textContent = `Bonne année ${y} ! 🎉`;
-      // petite animation d'apparition
+      dateBanner.textContent = `Bonne année ${today.getFullYear()} ! 🎉`;
       dateBanner.style.opacity = '0';
-      dateBanner.style.transform = 'translate(-50%, -10px) scale(.98)';
-      setTimeout(()=> { dateBanner.style.transition = 'all .45s cubic-bezier(.2,.9,.3,1)'; dateBanner.style.opacity='1'; dateBanner.style.transform='translate(-50%, 0) scale(1)'; }, 20);
-      // et disparait au bout de 6s
-      setTimeout(()=> dateBanner.classList.add('fadeout'), 7000);
+      dateBanner.style.transform = 'translate(-50%,-8px) scale(.98)';
+      setTimeout(()=> { dateBanner.style.transition = 'all .45s'; dateBanner.style.opacity='1'; dateBanner.style.transform='translate(-50%,0) scale(1)'; }, 20);
+      setTimeout(()=> dateBanner.classList.add('hidden'), 7000);
     }
   })();
 
-  // effet "tilt" léger sur l'avatar
-  const avatar = document.getElementById('avatar');
-  if (avatar) {
-    avatar.addEventListener('mousemove', e => {
-      const rect = avatar.getBoundingClientRect();
-      const cx = rect.left + rect.width/2;
-      const cy = rect.top + rect.height/2;
-      const dx = (e.clientX - cx) / rect.width;
-      const dy = (e.clientY - cy) / rect.height;
-      avatar.style.transform = `perspective(800px) rotateY(${dx*6}deg) rotateX(${-dy*6}deg) translateZ(4px)`;
+  // petites fonctions utilitaires
+  function flashMessage(txt, ms=1000) {
+    const d = document.createElement('div');
+    d.textContent = txt;
+    d.style.position='fixed'; d.style.left='50%'; d.style.top='24px';
+    d.style.transform='translateX(-50%)'; d.style.background='rgba(0,0,0,.7)';
+    d.style.color='#fff'; d.style.padding='8px 12px'; d.style.borderRadius='8px'; d.style.zIndex='9999';
+    document.body.appendChild(d);
+    setTimeout(()=> d.style.opacity='0', ms-200);
+    setTimeout(()=> d.remove(), ms);
+  }
+
+  // Idle animations : ajoute un delay aléatoire pour rendre le mouvement organique
+  (function staggerIdle(){
+    const idles = Array.from(document.querySelectorAll('.idle'));
+    idles.forEach((el,i) => {
+      const r = (Math.random()*1.8).toFixed(2);
+      el.style.animationDelay = `${r}s`;
+      // petite variation de durée
+      const dur = 5 + Math.random()*3;
+      el.style.animationDuration = `${dur}s`;
     });
-    avatar.addEventListener('mouseleave', () => {
-      avatar.style.transform = '';
+  })();
+
+  // effet "tilt" 3D léger suivant la souris sur les éléments .card
+  document.querySelectorAll('.card').forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const r = card.getBoundingClientRect();
+      const dx = (e.clientX - r.left - r.width/2) / r.width;
+      const dy = (e.clientY - r.top - r.height/2) / r.height;
+      card.style.transform = `perspective(900px) rotateX(${ -dy * 6 }deg) rotateY(${ dx * 8 }deg) translateZ(6px)`;
+      card.style.transition = 'transform .08s';
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = '';
+    });
+  });
+
+  // contact form (studio)
+  const form = document.getElementById('contactForm');
+  if (form) {
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const formMsg = document.getElementById('formMsg');
+      formMsg.textContent = 'Message envoyé (simulé) — merci !';
+      form.reset();
+      setTimeout(()=> formMsg.textContent = '', 3000);
     });
   }
 
-  // initial filter (vide)
-  filterLinks('', []);
+  // relancer setup au cas où nouvelles pages DOM load
+  setupClickTargets();
 });
