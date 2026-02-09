@@ -1,41 +1,44 @@
 <!doctype html>
 <html lang="fr">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>KENZOUTV — Links</title>
-<link rel="stylesheet" href="style.css" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Mes Réseaux — KenzouTV</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#071018;--accent:#ff7a18;--accent-2:#ff9b3b}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,system-ui,Arial;background:linear-gradient(180deg,#040607 0%,#071018 100%);color:#eaf0ff;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:28px}
+    .card{width:860px;max-width:94%;background:rgba(255,255,255,0.02);padding:28px;border-radius:18px;box-shadow:0 40px 80px rgba(0,0,0,0.7);border:1px solid rgba(255,255,255,0.02)}
+    .head{display:flex;align-items:center;gap:16px}
+    .head img{width:64px;height:64px;border-radius:12px;object-fit:cover}
+    h1{margin:0;font-size:22px}
+    p{margin:6px 0 18px;color:rgba(234,240,255,0.8)}
+    .links{display:flex;flex-wrap:wrap;gap:12px}
+    .link{flex:1 1 220px;padding:14px;border-radius:12px;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#071018;font-weight:800;text-decoration:none;text-align:center}
+    .link.secondary{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--accent-2);font-weight:700}
+    .note{margin-top:18px;color:rgba(255,255,255,0.25);font-size:13px}
+    @media(max-width:540px){.links{flex-direction:column}}
+  </style>
 </head>
 <body>
-<header>
-<div class="header-bar">
-<a class="brand" href="index.html">
-<img class="profile" src="images/profile.jpg" alt="Profil" />
-<div class="brand-text"><strong>KENZOUTV</strong><span class="muted">Créateur de contenu & Développeur</span></div>
-</a>
+  <div class="card">
+    <div class="head">
+      <img src="profile.jpg" alt="avatar">
+      <div>
+        <h1>KenzouTV — Mes Réseaux</h1>
+        <p>Retrouve-moi sur mes plateformes. Clique pour ouvrir chaque lien.</p>
+      </div>
+    </div>
 
+    <div class="links">
+      <a class="link" href="https://discord.gg/KURpXHzRTE" target="_blank" rel="noopener">Rejoindre le Discord</a>
+      <a class="link secondary" href="#" target="_blank">YouTube (à ajouter)</a>
+      <a class="link secondary" href="#" target="_blank">Instagram (à ajouter)</a>
+      <a class="link secondary" href="#" target="_blank">Twitter (à ajouter)</a>
+    </div>
 
-<nav>
-<a href="index.html">Index</a>
-<a class="active" href="links.html">Links</a>
-<a href="studio.html">Studio</a>
-<a class="discord-btn" href="#">Discord</a>
-</nav>
-</div>
-</header>
-
-
-<main class="wrap">
-<h1>Mes réseaux</h1>
-<p class="subtitle">Retrouve-moi sur toutes les plateformes. Clique pour ouvrir.</p>
-
-
-<div class="links-grid">
-<a class="link-card" href="https://youtube.com/" target="_blank">
-<img src="images/yt.jpg" alt="YouTube" />
-<div class="meta"><strong>YouTube</strong><span>Chaîne KENZOUTV</span></div>
-</a>
-
-
-<a class="link-card" href="https://discord.gg/" target="_blank">
+    <div class="note">Astuce : remplace les liens secondaires par tes URLs. L'image <code>profile.jpg</code> doit être dans le même dossier.</div>
+  </div>
+</body>
 </html>
