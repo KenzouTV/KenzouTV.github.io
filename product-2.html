@@ -6,7 +6,7 @@
   <title>Produit 2 — Pack 3 animations</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
   <style>
-    :root{--bg:#071018;--accent:#ff7a18}
+    :root{--accent:#ff7a18}
     *{box-sizing:border-box}
     body{margin:0;font-family:Inter,system-ui,Arial;background:linear-gradient(180deg,#040607 0%,#071018 100%);color:#eaf0ff;min-height:100vh;padding:28px}
     .wrap{max-width:900px;margin:0 auto}
@@ -14,9 +14,7 @@
     .product{background:rgba(255,255,255,0.02);padding:18px;border-radius:12px}
     .hero{display:grid;grid-template-columns:1fr 320px;gap:14px}
     .preview{width:100%;height:360px;background:#0b0b0b;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#666}
-    .meta{margin-top:12px}
     .buy{display:inline-block;padding:12px 14px;border-radius:10px;background:linear-gradient(90deg,var(--accent),#ff9b3b);color:#071018;font-weight:800;text-decoration:none}
-    ul{margin:10px 0}
     @media(max-width:820px){.hero{grid-template-columns:1fr}}
   </style>
 </head>
@@ -24,7 +22,13 @@
   <div class="wrap">
     <nav class="topbar">
       <div class="brand"><img src="profile.jpg" alt="logo" style="width:44px;height:44px;border-radius:10px;object-fit:cover"><span style="margin-left:10px;font-weight:700">KenzouTV</span></div>
-      <div class="navlinks"><a href="index-orange-profile.html">Accueil</a><a href="links.html">Mes Réseaux</a><a href="boutique.html">Boutique</a><a href="blockframe.html">BlockFrame</a><button class="btn-discord" id="btnDiscord">Discord</button></div>
+      <div class="navlinks">
+        <a href="index.html">Accueil</a>
+        <a href="links.html">Mes Réseaux</a>
+        <a href="boutique.html" class="active">Boutique</a>
+        <a href="blockframe.html">BlockFrame</a>
+        <button class="btn-discord" id="btnDiscord">Discord</button>
+      </div>
     </nav>
 
     <div class="product">
@@ -32,7 +36,7 @@
         <div>
           <h2>Pack 3 animations — Produit 2</h2>
           <div class="preview">Image: Produit-2.jpg (aperçu)</div>
-          <p class="meta"><strong>Prix :</strong> 5€ — pack de 3 animations &lt; 1 minute chacune.</p>
+          <p style="margin-top:12px"><strong>Prix :</strong> 5€ — pack de 3 animations &lt; 1 minute chacune.</p>
           <p><a class="buy" href="order-form.html">Commander le pack</a></p>
         </div>
 
@@ -42,10 +46,9 @@
             <li>Résolution : jusqu'à 4K</li>
             <li>Frame-rate : 60 FPS</li>
             <li>Modifications : illimitées (dans la limite du brief)</li>
-            <li>Livraison : MP4 / WebM selon préférence</li>
+            <li>Livraison : MP4 / WebM</li>
             <li>Formats séparés pour chaque animation</li>
           </ul>
-          <p style="color:rgba(255,255,255,0.6)">Idéal pour miniatures animées / intros courtes.</p>
         </aside>
       </div>
 
@@ -57,6 +60,7 @@
   <script>
     var btn = document.getElementById('btnDiscord');
     if(btn){ btn.addEventListener('click', function(){ window.open('https://discord.gg/KURpXHzRTE','_blank','noopener'); }); }
+    document.querySelectorAll('a[href^="http"]').forEach(function(a){ a.setAttribute('target','_blank'); a.setAttribute('rel','noopener'); });
   </script>
 </body>
 </html>
