@@ -4,41 +4,38 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>KENZOUTV — Links</title>
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css" />
 </head>
 <body>
-<div class="cursor-follower" id="follower"></div>
-<header class="site-header">
-<div class="brand">
-<div class="logo">KZ</div>
-<div class="brand-txt">
-<strong>KENZOUTV</strong>
-<span class="muted">Miniamaker • Développeur</span>
-</div>
-</div>
-<nav class="site-nav">
-<a href="index.html" class="navlink">Index</a>
-<a href="links.html" class="navlink active">Links</a>
-<a href="studio.html" class="navlink">Studio</a>
-<a href="#" id="discordLink2" class="navlink">Discord</a>
+<header>
+<div class="header-bar">
+<a class="brand" href="index.html">
+<img class="profile" src="images/profile.jpg" alt="Profil" />
+<div class="brand-text"><strong>KENZOUTV</strong><span class="muted">Créateur de contenu & Développeur</span></div>
+</a>
+
+
+<nav>
+<a href="index.html">Index</a>
+<a class="active" href="links.html">Links</a>
+<a href="studio.html">Studio</a>
+<a class="discord-btn" href="#">Discord</a>
 </nav>
+</div>
 </header>
 
 
-<main class="main">
-<section class="container">
-<h2>Mes réseaux & contacts</h2>
-<p class="muted">Retrouve-moi sur les plateformes suivantes.</p>
+<main class="wrap">
+<h1>Mes réseaux</h1>
+<p class="subtitle">Retrouve-moi sur toutes les plateformes. Clique pour ouvrir.</p>
 
 
-<div class="links-grid" id="linksGrid">
-<!-- Les cartes seront injectées via script.js -->
-</div>
-</section>
-</main>
+<div class="links-grid">
+<a class="link-card" href="https://youtube.com/" target="_blank">
+<img src="images/yt.jpg" alt="YouTube" />
+<div class="meta"><strong>YouTube</strong><span>Chaîne KENZOUTV</span></div>
+</a>
 
 
-<footer class="site-footer">© 2026 KENZOUTV — TOUS DROITS RÉSERVÉS</footer>
-<script src="script.js"></script>
-</body>
+<a class="link-card" href="https://discord.gg/" target="_blank">
 </html>
