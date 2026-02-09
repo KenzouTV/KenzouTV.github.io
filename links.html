@@ -6,39 +6,64 @@
   <title>Mes Réseaux — KenzouTV</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
   <style>
-    :root{--bg:#071018;--accent:#ff7a18;--accent-2:#ff9b3b}
+    :root{--accent:#ff7a18;--accent-2:#ff9b3b;--muted:rgba(255,255,255,0.6)}
     *{box-sizing:border-box}
-    body{margin:0;font-family:Inter,system-ui,Arial;background:linear-gradient(180deg,#040607 0%,#071018 100%);color:#eaf0ff;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:28px}
-    .card{width:860px;max-width:94%;background:rgba(255,255,255,0.02);padding:28px;border-radius:18px;box-shadow:0 40px 80px rgba(0,0,0,0.7);border:1px solid rgba(255,255,255,0.02)}
-    .head{display:flex;align-items:center;gap:16px}
+    body{margin:0;font-family:Inter,system-ui,Arial;background:radial-gradient(700px 300px at 10% 90%, rgba(255,122,24,0.04),transparent),linear-gradient(180deg,#040607 0%,#071018 100%);color:#eaf0ff;min-height:100vh;padding:28px}
+    .wrap{max-width:1180px;margin:0 auto}
+    /* NAV same as other pages */
+    nav.topbar{display:flex;align-items:center;justify-content:space-between;padding:12px 18px;border-radius:30px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));box-shadow:0 6px 20px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.02);margin-bottom:22px}
+    .brand{display:flex;align-items:center;gap:12px}.brand img{width:44px;height:44px;border-radius:10px;object-fit:cover}.brand .title{font-weight:700;color:#eaf0ff}
+    .navlinks{display:flex;gap:12px;align-items:center}
+    .navlinks a{padding:8px 14px;border-radius:12px;text-decoration:none;color:rgba(255,255,255,0.60);font-weight:600}
+    .navlinks a.active{color:#fff;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01))}
+    .btn-discord{background:linear-gradient(180deg,var(--accent),var(--accent-2));padding:8px 16px;border-radius:12px;color:#0b0a0b;font-weight:700;border:none;cursor:pointer}
+    .card{background:rgba(255,255,255,0.02);padding:28px;border-radius:18px;box-shadow:0 40px 80px rgba(0,0,0,0.7)}
+    .head{display:flex;gap:16px;align-items:center}
     .head img{width:64px;height:64px;border-radius:12px;object-fit:cover}
-    h1{margin:0;font-size:22px}
-    p{margin:6px 0 18px;color:rgba(234,240,255,0.8)}
-    .links{display:flex;flex-wrap:wrap;gap:12px}
+    .links-grid{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
     .link{flex:1 1 220px;padding:14px;border-radius:12px;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#071018;font-weight:800;text-decoration:none;text-align:center}
     .link.secondary{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--accent-2);font-weight:700}
     .note{margin-top:18px;color:rgba(255,255,255,0.25);font-size:13px}
-    @media(max-width:540px){.links{flex-direction:column}}
+    @media(max-width:540px){.links-grid{flex-direction:column}}
   </style>
 </head>
 <body>
-  <div class="card">
-    <div class="head">
-      <img src="profile.jpg" alt="avatar">
-      <div>
-        <h1>KenzouTV — Mes Réseaux</h1>
-        <p>Retrouve-moi sur mes plateformes. Clique pour ouvrir chaque lien.</p>
+  <div class="wrap">
+    <nav class="topbar">
+      <div class="brand"><img src="profile.jpg" alt="logo"><div class="title">KenzouTV</div></div>
+      <div class="navlinks">
+        <a href="index.html">Accueil</a>
+        <a href="links.html" class="active">Mes Réseaux</a>
+        <a href="boutique.html">Boutique</a>
+        <a href="blockframe.html">BlockFrame</a>
+        <button class="btn-discord" id="btnDiscord">Discord</button>
       </div>
-    </div>
+    </nav>
 
-    <div class="links">
-      <a class="link" href="https://discord.gg/KURpXHzRTE" target="_blank" rel="noopener">Rejoindre le Discord</a>
-      <a class="link secondary" href="#" target="_blank">YouTube (à ajouter)</a>
-      <a class="link secondary" href="#" target="_blank">Instagram (à ajouter)</a>
-      <a class="link secondary" href="#" target="_blank">Twitter (à ajouter)</a>
-    </div>
+    <div class="card">
+      <div class="head">
+        <img src="profile.jpg" alt="avatar">
+        <div>
+          <h1 style="margin:0;font-size:22px">KenzouTV — Mes Réseaux</h1>
+          <p style="margin:6px 0 18px;color:rgba(234,240,255,0.8)">Retrouve-moi sur mes plateformes. Clique pour ouvrir chaque lien.</p>
+        </div>
+      </div>
 
-    <div class="note">Astuce : remplace les liens secondaires par tes URLs. L'image <code>profile.jpg</code> doit être dans le même dossier.</div>
+      <div class="links-grid">
+        <a class="link" href="https://discord.gg/KURpXHzRTE" rel="noopener" target="_blank">Rejoindre le Discord</a>
+        <a class="link secondary" href="#" rel="noopener">YouTube (à ajouter)</a>
+        <a class="link secondary" href="#" rel="noopener">Instagram (à ajouter)</a>
+        <a class="link secondary" href="#" rel="noopener">Twitter (à ajouter)</a>
+      </div>
+
+      <div class="note">Astuce : remplace les liens secondaires par tes URLs. L'image <code>profile.jpg</code> doit être dans le même dossier.</div>
+    </div>
   </div>
+
+  <script>
+    var btn = document.getElementById('btnDiscord');
+    if(btn){ btn.addEventListener('click', function(){ window.open('https://discord.gg/KURpXHzRTE','_blank','noopener'); }); }
+    document.querySelectorAll('a[href^="http"]').forEach(function(a){ a.setAttribute('target','_blank'); a.setAttribute('rel','noopener'); });
+  </script>
 </body>
 </html>
