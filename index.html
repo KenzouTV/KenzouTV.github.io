@@ -3,80 +3,242 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>KenzouTV — Accueil</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body class="theme-orange">
-  <div id="dateBanner" class="date-banner hidden"></div>
+  <title>KENZOUTV — Portfolio</title>
+  <style>
+    :root{
+      --bg:#0b0b0d;
+      --card:#0f0f11;
+      --accent:#ff7a00; /* orange */
+      --muted: #bdbdbd;
+      --glass: rgba(255,255,255,0.03);
+      --glass-2: rgba(255,255,255,0.02);
+      --blur: 10px;
+      --maxwidth:1100px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: radial-gradient(800px 400px at var(--mx,50%) var(--my,50%), rgba(255,122,0,0.06), transparent), var(--bg);
+      color:#eaeaea; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+      overflow-x:hidden;
+    }
+    header{
+      position:fixed;left:0;right:0;top:0;display:flex;align-items:center;justify-content:space-between;padding:14px 28px;z-index:60;
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+      backdrop-filter: blur(6px);
+      border-bottom:1px solid rgba(255,255,255,0.03);
+    }
+    .brand{display:flex;gap:12px;align-items:center}
+    .logo{
+      height:40px;width:40px;border-radius:8px;background:linear-gradient(135deg,var(--accent),#ffaa66);display:grid;place-items:center;font-weight:700;color:#111
+    }
+    nav{display:flex;gap:14px}
+    a.navlink{color:var(--muted);text-decoration:none;padding:8px 12px;border-radius:8px;font-weight:600}
+    a.navlink.active, a.navlink:hover{color:#fff;background:linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01))}
 
-  <header class="topbar">
-    <div class="logo-row">
-      <img id="avatar" src="profile.jpg" alt="KenzouTV" class="avatar" />
-      <div class="brand">
-        <h1>KenzouTV</h1>
-        <p class="subtitle">Chaîne · Discord · À venir</p>
+    main{padding-top:92px;min-height:100vh}
+    .wrap{max-width:var(--maxwidth);margin:0 auto;padding:36px}
+
+    /* Home */
+    .hero{display:grid;grid-template-columns:1fr 420px;gap:32px;align-items:center}
+    .hero .left{padding-right:12px}
+    .eyebrow{color:var(--accent);font-weight:700;letter-spacing:1px}
+    h1{font-size:44px;margin:10px 0 6px;line-height:1.02}
+    p.lead{color:var(--muted);font-size:15px;margin-bottom:18px}
+    .stats{display:flex;gap:18px;margin:28px 0}
+    .stat{background:linear-gradient(180deg,var(--glass),transparent);padding:14px;border-radius:12px;min-width:140px}
+    .cta{display:flex;gap:12px}
+    .btn{background:linear-gradient(90deg,var(--accent),#ff9a4a);padding:12px 16px;border-radius:12px;color:#111;font-weight:800;text-decoration:none}
+    .ghost{padding:12px 16px;border-radius:12px;border:1px solid rgba(255,255,255,0.06);color:var(--muted);text-decoration:none}
+
+    .right-card{background:linear-gradient(180deg,var(--card), rgba(255,255,255,0.01));padding:18px;border-radius:16px;box-shadow:0 6px 30px rgba(0,0,0,0.6);position:relative;overflow:hidden}
+    .right-card img{width:100%;height:260px;object-fit:cover;border-radius:10px}
+    .tag{position:absolute;left:18px;top:18px;background:rgba(0,0,0,0.35);padding:6px 10px;border-radius:8px;font-weight:700}
+
+    /* Links page */
+    .links-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+    .card{background:var(--glass-2);padding:16px;border-radius:12px;border:1px solid rgba(255,255,255,0.02);display:flex;align-items:center;gap:12px}
+    .card img{width:54px;height:54px;border-radius:8px;object-fit:cover}
+    .card .meta{flex:1}
+    .card h4{margin:0}
+    .card p{margin:4px 0 0;color:var(--muted);font-size:13px}
+
+    /* Studio */
+    .studio-grid{display:grid;grid-template-columns:1fr 360px;gap:20px;align-items:start}
+    .studio-card{background:linear-gradient(180deg,var(--card),transparent);padding:18px;border-radius:12px}
+    .studio-card ul{margin:10px 0 0;padding-left:18px;color:var(--muted)}
+
+    /* Footer */
+    footer{padding:22px 0;text-align:center;color:var(--muted);font-size:13px}
+
+    /* small & animation */
+    @media (max-width:900px){.hero{grid-template-columns:1fr;}.right-card img{height:200px}} 
+    .floaty{transition:transform .25s ease;will-change:transform}
+    .fade{opacity:0;transform:translateY(10px);transition:all .45s ease}
+    .fade.in{opacity:1;transform:none}
+
+    /* cursor follower */
+    .cursor-follower{position:fixed;pointer-events:none;left:0;top:0;width:48px;height:48px;margin-left:-24px;margin-top:-24px;border-radius:50%;background:radial-gradient(circle at 30% 30%, rgba(255,255,255,0.9), rgba(255,255,255,0.06) 40%, transparent 60%);mix-blend-mode:screen;transform:translate3d(0,0,0);z-index:200}
+  </style>
+</head>
+<body>
+  <div class="cursor-follower" id="follower"></div>
+  <header>
+    <div class="brand">
+      <div class="logo">KZ</div>
+      <div>
+        <div style="font-weight:800">KENZOUTV</div>
+        <div style="font-size:12px;color:var(--muted)">Miniamaker • Développeur</div>
       </div>
     </div>
-
-    <nav class="main-nav">
-      <a class="nav-link" href="index.html">Accueil</a>
-      <a class="nav-link" href="links.html">Liens</a>
-      <a class="nav-link" href="studio.html">Studio</a>
+    <nav>
+      <a class="navlink" href="#home" data-target="home">Index</a>
+      <a class="navlink" href="#links" data-target="links">Links</a>
+      <a class="navlink" href="#studio" data-target="studio">Studio</a>
+      <a class="navlink" href="#discord" id="discordBtn">Discord</a>
     </nav>
   </header>
 
-  <main class="page container">
-    <section class="left-col">
-      <div class="card intro idle">
-        <h2>KenzouTV</h2>
-        <p>Landing simple pour tes vidéos et ton Discord. Clique pour rejoindre, t’abonner, ou me soutenir.</p>
-        <div class="small-tags">
-          <span class="pill">#discord</span>
-          <span class="pill">#youtube</span>
-          <span class="pill">#tutos</span>
-        </div>
-      </div>
+  <main>
+    <section id="home" class="wrap page" data-page="home">
+      <div class="hero">
+        <div class="left">
+          <div class="eyebrow">Miniamaker & Développeur</div>
+          <h1>L'ART DE LA<br/>PERFORMANCE.</h1>
+          <p class="lead">Je crée des miniatures percutantes, j'anime des scènes 3D et je participe à la création et à la gestion d'écosystèmes Minecraft. Je travaille en coulisses pour propulser des projets sous l'identité Wamonixx.</p>
 
-      <div class="card search-card idle">
-        <input id="searchInput" placeholder="Recherche de lien ou tag (ex : discord, youtube)" />
-        <div id="activeTags" class="active-tags"></div>
-      </div>
+          <div class="stats">
+            <div class="stat">
+              <strong>01.</strong>
+              <div>Expertise Miniamaker — transformation visuelle stratégique</div>
+            </div>
+            <div class="stat">
+              <strong>02.</strong>
+              <div>Écosystème Minecraft — développement & gestion communautaire</div>
+            </div>
+          </div>
 
-      <div class="card links-list idle">
-        <h3>Tous les liens rapides</h3>
-        <div id="linksContainer">
-          <!-- boutons : change les data-link ici -->
-          <button class="link-btn" data-link="https://youtube.com/" data-tags="youtube vidéo">YouTube <span>#youtube</span></button>
-          <button class="link-btn" data-link="https://discord.gg/" data-tags="discord serveur">Discord <span>#discord</span></button>
-          <button class="link-btn" data-link="https://twitch.tv/" data-tags="twitch live">Twitch <span>#twitch</span></button>
-          <button class="link-btn" data-link="https://instagram.com/" data-tags="instagram réseaux">Instagram <span>#instagram</span></button>
-          <button class="link-btn paypal" data-link="#" data-tags="soutien donation">Me soutenir 💖 <span>#donation</span></button>
+          <div class="cta">
+            <a class="btn" href="#links">DÉCOUVRIR MES RÉALISATIONS</a>
+            <a class="ghost" href="#studio">Voir le studio</a>
+          </div>
         </div>
-        <p id="noResult" class="muted hidden">Aucun lien trouvé</p>
+
+        <div class="right-card floaty" id="heroCard">
+          <div class="tag">En création</div>
+          <img src="hero.jpg" alt="Exemple visuel — miniature" id="heroImg">
+          <div style="margin-top:12px;color:var(--muted);font-size:14px">Animation, montage et rendu 3D — miniatures et teasers.</div>
+        </div>
       </div>
     </section>
 
-    <aside class="right-col">
-      <div class="card big-cta idle">
-        <h3 class="big-title">PROCHAINES VIDÉOS</h3>
-        <p class="muted">Tutos, montages, et p'tits hacks Minecraft — abonne-toi !</p>
-        <div class="btn-row">
-          <button class="btn" data-link="https://discord.gg/">Rejoindre Discord</button>
-          <button class="btn ghost" data-link="https://youtube.com/">S'abonner</button>
-        </div>
+    <section id="links" class="wrap page" data-page="links" style="display:none">
+      <h2>Mes réseaux & contacts</h2>
+      <p style="color:var(--muted)">Retrouve-moi sur les plateformes suivantes.</p>
+      <div class="links-grid" id="linksGrid">
+        <!-- cards filled by JS -->
       </div>
+    </section>
 
-      <div class="card mini idle">
-        <strong>Astuce :</strong> shift+clic sur un lien → copie l’URL.
+    <section id="studio" class="wrap page" data-page="studio" style="display:none">
+      <div class="studio-grid">
+        <div>
+          <h2>Studio d'animation 3D</h2>
+          <p style="color:var(--muted)">Nous utilisons MineImator pour produire des animations 3D rapides et stylisées. Si tu veux rejoindre l'équipe ou discuter d'un projet, rejoins notre forum / Discord.</p>
+
+          <div class="studio-card">
+            <h3>Ce qu'on fait</h3>
+            <ul>
+              <li>Préproduction : storyboard & assets</li>
+              <li>Animation : MineImator + retouches</li>
+              <li>Postproduction : montage et sons</li>
+            </ul>
+            <p style="color:var(--muted)">Tu veux participer ? Crée un compte sur notre forum (lien ci-dessous) et présente ton portfolio.</p>
+            <div style="margin-top:12px"><a class="btn" href="#discord">Rejoindre le forum / Discord</a></div>
+          </div>
+        </div>
+
+        <aside>
+          <div class="studio-card">
+            <img src="studio1.jpg" alt="Le studio" style="width:100%;height:180px;object-fit:cover;border-radius:10px;">
+            <h4 style="margin-top:12px">Ressources</h4>
+            <p style="color:var(--muted)">Templates, rigs et assets partagés pour les membres.</p>
+          </div>
+        </aside>
       </div>
-    </aside>
+    </section>
   </main>
 
-  <footer class="site-footer">
-    <div>email : kenzoutv@outlook.fr</div>
-    <div id="updated">Dernière mise à jour : 05/01/2026</div>
+  <footer>
+    © 2026 KENZOUTV — TOUS DROITS RÉSERVÉS
   </footer>
 
-  <script src="script.js"></script>
+  <script>
+    /* Simple hash-based page router */
+    const pages = document.querySelectorAll('.page');
+    const navlinks = document.querySelectorAll('a.navlink');
+    function showPage(name){
+      pages.forEach(p=>p.style.display = p.dataset.page===name? 'block':'none');
+      navlinks.forEach(a=> a.classList.toggle('active', a.dataset.target===name));
+    }
+    function route(){
+      const hash = location.hash.replace('#','') || 'home';
+      if(hash==='discord'){
+        // replace with your discord invite if you want
+        window.open('https://discord.gg/REMPLACE-MOI','_blank');
+        location.hash = '#home';
+        return;
+      }
+      showPage(hash);
+    }
+    window.addEventListener('hashchange', route);
+    route();
+
+    // Links data — personalise these strings below
+    const links = [
+      {title:'YouTube',desc:'Chaîne KENZOUTV',img:'yt.jpg',href:'https://youtube.com/'},
+      {title:'Discord',desc:'Rejoins le serveur',img:'discord.jpg',href:'https://discord.gg/'},
+      {title:'Instagram',desc:'Bannière & coulisses',img:'insta.jpg',href:'https://instagram.com/'},
+      {title:'Mon site (projet)',desc:'Page projet & portfolio',img:'project.jpg',href:'#'}
+    ];
+    const linksGrid = document.getElementById('linksGrid');
+    links.forEach(l=>{
+      const card = document.createElement('a');
+      card.className='card';
+      card.href = l.href; card.target='_blank';
+      card.innerHTML = `<img src="${l.img}" alt="${l.title}"><div class=meta><h4>${l.title}</h4><p>${l.desc}</p></div><div style=font-weight:800;color:var(--accent)>→</div>`;
+      linksGrid.appendChild(card);
+    });
+
+    // Cursor follower + background parallax
+    const follower = document.getElementById('follower');
+    document.addEventListener('mousemove', e=>{
+      const x = e.clientX; const y = e.clientY;
+      follower.style.transform = `translate3d(${x}px, ${y}px, 0) scale(1)`;
+      // background radial gradient follow
+      document.documentElement.style.setProperty('--mx', x + 'px');
+      document.documentElement.style.setProperty('--my', y + 'px');
+      // slight float on hero card
+      const hero = document.getElementById('heroCard');
+      if(hero){
+        const rect = hero.getBoundingClientRect();
+        const dx = (x - (rect.left + rect.width/2))/20;
+        const dy = (y - (rect.top + rect.height/2))/30;
+        hero.style.transform = `translate(${dx}px, ${dy}px)`;
+      }
+    });
+
+    // Simple reveal animations
+    document.querySelectorAll('.fade').forEach(el=> setTimeout(()=>el.classList.add('in'),200));
+
+    // small helper: replace images names with yours
+    // Images à fournir dans le même dossier:
+    // hero.jpg — grande image pour la page d'accueil (1200x800 conseillé)
+    // hero_thumbnail.jpg — miniature
+    // yt.jpg, discord.jpg, insta.jpg, project.jpg — icônes / vignettes (400x400)
+    // studio1.jpg — photo du studio (1200x800 ou 800x600)
+
+  </script>
 </body>
 </html>
