@@ -1,85 +1,39 @@
 <!doctype html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>KenzouTV — Studio BlockFrame</title>
-  <link rel="stylesheet" href="style.css" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>KENZOUTV — Studio</title>
+<link rel="stylesheet" href="style.css">
 </head>
-<body class="theme-neon">
-  <header class="topbar small">
-    <a href="index.html" class="back">← Accueil</a>
-    <h1>Studio — BlockFrame</h1>
-  </header>
+<body>
+<div class="cursor-follower" id="follower"></div>
+<header class="site-header">
+<div class="brand">
+<div class="logo">KZ</div>
+<div class="brand-txt">
+<strong>KENZOUTV</strong>
+<span class="muted">Miniamaker • Développeur</span>
+</div>
+</div>
+<nav class="site-nav">
+<a href="index.html" class="navlink">Index</a>
+<a href="links.html" class="navlink">Links</a>
+<a href="studio.html" class="navlink active">Studio</a>
+<a href="#" id="discordLink3" class="navlink">Discord</a>
+</nav>
+</header>
 
-  <main class="container studio-page">
-    <!-- Présentation -->
-    <section class="card">
-      <h2>BlockFrame — studio d'animation Minecraft 3D</h2>
-      <p class="muted">
-        BlockFrame est la compagnie que j'ai créée pour mes animations 3D Minecraft.
-        L'accès au serveur Discord est <strong>restreint</strong> : seules certaines personnes peuvent rejoindre.
-      </p>
-      <p>
-        Je lance des projets YouTube (animations, shorts, montages). Les membres du serveur
-        pourront participer aux animations (figurer dans une vidéo, aider sur un projet, etc.).
-      </p>
 
-      <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap;">
-        <button class="btn" id="joinBlock">Rejoindre le Discord</button>
-        <button class="btn ghost" id="requestAccessBtn">Demander l'accès</button>
-      </div>
+<main class="main">
+<section class="container studio">
+<div class="studio-left">
+<h2>Studio d'animation 3D</h2>
+<p class="muted">Nous utilisons MineImator pour produire des animations 3D rapides et stylisées. Si tu veux rejoindre l'équipe ou discuter d'un projet, rejoins notre forum / Discord.</p>
 
-      <p class="muted" style="margin-top:12px;">
-        Si tu veux des exemples de l'animation que je veux faire (plans, rigs, mouvements) dis-le moi — je peux t'en montrer.
-      </p>
-    </section>
 
-    <!-- Rôles recherchés / participation -->
-    <section class="card">
-      <h3>Rôles recherchés</h3>
-      <ul class="muted">
-        <li>Animateur 3D (Blender / Blocky rigs)</li>
-        <li>Modeleur / Texturier (style voxel / low-poly)</li>
-        <li>Sound design & montage</li>
-        <li>Testeurs & figurants pour vidéos</li>
-      </ul>
-      <p>Tu peux demander l'accès pour proposer ta candidature.</p>
-    </section>
-
-    <!-- Galerie / Exemples -->
-    <section class="card">
-      <h3>Exemples & galerie (placeholders)</h3>
-      <div class="thumbs" style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;">
-        <div class="thumb" style="width:160px;height:90px;border-radius:10px;background:linear-gradient(180deg,#1c1232,#2b1842);display:flex;align-items:center;justify-content:center;">Anim1</div>
-        <div class="thumb" style="width:160px;height:90px;border-radius:10px;background:linear-gradient(180deg,#11221e,#19362a);display:flex;align-items:center;justify-content:center;">Anim2</div>
-        <div class="thumb" style="width:160px;height:90px;border-radius:10px;background:linear-gradient(180deg,#2b1f0f,#3a2b13);display:flex;align-items:center;justify-content:center;">Anim3</div>
-      </div>
-      <p class="muted" style="margin-top:10px;">Remplace ces blocs par des miniatures (thumb1.jpg, thumb2.jpg ...).</p>
-    </section>
-
-    <!-- Formulaire de demande d'accès -->
-    <section class="card">
-      <h3>Demander l'accès au serveur</h3>
-      <form id="accessForm">
-        <input name="pseudo" placeholder="Ton pseudo Discord (ex: Kenzo#1234)" required />
-        <input name="role" placeholder="Que sais-tu faire ? (ex: animation, son)" />
-        <textarea name="msg" placeholder="Petit message / Pourquoi tu veux rejoindre ?" ></textarea>
-        <div class="btn-row" style="margin-top:10px;">
-          <button type="submit" class="btn">Envoyer la demande</button>
-          <button type="button" class="btn ghost" id="resetForm">Réinitialiser</button>
-        </div>
-      </form>
-      <p id="accessFeedback" class="muted"></p>
-    </section>
-
-  </main>
-
-  <footer class="site-footer">
-    <div>Studio — BlockFrame</div>
-    <div><a href="index.html">Retour</a></div>
-  </footer>
-
-  <script src="script.js"></script>
-</body>
+<div class="studio-card card">
+<h3>Ce qu'on fait</h3>
+<ul>
+<li>Préproduction : storyboard & assets</li>
 </html>
