@@ -5,62 +5,302 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Boutique — KenzouTV</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <meta name="description" content="Boutique — BlockFrame (KenzouTV)"/>
   <style>
-    :root{--accent:#ff7a18;--accent-2:#ff9b3b}
+    :root{
+      --bg-1:#06070a;
+      --accent:#ff7a18;
+      --accent-2:#ff9b3b;
+      --muted:rgba(255,255,255,0.65);
+      --glass: rgba(7,16,24,0.88);
+      --card: rgba(255,255,255,0.02);
+      --max-w:1180px;
+    }
     *{box-sizing:border-box}
-    body{margin:0;font-family:Inter,system-ui,Arial;background:linear-gradient(180deg,#040607 0%,#071018 100%);color:#eaf0ff;min-height:100vh;padding:28px}
-    .wrap{max-width:1180px;margin:0 auto}
-    nav.topbar{display:flex;align-items:center;justify-content:space-between;padding:12px 18px;border-radius:30px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));box-shadow:0 6px 20px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.02);margin-bottom:22px}
+    html,body{height:100%}
+    body{
+      margin:0;
+      padding:48px 24px; /* same spacing as index */
+      font-family:Inter,system-ui,Arial;
+      color:#eaf0ff;
+      -webkit-font-smoothing:antialiased;
+      background:
+        radial-gradient(800px 400px at 10% 80%, rgba(255,122,24,0.06), transparent 8%),
+        radial-gradient(900px 450px at 90% 20%, rgba(255,155,59,0.04), transparent 8%),
+        linear-gradient(180deg,var(--bg-1), #071018 60%);
+      background-size:200% 200%;
+      min-height:100vh;
+    }
+
+    .wrap{ max-width:var(--max-w); margin:32px auto; }
+
+    /* === TOPBAR: copied from index (pixel-matched) === */
+    nav.topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:12px 18px;
+      border-radius:30px; /* same rounding */
+      max-width:var(--max-w);
+      margin:0 auto;
+      position:sticky;
+      top:22px;
+      z-index:40;
+      background: var(--glass);
+      border:1px solid rgba(255,255,255,0.03);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+    }
+    .brand{display:flex;align-items:center;gap:12px}
     .brand img{width:44px;height:44px;border-radius:10px;object-fit:cover}
+    .brand .title{font-weight:700;letter-spacing:0.4px;color:#eaf0ff}
     .navlinks{display:flex;gap:12px;align-items:center}
-    .navlinks a{padding:8px 14px;border-radius:12px;text-decoration:none;color:rgba(255,255,255,0.6);font-weight:600}
-    .navlinks a.active{color:#fff;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01))}
-    .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-    .product{background:rgba(255,255,255,0.02);padding:14px;border-radius:12px}
-    .product img{width:100%;height:200px;object-fit:cover;border-radius:10px}
-    .meta{display:flex;justify-content:space-between;align-items:center;margin-top:10px}
-    .buy{background:linear-gradient(90deg,var(--accent),var(--accent-2));padding:10px 12px;border-radius:10px;color:#071018;font-weight:800;text-decoration:none}
-    .note{margin-top:12px;color:rgba(255,255,255,0.35)}
-    @media(max-width:820px){.grid{grid-template-columns:1fr}}
+    .navlinks a{padding:8px 14px;border-radius:12px;text-decoration:none;color:var(--muted);font-weight:600}
+    .navlinks a.active{ color:#fff; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); }
+    .btn-discord{
+      background:linear-gradient(180deg,var(--accent),var(--accent-2));
+      padding:8px 16px;border-radius:12px;color:#0b0a0b;font-weight:700;border:none;cursor:pointer;box-shadow:0 6px 18px rgba(255,122,24,0.12);
+    }
+    /* === END TOPBAR === */
+
+    header{ max-width:var(--max-w); margin:18px auto 6px auto; padding:0 6px; }
+    header h1{ margin:0 0 6px 0; font-size:28px; }
+    header p{ margin:0; color:rgba(234,240,255,0.76) }
+
+    /* products grid */
+    .grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:18px; margin-top:18px }
+    .product{
+      background:var(--card);
+      padding:14px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,0.02);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.45);
+      display:flex; flex-direction:column;
+      gap:10px;
+    }
+    .product img{ width:100%; height:200px; object-fit:cover; border-radius:10px; display:block }
+    .meta{ display:flex; justify-content:space-between; align-items:center; gap:12px; }
+    .meta strong{ font-weight:700 }
+    .price{ color:var(--muted); font-weight:700 }
+    .actions{ display:flex; gap:8px; align-items:center }
+    .buy{ background:linear-gradient(90deg,var(--accent),var(--accent-2)); padding:10px 12px;border-radius:10px;color:#071018;font-weight:800;text-decoration:none; cursor:pointer; border:none }
+    .info{ background:transparent; padding:8px 10px; border-radius:10px; color:var(--muted); border:1px solid rgba(255,255,255,0.03) }
+
+    .note{ margin-top:12px; color:rgba(255,255,255,0.35) }
+
+    /* modal overlay */
+    .modal-backdrop{ position:fixed; inset:0; background:rgba(0,0,0,0.6); display:none; align-items:center; justify-content:center; z-index:2000; padding:24px }
+    .modal{ width:100%; max-width:880px; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-radius:14px; padding:18px; border:1px solid rgba(255,255,255,0.03); box-shadow:0 30px 80px rgba(0,0,0,0.7); display:flex; gap:18px; color:#eaf0ff }
+    .modal .left{ flex:1 }
+    .modal .left img{ width:100%; height:320px; object-fit:cover; border-radius:10px }
+    .modal .right{ width:320px; display:flex; flex-direction:column; gap:12px }
+    .modal .close{ background:transparent;border:0;color:var(--muted);cursor:pointer;font-weight:800;align-self:flex-end }
+
+    /* small screens */
+    @media(max-width:980px){ .grid{ grid-template-columns:1fr } .modal{ flex-direction:column } .modal .right{ width:100% } .modal .left img{ height:220px } }
+    @media(max-width:720px){
+      .navlinks{ display:none; position:absolute; right:24px; top:76px; flex-direction:column; background:var(--glass); padding:10px; border-radius:12px; border:1px solid rgba(255,255,255,0.03) }
+      #burger{ display:block }
+    }
+
+    /* small helpers */
+    a:focus, button:focus{ outline:3px solid rgba(255,155,59,0.12); outline-offset:4px; border-radius:8px }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <nav class="topbar">
-      <div class="brand"><img src="profile.jpg" alt="logo"><div style="margin-left:10px;font-weight:700">KenzouTV</div></div>
-      <div class="navlinks">
-        <a href="index.html">Accueil</a>
-        <a href="links.html">Mes Réseaux</a>
-        <a href="boutique.html" class="active">Boutique</a>
-        <a href="blockframe.html">BlockFrame</a>
-        <button class="btn-discord" id="btnDiscord">Discord</button>
+    <!-- TOPBAR INSIDE WRAP to match index spacing -->
+    <nav class="topbar" aria-label="Barre de navigation">
+      <div class="brand">
+        <img src="profile-0.png" alt="logo KenzouTV">
+        <div class="title">KenzouTV</div>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:10px">
+        <button id="burger" aria-expanded="false" aria-controls="main-nav" aria-label="Ouvrir le menu" style="display:none">☰</button>
+        <div class="navlinks" id="main-nav">
+          <a href="index.html">Accueil</a>
+          <a href="links.html">Mes Réseaux</a>
+          <a href="#product-grid" class="active">Boutique</a>
+          <a href="blockframe.html">BlockFrame</a>
+          <button class="btn-discord" id="btnDiscord">Discord</button>
+        </div>
       </div>
     </nav>
 
-    <h2 style="margin:0 0 8px">Animations à vendre</h2>
-    <p class="note">Prix : 2€ pour une animation (&lt;1min). Pack 3 animations &lt;1min = 5€. (Pas d'animations de plus d'une minute pour l'instant.)</p>
+    <header>
+      <h1>Boutique — Animations</h1>
+      <p class="note">Prix : 2€ l'animation courte (&lt;1min) — Pack 3 = 5€ — Paiement via formulaire (paypal / stripe à configurer).</p>
+    </header>
 
-    <div class="grid" style="margin-top:18px">
-      <div class="product">
-        <img src="Produit-1.jpg" alt="Produit 1">
-        <div class="meta"><strong>Animation courte — 1</strong><span>2€</span></div>
-        <div style="margin-top:8px"><a class="buy" href="product-1.html">Voir détails</a></div>
-      </div>
+    <!-- PRODUCTS GRID -->
+    <section id="product-grid" class="grid" aria-label="Liste des produits">
+      <!-- Product 1 -->
+      <article class="product" id="product-1">
+        <img src="Produit-1.jpg" alt="Animation courte 1">
+        <div class="meta"><strong>Animation courte — 1</strong><span class="price">2€</span></div>
+        <p style="margin:0;color:rgba(234,240,255,0.78)">Intro courte, loop, bumpers — rendu MP4 720p.</p>
+        <div class="actions" style="margin-top:auto">
+          <a href="#product-1" class="buy" data-id="product-1">Voir détails</a>
+          <a href="#order" class="info">Commander</a>
+        </div>
+      </article>
 
-      <div class="product">
-        <img src="Produit-2.jpg" alt="Produit 2">
-        <div class="meta"><strong>Pack 3 animations</strong><span>5€</span></div>
-        <div style="margin-top:8px"><a class="buy" href="product-2.html">Voir détails</a></div>
-      </div>
+      <!-- Product 2 -->
+      <article class="product" id="product-2">
+        <img src="Produit-2.jpg" alt="Pack 3 animations">
+        <div class="meta"><strong>Pack 3 animations</strong><span class="price">5€</span></div>
+        <p style="margin:0;color:rgba(234,240,255,0.78)">Trois animations courtes livrées séparément. Idéal pour séries.</p>
+        <div class="actions" style="margin-top:auto">
+          <a href="#product-2" class="buy" data-id="product-2">Voir détails</a>
+          <a href="#order" class="info">Commander</a>
+        </div>
+      </article>
+
+      <!-- Add more products here: use id product-3, product-4, etc. and set buy href="#product-3" -->
+    </section>
+
+    <div style="margin-top:18px;color:var(--muted);font-size:13px">
+      Le bouton "Commander" renvoie vers le formulaire de commande (page ou ancre #order).
     </div>
 
-    <p class="note" style="margin-top:12px">Paiements à configurer (Paypal / Stripe). Le bouton d'achat renvoie vers le formulaire de commande.</p>
+    <footer style="margin-top:28px;color:rgba(255,255,255,0.16);text-align:center">© 2026 KenzouTV — Boutique</footer>
+  </div>
+
+  <!-- Modal (shared) -->
+  <div class="modal-backdrop" id="modalBackdrop" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="left">
+        <img src="" alt="" id="modalImg">
+      </div>
+      <div class="right">
+        <button class="close" id="modalClose" aria-label="Fermer">✕</button>
+        <h3 id="modalTitle">Titre</h3>
+        <div id="modalPrice" style="font-weight:800;color:var(--muted)"></div>
+        <p id="modalDesc" style="color:rgba(234,240,255,0.85)"></p>
+        <div style="margin-top:auto;display:flex;gap:8px">
+          <a href="#order" id="modalOrder" class="buy">Commander</a>
+          <button id="modalCloseBtn" class="info">Fermer</button>
+        </div>
+      </div>
+    </div>
   </div>
 
   <script>
-    var btn = document.getElementById('btnDiscord');
-    if(btn){ btn.addEventListener('click', function(){ window.open('https://discord.gg/KURpXHzRTE','_blank','noopener'); }); }
-    document.querySelectorAll('a[href^="http"]').forEach(function(a){ a.setAttribute('target','_blank'); a.setAttribute('rel','noopener'); });
+    /* ========================
+       Data: product details
+       ======================== */
+    const PRODUCTS = {
+      'product-1': {
+        id: 'product-1',
+        title: 'Animation courte — 1',
+        price: '2€',
+        img: 'Produit-1.jpg',
+        desc: "Intro/ bumper court (<1min). Rendu MP4 720p. Révisions : 1",
+      },
+      'product-2': {
+        id: 'product-2',
+        title: 'Pack 3 animations',
+        price: '5€',
+        img: 'Produit-2.jpg',
+        desc: "Trois animations courtes, livrées séparément. Idéal pour playlists ou séries.",
+      }
+    };
+
+    /* ==============
+       Utility & UI
+       ============== */
+    const modalBackdrop = document.getElementById('modalBackdrop');
+    const modalImg = document.getElementById('modalImg');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalPrice = document.getElementById('modalPrice');
+    const modalDesc = document.getElementById('modalDesc');
+    const modalOrder = document.getElementById('modalOrder');
+    const modalClose = document.getElementById('modalClose');
+    const modalCloseBtn = document.getElementById('modalCloseBtn');
+
+    let lastFocused = null;
+
+    function openModal(productId) {
+      const p = PRODUCTS[productId];
+      if (!p) return;
+      modalImg.src = p.img;
+      modalImg.alt = p.title;
+      modalTitle.textContent = p.title;
+      modalPrice.textContent = p.price;
+      modalDesc.textContent = p.desc;
+      modalOrder.href = '#order'; // you can set to a form or Paypal link later
+      modalBackdrop.style.display = 'flex';
+      modalBackdrop.setAttribute('aria-hidden','false');
+      lastFocused = document.activeElement;
+      modalClose.focus();
+      // update hash so linkable
+      if (location.hash !== '#' + productId) history.pushState(null, '', '#' + productId);
+    }
+
+    function closeModal() {
+      modalBackdrop.style.display = 'none';
+      modalBackdrop.setAttribute('aria-hidden','true');
+      if (lastFocused) lastFocused.focus();
+      // remove product hash (preserve other states)
+      if (location.hash && location.hash.startsWith('#product-')) {
+        history.pushState(null, '', location.pathname + location.search);
+      }
+    }
+
+    // open modal when clicking "Voir détails" (href="#product-X")
+    document.querySelectorAll('.buy[data-id]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const id = btn.getAttribute('data-id');
+        openModal(id);
+      });
+    });
+
+    // allow clicking anchor links that are '#product-1' (e.g., from external)
+    window.addEventListener('hashchange', () => {
+      const h = location.hash.replace('#','');
+      if (h && h.startsWith('product-') && PRODUCTS[h]) {
+        openModal(h);
+      } else {
+        // close modal on hash removal
+        if (modalBackdrop.style.display === 'flex') closeModal();
+      }
+    });
+
+    // open if initial hash is product
+    (function checkInitialHash(){
+      const h = location.hash.replace('#','');
+      if (h && h.startsWith('product-') && PRODUCTS[h]) {
+        // small delay to ensure layout ready
+        setTimeout(()=> openModal(h), 80);
+      }
+    })();
+
+    // modal close handlers
+    modalClose.addEventListener('click', closeModal);
+    modalCloseBtn.addEventListener('click', closeModal);
+    modalBackdrop.addEventListener('click', (e)=> { if (e.target === modalBackdrop) closeModal(); });
+    window.addEventListener('keydown', (e)=> { if (e.key === 'Escape' && modalBackdrop.style.display === 'flex') closeModal(); });
+
+    /* ===== NAV (burger + discord) - same behaviour as index ===== */
+    const burger = document.getElementById('burger');
+    const navlinks = document.getElementById('main-nav');
+    if (burger) {
+      burger.addEventListener('click', () => {
+        const open = burger.getAttribute('aria-expanded') === 'true';
+        burger.setAttribute('aria-expanded', String(!open));
+        navlinks.style.display = navlinks.style.display === 'flex' ? 'none' : 'flex';
+      });
+    }
+    document.getElementById('btnDiscord').addEventListener('click', ()=> {
+      window.open('https://discord.gg/KURpXHzRTE','_blank','noopener');
+    });
+
+    // Ensure external links open in new tab
+    document.querySelectorAll('a[href^="http"]').forEach(a => { a.setAttribute('target','_blank'); a.setAttribute('rel','noopener'); });
   </script>
 </body>
 </html>
