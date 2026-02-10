@@ -11,6 +11,7 @@
       --bg-1:#06070a;
       --accent:#ff7a18;
       --accent-2:#ff9b3b;
+      --accent-blue:#2b8cff;
       --muted:rgba(255,255,255,0.65);
       --glass: rgba(7,16,24,0.88);
       --card: rgba(255,255,255,0.02);
@@ -31,28 +32,15 @@
       background-size:200% 200%;
       min-height:100vh;
     }
-    /* when modal open, darken + strengthen topbar */
     body.modal-open nav.topbar{ background: rgba(7,16,24,0.98); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); }
 
     .wrap{ max-width:var(--max-w); margin:32px auto; }
 
-    /* topbar (pixel matched to index) */
+    /* Topbar (pixel matched) */
     nav.topbar{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:16px;
-      padding:12px 18px;
-      border-radius:30px;
-      max-width:var(--max-w);
-      margin:0 auto;
-      position:sticky;
-      top:22px;
-      z-index:40;
-      background: var(--glass);
-      border:1px solid rgba(255,255,255,0.03);
-      -webkit-backdrop-filter: blur(10px);
-      backdrop-filter: blur(10px);
+      display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 18px;border-radius:30px;
+      max-width:var(--max-w);margin:0 auto;position:sticky;top:22px;z-index:40;background:var(--glass);
+      border:1px solid rgba(255,255,255,0.03);-webkit-backdrop-filter: blur(10px);backdrop-filter: blur(10px);
       box-shadow: 0 10px 30px rgba(0,0,0,0.6);
     }
     .brand{display:flex;align-items:center;gap:12px}
@@ -61,38 +49,49 @@
     .navlinks{display:flex;gap:12px;align-items:center}
     .navlinks a{padding:8px 14px;border-radius:12px;text-decoration:none;color:var(--muted);font-weight:600}
     .navlinks a.active{ color:#fff; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); }
-    .btn-discord{
-      background:linear-gradient(180deg,var(--accent),var(--accent-2));
-      padding:8px 16px;border-radius:12px;color:#0b0a0b;font-weight:700;border:none;cursor:pointer;box-shadow:0 6px 18px rgba(255,122,24,0.12);
-    }
+    .btn-discord{ background:linear-gradient(180deg,var(--accent),var(--accent-2)); padding:8px 16px;border-radius:12px;color:#0b0a0b;font-weight:700;border:none;cursor:pointer;box-shadow:0 6px 18px rgba(255,122,24,0.12); }
 
     header{ max-width:var(--max-w); margin:18px auto 6px auto; padding:0 6px; }
     header h1{ margin:0 0 6px 0; font-size:28px; }
     header p{ margin:0; color:rgba(234,240,255,0.76) }
 
-    /* products grid */
+    /* grid */
     .grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:18px; margin-top:18px }
     .product{ background:var(--card); padding:14px; border-radius:12px; border:1px solid rgba(255,255,255,0.02); box-shadow:0 12px 30px rgba(0,0,0,0.45); display:flex; flex-direction:column; gap:10px; min-height:280px }
     .product img{ width:100%; height:200px; object-fit:cover; border-radius:10px; display:block }
     .meta{ display:flex; justify-content:space-between; align-items:center; gap:12px; }
     .meta strong{ font-weight:700 }
     .price{ color:var(--muted); font-weight:700 }
-    .actions{ display:flex; gap:8px; align-items:center; margin-top:auto }
-    .buy{ background:linear-gradient(90deg,var(--accent),var(--accent-2)); padding:10px 12px;border-radius:10px;color:#071018;font-weight:800;text-decoration:none; cursor:pointer; border:none }
+    .actions{ display:flex; gap:8px; align-items:center; margin-top:auto; justify-content:flex-start }
+
+    /* orange primary button (Voir détails + Commander) */
+    .primary-btn{
+      background:linear-gradient(90deg,var(--accent),var(--accent-2));
+      padding:10px 12px;border-radius:10px;color:#071018;font-weight:800;text-decoration:none; cursor:pointer; border:none;
+      box-shadow:0 8px 22px rgba(255,122,24,0.12);
+    }
+    /* blue example button (opposé) */
+    .example-btn{
+      background:linear-gradient(90deg,var(--accent-blue),#1a6ef0);
+      padding:10px 12px;border-radius:10px;color:#fff;font-weight:800;text-decoration:none; cursor:pointer; border:none;
+      box-shadow:0 8px 22px rgba(43,140,255,0.12);
+      margin-left:auto;
+    }
     .info{ background:transparent; padding:8px 10px; border-radius:10px; color:var(--muted); border:1px solid rgba(255,255,255,0.03) }
 
     .note{ margin-top:12px; color:rgba(255,255,255,0.35) }
 
-    /* PP gallery */
+    /* PP gallery (use product-3 & product-4 as main samples) */
     .pp-gallery{ margin-top:22px; display:grid; grid-template-columns:repeat(4,1fr); gap:10px }
-    .pp-sample{ border-radius:8px; overflow:hidden; cursor:pointer; border:1px solid rgba(255,255,255,0.03); background:var(--card) }
+    .pp-sample{ border-radius:8px; overflow:hidden; cursor:pointer; border:1px solid rgba(255,255,255,0.03); background:var(--card); }
     .pp-sample img{ width:100%; height:100px; object-fit:cover; display:block }
 
-    /* modal overlay (stronger blur + opacity) */
-    .modal-backdrop{ position:fixed; inset:0; background:rgba(0,0,0,0.82); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); display:none; align-items:center; justify-content:center; z-index:2200; padding:24px }
-    .modal{ width:100%; max-width:920px; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-radius:14px; padding:18px; border:1px solid rgba(255,255,255,0.03); box-shadow:0 40px 120px rgba(0,0,0,0.8); display:flex; gap:18px; color:#eaf0ff }
-    .modal .left{ flex:1 }
+    /* modal (stronger blur & opacity) */
+    .modal-backdrop{ position:fixed; inset:0; background:rgba(0,0,0,0.86); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); display:none; align-items:center; justify-content:center; z-index:2200; padding:24px }
+    .modal{ width:100%; max-width:920px; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-radius:14px; padding:18px; border:1px solid rgba(255,255,255,0.03); box-shadow:0 40px 120px rgba(0,0,0,0.8); display:flex; gap:18px; color:#eaf0ff; align-items:flex-start }
+    .modal .left{ flex:1; display:flex; flex-direction:column; gap:12px }
     .modal .left img{ width:100%; height:320px; object-fit:cover; border-radius:10px }
+    .modal .left .carousel-controls{ display:flex; gap:8px; justify-content:center; align-items:center }
     .modal .right{ width:340px; display:flex; flex-direction:column; gap:12px }
     .modal .close{ background:transparent;border:0;color:var(--muted);cursor:pointer;font-weight:800;align-self:flex-end }
 
@@ -124,19 +123,20 @@
 
     <header>
       <h1>Boutique — Animations & PP</h1>
-      <p class="note">Prix indicatifs : 1€ (PP simple) • Pack 5 PP = 4€ • 2€ animation courte • Abonnement mensuel (voir ci-dessous). Paiement via PayPal (liens dans les fiches).</p>
+      <p class="note">Prix indicatifs : 1€ (PP simple) • Pack 5 PP = 4€ • 2€ animation courte • Abbonement : 6€/mois. Paiement via PayPal (liens dans les fiches).</p>
     </header>
 
-    <!-- products grid -->
+    <!-- products -->
     <section id="product-grid" class="grid" aria-label="Liste des produits">
       <!-- Animation courte -->
       <article class="product" id="product-1">
         <img src="Produit-1.jpg" alt="Animation courte 1">
         <div class="meta"><strong>Animation courte</strong><span class="price">2€</span></div>
-        <p style="margin:0;color:rgba(234,240,255,0.78)">Intro/bumpers <1min. Format MP4 720p. 1 révision incluse.</p>
+        <p style="margin:0;color:rgba(234,240,255,0.78)">Intro/bumpers &lt;1min. MP4 720p. 1 révision incluse.</p>
         <div class="actions" style="margin-top:auto">
-          <a href="#product-1" class="buy" data-id="product-1">Voir détails</a>
-          <a href="#order" class="info" onclick="location.hash='order'">Commander</a>
+          <button class="primary-btn" data-id="product-1">Voir détails</button>
+          <button class="primary-btn" onclick="openOrder()">Commander</button>
+          <button class="example-btn" data-examples="PP-1.jpg,PP-2.jpg,PP-3.jpg">Voir Exemple</button>
         </div>
       </article>
 
@@ -144,72 +144,81 @@
       <article class="product" id="product-2">
         <img src="Produit-2.jpg" alt="Pack 3 animations">
         <div class="meta"><strong>Pack 3 animations</strong><span class="price">5€</span></div>
-        <p style="margin:0;color:rgba(234,240,255,0.78)">Trois courts rendus séparés. Bon pour séries.</p>
+        <p style="margin:0;color:rgba(234,240,255,0.78)">Trois courts rendus séparés. Idéal pour séries.</p>
         <div class="actions" style="margin-top:auto">
-          <a href="#product-2" class="buy" data-id="product-2">Voir détails</a>
-          <a href="#order" class="info" onclick="location.hash='order'">Commander</a>
+          <button class="primary-btn" data-id="product-2">Voir détails</button>
+          <button class="primary-btn" onclick="openOrder()">Commander</button>
+          <button class="example-btn" data-examples="PP-1.jpg,PP-2.jpg,PP-3.jpg">Voir Exemple</button>
         </div>
       </article>
 
-      <!-- PP simple 1€ -->
+      <!-- PP simple -->
       <article class="product" id="product-pp-single">
-        <img src="pp-sample1.jpg" alt="PP simple exemple">
+        <img src="product-3.jpg" alt="PP simple exemple">
         <div class="meta"><strong>PP simple</strong><span class="price">1€</span></div>
-        <p style="margin:0;color:rgba(234,240,255,0.78)">Profil picture simple. Indique ton pseudo Minecraft OU ouvre un ticket Discord pour envoyer ta demande. Peut être autre chose qu'un skin.</p>
+        <p style="margin:0;color:rgba(234,240,255,0.78)">PP simple. Indique ton pseudo Minecraft OU ouvre un ticket Discord. Peut être autre chose qu'un skin.</p>
         <div class="actions" style="margin-top:auto">
-          <a href="#product-pp-single" class="buy" data-id="product-pp-single">Voir détails</a>
-          <a href="#order" class="info" onclick="location.hash='order'">Commander</a>
+          <button class="primary-btn" data-id="product-pp-single">Voir détails</button>
+          <button class="primary-btn" onclick="openOrder()">Commander</button>
+          <button class="example-btn" data-examples="PP-1.jpg,PP-2.jpg,PP-3.jpg">Voir Exemple</button>
         </div>
       </article>
 
       <!-- Pack 5 PP -->
       <article class="product" id="product-pp-pack">
-        <img src="pp-sample2.jpg" alt="Pack PP exemple">
+        <img src="product-4.jpg" alt="Pack PP exemple">
         <div class="meta"><strong>Pack 5 PP</strong><span class="price">4€</span></div>
-        <p style="margin:0;color:rgba(234,240,255,0.78)">Cinq PP personnalisées. Précise les skins ou idées pour chaque PP.</p>
+        <p style="margin:0;color:rgba(234,240,255,0.78)">Cinq PP personnalisées. Précise les idées pour chaque PP.</p>
         <div class="actions" style="margin-top:auto">
-          <a href="#product-pp-pack" class="buy" data-id="product-pp-pack">Voir détails</a>
-          <a href="#order" class="info" onclick="location.hash='order'">Commander</a>
+          <button class="primary-btn" data-id="product-pp-pack">Voir détails</button>
+          <button class="primary-btn" onclick="openOrder()">Commander</button>
+          <button class="example-btn" data-examples="PP-1.jpg,PP-2.jpg,PP-3.jpg">Voir Exemple</button>
         </div>
       </article>
 
-      <!-- Abonnement (exemple) -->
+      <!-- Abbonement -->
       <article class="product" id="product-subscription">
-        <img src="subscription.jpg" alt="Abonnement exemple">
-        <div class="meta"><strong>Abonnement Mensuel</strong><span class="price">6€/mois</span></div>
-        <p style="margin:0;color:rgba(234,240,255,0.78)">1 animation courte/mois + 3 PP simples/mois. Annulable. Bénéfice : tarif réduit, livraisons prioritaires.</p>
+        <img src="subscription.jpg" alt="Abbonement exemple">
+        <div class="meta"><strong>Abbonement</strong><span class="price">6€/mois</span></div>
+        <p style="margin:0;color:rgba(234,240,255,0.78)">1 animation courte/mois + 3 PP simples/mois. Annulable. Tarif préférentiel et livraisons priorisées.</p>
         <div class="actions" style="margin-top:auto">
-          <a href="#product-subscription" class="buy" data-id="product-subscription">Voir détails</a>
-          <a href="#order" class="info" onclick="location.hash='order'">S'abonner</a>
+          <button class="primary-btn" data-id="product-subscription">Voir détails</button>
+          <button class="primary-btn" onclick="openOrder()">S'abonner</button>
+          <button class="example-btn" data-examples="PP-1.jpg,PP-2.jpg,PP-3.jpg">Voir Exemple</button>
         </div>
       </article>
     </section>
 
-    <!-- Galerie styles PP -->
+    <!-- PP gallery (main samples use product-3 & product-4) -->
     <section style="margin-top:22px">
       <h3 style="margin:0 0 8px 0">Galerie — Styles de PP</h3>
-      <p style="margin:0 0 12px 0;color:var(--muted)">Exemples de PP que nous réalisons. Clique pour agrandir.</p>
+      <p style="margin:0 0 12px 0;color:var(--muted)">Exemples que nous réalisons. Clique pour agrandir (ou utilisez "Voir Exemple").</p>
       <div class="pp-gallery" id="ppGallery">
-        <div class="pp-sample" data-sample="pp-sample1.jpg"><img src="pp-sample1.jpg" alt="Sample 1"></div>
-        <div class="pp-sample" data-sample="pp-sample2.jpg"><img src="pp-sample2.jpg" alt="Sample 2"></div>
-        <div class="pp-sample" data-sample="pp-sample3.jpg"><img src="pp-sample3.jpg" alt="Sample 3"></div>
-        <div class="pp-sample" data-sample="pp-sample4.jpg"><img src="pp-sample4.jpg" alt="Sample 4"></div>
+        <div class="pp-sample" data-sample="product-3.jpg"><img src="product-3.jpg" alt="Sample product-3"></div>
+        <div class="pp-sample" data-sample="product-4.jpg"><img src="product-4.jpg" alt="Sample product-4"></div>
+        <div class="pp-sample" data-sample="PP-1.jpg"><img src="PP-1.jpg" alt="PP-1"></div>
+        <div class="pp-sample" data-sample="PP-2.jpg"><img src="PP-2.jpg" alt="PP-2"></div>
       </div>
     </section>
 
     <div style="margin-top:18px;color:var(--muted);font-size:13px">
-      Paiement : liens PayPal dans les fiches produits (remplace les placeholders par tes liens PayPal.me ou boutons PayPal).
+      Les liens de paiement PayPal sont renseignés dans les fiches produits (remplace les placeholders par tes liens).
     </div>
 
     <footer style="margin-top:28px;color:rgba(255,255,255,0.16);text-align:center">© 2026 KenzouTV — Boutique</footer>
   </div>
 
-  <!-- modal (shared) -->
+  <!-- modal -->
   <div class="modal-backdrop" id="modalBackdrop" aria-hidden="true">
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
       <div class="left">
         <img src="" alt="" id="modalImg">
+        <div class="carousel-controls" style="margin-top:6px;display:flex;gap:8px;justify-content:center;">
+          <button id="prevExample" class="info">◀</button>
+          <button id="nextExample" class="info">▶</button>
+        </div>
       </div>
+
       <div class="right">
         <button class="close" id="modalClose" aria-label="Fermer">✕</button>
         <h3 id="modalTitle">Titre</h3>
@@ -217,63 +226,28 @@
         <p id="modalDesc" style="color:rgba(234,240,255,0.85)"></p>
 
         <div style="display:flex;gap:8px;flex-wrap:wrap">
-          <a id="modalPaypal" class="buy" href="#" target="_blank" rel="noopener">Payer via PayPal</a>
+          <a id="modalPaypal" class="primary-btn" href="#" target="_blank" rel="noopener">Payer via PayPal</a>
           <a id="modalTicket" class="info" href="https://discord.gg/KURpXHzRTE" target="_blank" rel="noopener">Ouvrir un ticket Discord</a>
         </div>
 
         <div style="margin-top:6px;color:var(--muted);font-size:13px">
-          Important : Indique ton pseudo Minecraft OU ouvre un ticket sur le Discord pour envoyer les infos. Les PPs peuvent être autre chose qu’un skin.
+          Important : indique ton pseudo Minecraft OU ouvre un ticket Discord pour envoyer les infos. Les PPs peuvent être autre chose qu’un skin.
         </div>
       </div>
     </div>
   </div>
 
   <script>
-    /* ====== Products data (incl. PayPal placeholders) ====== */
+    /* ===== PRODUCTS (with PayPal placeholders) ===== */
     const PRODUCTS = {
-      'product-1': {
-        id: 'product-1',
-        title: 'Animation courte',
-        price: '2€',
-        img: 'Produit-1.jpg',
-        desc: 'Intro/bumpers <1min. Format MP4 720p. 1 révision incluse.',
-        paypal: 'REPLACE_PAYPAL_PRODUCT1' // remplace par ton lien PayPal.me ou url
-      },
-      'product-2': {
-        id: 'product-2',
-        title: 'Pack 3 animations',
-        price: '5€',
-        img: 'Produit-2.jpg',
-        desc: 'Trois courts rendus séparés. Idéal pour séries.',
-        paypal: 'REPLACE_PAYPAL_PRODUCT2'
-      },
-      'product-pp-single': {
-        id: 'product-pp-single',
-        title: 'PP simple',
-        price: '1€',
-        img: 'pp-sample1.jpg',
-        desc: "PP simple. Indique ton pseudo Minecraft OU ouvre un ticket Discord pour envoyer ta demande. Peut être autre chose qu'un skin.",
-        paypal: 'REPLACE_PAYPAL_PP_SINGLE'
-      },
-      'product-pp-pack': {
-        id: 'product-pp-pack',
-        title: 'Pack 5 PP',
-        price: '4€',
-        img: 'pp-sample2.jpg',
-        desc: "Pack de 5 PP personnalisées. Précise les skins ou idées pour chaque PP. Indique le pseudo ou ouvre un ticket.",
-        paypal: 'REPLACE_PAYPAL_PP_PACK'
-      },
-      'product-subscription': {
-        id: 'product-subscription',
-        title: 'Abonnement Mensuel',
-        price: '6€/mois',
-        img: 'subscription.jpg',
-        desc: "1 animation courte/mois + 3 PP simples/mois. Paiement récurrent via PayPal (lien ci-dessous).",
-        paypal: 'REPLACE_PAYPAL_SUBSCRIPTION'
-      }
+      'product-1': { id:'product-1', title:'Animation courte', price:'2€', img:'Produit-1.jpg', desc:'Intro/bumpers <1min. MP4 720p. 1 révision incluse.', paypal:'REPLACE_PAYPAL_PRODUCT1' },
+      'product-2': { id:'product-2', title:'Pack 3 animations', price:'5€', img:'Produit-2.jpg', desc:'Trois courts rendus séparés. Idéal pour séries.', paypal:'REPLACE_PAYPAL_PRODUCT2' },
+      'product-pp-single': { id:'product-pp-single', title:'PP simple', price:'1€', img:'product-3.jpg', desc:"PP simple. Indique ton pseudo Minecraft OU ouvre un ticket Discord. Peut être autre chose qu'un skin.", paypal:'REPLACE_PAYPAL_PP_SINGLE' },
+      'product-pp-pack': { id:'product-pp-pack', title:'Pack 5 PP', price:'4€', img:'product-4.jpg', desc:"Pack de 5 PP personnalisées. Précise les idées pour chaque PP.", paypal:'REPLACE_PAYPAL_PP_PACK' },
+      'product-subscription': { id:'product-subscription', title:'Abbonement', price:'6€/mois', img:'subscription.jpg', desc:"1 animation courte/mois + 3 PP simples/mois. Annulable.", paypal:'REPLACE_PAYPAL_SUBSCRIPTION' }
     };
 
-    /* ===== DOM nodes ===== */
+    /* DOM nodes */
     const modalBackdrop = document.getElementById('modalBackdrop');
     const modalImg = document.getElementById('modalImg');
     const modalTitle = document.getElementById('modalTitle');
@@ -282,10 +256,14 @@
     const modalPaypal = document.getElementById('modalPaypal');
     const modalClose = document.getElementById('modalClose');
     const modalTicket = document.getElementById('modalTicket');
+    const prevExample = document.getElementById('prevExample');
+    const nextExample = document.getElementById('nextExample');
 
     let lastFocused = null;
+    let exampleImages = [];
+    let exampleIndex = 0;
 
-    function openModal(productId) {
+    function openModal(productId){
       const p = PRODUCTS[productId];
       if (!p) return;
       modalImg.src = p.img;
@@ -296,74 +274,122 @@
       modalPaypal.href = p.paypal || '#';
       modalBackdrop.style.display = 'flex';
       modalBackdrop.setAttribute('aria-hidden','false');
-      document.body.classList.add('modal-open'); // strengthen topbar + visuals
+      document.body.classList.add('modal-open');
       lastFocused = document.activeElement;
       modalClose.focus();
+      // remove any example set
+      exampleImages = [];
+      exampleIndex = 0;
+      updateCarouselControls();
       if (location.hash !== '#' + productId) history.pushState(null,'', '#' + productId);
     }
 
-    function closeModal() {
+    function openExamples(list){
+      exampleImages = list.slice();
+      if (exampleImages.length === 0) return;
+      exampleIndex = 0;
+      modalImg.src = exampleImages[exampleIndex];
+      modalImg.alt = 'Exemple ' + (exampleIndex+1);
+      modalTitle.textContent = 'Exemples PP';
+      modalPrice.textContent = '';
+      modalDesc.textContent = 'Aperçu des styles. Pour commander, sélectionne une fiche PP et indique le style souhaité.';
+      modalPaypal.href = 'REPLACE_PAYPAL_PP_SINGLE';
+      modalBackdrop.style.display = 'flex';
+      modalBackdrop.setAttribute('aria-hidden','false');
+      document.body.classList.add('modal-open');
+      lastFocused = document.activeElement;
+      modalClose.focus();
+      updateCarouselControls();
+      // set hash to indicate examples opened (optional)
+      if (location.hash !== '#examples') history.pushState(null,'', '#examples');
+    }
+
+    function closeModal(){
       modalBackdrop.style.display = 'none';
       modalBackdrop.setAttribute('aria-hidden','true');
       document.body.classList.remove('modal-open');
       if (lastFocused) lastFocused.focus();
-      if (location.hash && location.hash.startsWith('#product-')) {
-        history.pushState(null, '', location.pathname + location.search);
+      // remove product hash if present
+      if (location.hash && (location.hash.startsWith('#product-') || location.hash === '#examples')) {
+        history.pushState(null,'', location.pathname + location.search);
       }
+      exampleImages = []; exampleIndex = 0; updateCarouselControls();
     }
 
-    // click on buy buttons
-    document.querySelectorAll('.buy[data-id]').forEach(btn=>{
-      btn.addEventListener('click',(e)=>{
-        e.preventDefault();
+    function updateCarouselControls(){
+      const visible = exampleImages.length > 0;
+      prevExample.style.display = visible ? 'inline-block' : 'none';
+      nextExample.style.display = visible ? 'inline-block' : 'none';
+    }
+
+    prevExample.addEventListener('click', ()=> {
+      if (exampleImages.length===0) return;
+      exampleIndex = (exampleIndex - 1 + exampleImages.length) % exampleImages.length;
+      modalImg.src = exampleImages[exampleIndex];
+      modalImg.alt = 'Exemple ' + (exampleIndex+1);
+    });
+    nextExample.addEventListener('click', ()=> {
+      if (exampleImages.length===0) return;
+      exampleIndex = (exampleIndex + 1) % exampleImages.length;
+      modalImg.src = exampleImages[exampleIndex];
+      modalImg.alt = 'Exemple ' + (exampleIndex+1);
+    });
+
+    // product detail buttons (primary orange)
+    document.querySelectorAll('.primary-btn[data-id]').forEach(btn=>{
+      btn.addEventListener('click', (e)=>{
         const id = btn.getAttribute('data-id');
         openModal(id);
       });
     });
 
-    // handle hash links (open product modal on hashchange)
+    // example buttons (open PP-1..PP-3)
+    document.querySelectorAll('.example-btn').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const raw = btn.getAttribute('data-examples') || 'PP-1.jpg,PP-2.jpg,PP-3.jpg';
+        const list = raw.split(',').map(s=>s.trim()).filter(Boolean);
+        openExamples(list);
+      });
+    });
+
+    // clicking gallery samples opens them in modal as preview
+    document.querySelectorAll('.pp-sample').forEach(el=>{
+      el.addEventListener('click', ()=>{
+        const src = el.getAttribute('data-sample');
+        if(!src) return;
+        openExamples([src]);
+      });
+    });
+
+    // modal controls
+    modalClose.addEventListener('click', closeModal);
+    modalBackdrop.addEventListener('click', (e)=> { if (e.target === modalBackdrop) closeModal(); });
+    window.addEventListener('keydown', (e)=> { if (e.key === 'Escape' && modalBackdrop.style.display === 'flex') closeModal(); });
+
+    // hash handling (open modal when linking to #product-1, etc.)
     window.addEventListener('hashchange', ()=>{
       const h = location.hash.replace('#','');
       if (h && h.startsWith('product-') && PRODUCTS[h]) {
         openModal(h);
+      } else if (h === 'examples') {
+        openExamples(['PP-1.jpg','PP-2.jpg','PP-3.jpg']);
       } else {
-        // if hash removed or different, close
         if (modalBackdrop.style.display === 'flex') closeModal();
       }
     });
-
-    // initial check for hash
-    (function(){
+    (function checkInitialHash(){
       const h = location.hash.replace('#','');
-      if (h && h.startsWith('product-') && PRODUCTS[h]) {
-        setTimeout(()=> openModal(h), 80);
-      }
+      if (h && h.startsWith('product-') && PRODUCTS[h]) setTimeout(()=>openModal(h),80);
+      if (h === 'examples') setTimeout(()=>openExamples(['PP-1.jpg','PP-2.jpg','PP-3.jpg']),80);
     })();
 
-    // modal close handlers
-    modalClose.addEventListener('click', closeModal);
-    modalBackdrop.addEventListener('click',(e)=> { if (e.target === modalBackdrop) closeModal(); });
-    window.addEventListener('keydown', (e)=> { if (e.key === 'Escape' && modalBackdrop.style.display === 'flex') closeModal(); });
-    document.getElementById('modalClose').addEventListener('click', closeModal);
+    // helper openOrder (go to order anchor or set hash)
+    function openOrder(){
+      // replace by your real order page or #order anchor
+      window.location.href = '#order';
+    }
 
-    // PP gallery clicking -> open modal as image preview (no PayPal)
-    document.querySelectorAll('.pp-sample').forEach(el=>{
-      el.addEventListener('click', ()=>{
-        const src = el.getAttribute('data-sample');
-        modalImg.src = src;
-        modalImg.alt = 'Preview PP';
-        modalTitle.textContent = 'Style PP — Aperçu';
-        modalPrice.textContent = '';
-        modalDesc.textContent = 'Exemple de style. Pour commander, sélectionne "PP simple" ou un pack puis indique le style souhaité (ou ouvre un ticket Discord).';
-        modalPaypal.href = 'REPLACE_PAYPAL_PP_SINGLE';
-        modalBackdrop.style.display = 'flex';
-        modalBackdrop.setAttribute('aria-hidden','false');
-        document.body.classList.add('modal-open');
-        modalClose.focus();
-      });
-    });
-
-    // burger + nav (mobile)
+    // burger + nav
     const burger = document.getElementById('burger');
     const navlinks = document.getElementById('main-nav');
     if (burger){
@@ -374,11 +400,10 @@
       });
     }
 
-    // discord btn
-    document.getElementById('btnDiscord').addEventListener('click', ()=> {
-      window.open('https://discord.gg/KURpXHzRTE','_blank','noopener');
-    });
+    // discord button
+    document.getElementById('btnDiscord').addEventListener('click', ()=> { window.open('https://discord.gg/KURpXHzRTE','_blank','noopener'); });
 
+    // open PayPal link in new tab (modalPaypal already has href)
     // ensure external links open in new tab
     document.querySelectorAll('a[href^="http"]').forEach(a => { a.setAttribute('target','_blank'); a.setAttribute('rel','noopener'); });
   </script>
