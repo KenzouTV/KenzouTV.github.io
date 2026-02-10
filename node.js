@@ -5,7 +5,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 const API_KEY = process.env.YT_API_KEY;   // définis dans ton .env
-const CHANNEL_ID = 'YOUR_CHANNEL_ID';
+const CHANNEL_ID = '@Kenzou_TV';
 
 app.get('/latest-video', async (req, res) => {
   try {
