@@ -144,14 +144,14 @@
         </div>
       </article>
 
-      <!-- Pack 3 animations -->
+       <!-- Pack 3 animations -->
       <article class="product" id="product-2">
         <img src="Produit-2.jpg" alt="Pack 3 animations">
         <div class="meta"><strong>Pack 3 animations</strong><span class="price">5€</span></div>
         <p style="margin:0;color:rgba(234,240,255,0.78)">Trois courts rendus séparés. Idéal pour séries.</p>
         <div class="actions" style="margin-top:auto">
           <button class="primary-btn" data-id="product-2">Voir détails</button>
-          <a class="primary-btn" id="buy-product-2" href="https://www.paypal.com/ncp/payment/Z2KD45BKQUXSA" target="_blank" rel="noopener">Commander</a>
+          <button class="primary-btn" onclick="openOrder()">Commander</button>
           <button class="example-btn" data-target="blockframe.html">Voir Exemple</button>
         </div>
       </article>
@@ -247,7 +247,7 @@
        ----------------------- */
     const PRODUCTS = {
       'product-1': { id:'product-1', title:'Animation courte', price:'2€', img:'Produit-1.jpg', desc:'Intro/bumpers <1min. MP4 720p. 1 révision incluse.', paypal:'https://www.paypal.com/ncp/payment/GG7ZXTNYLZLS6' },
-      'product-2': { id:'product-2', title:'Pack 3 animations', price:'5€', img:'Produit-2.jpg', desc:'Trois courts rendus séparés. Idéal pour séries.', paypal:'REPLACE_PAYPAL_PRODUCT2' },
+      'product-2': { id:'product-2', title:'Pack 3 animations', price:'5€', img:'Produit-2.jpg', desc:'Trois courts rendus séparés. Idéal pour séries.', paypal:'https://www.paypal.com/ncp/payment/Z2KD45BKQUXSA' },
       'product-pp-single': { id:'product-pp-single', title:'PP simple', price:'1€', img:'product-3.jpg', desc:"PP simple. Indique ton pseudo Minecraft OU ouvre un ticket Discord. Peut être autre chose qu'un skin.", paypal:'REPLACE_PAYPAL_PP_SINGLE' },
       'product-pp-pack': { id:'product-pp-pack', title:'Pack 5 PP', price:'4€', img:'product-4.jpg', desc:"Pack de 5 PP personnalisées. Précise les idées pour chaque PP.", paypal:'REPLACE_PAYPAL_PP_PACK' },
       'product-subscription': { id:'product-subscription', title:'Abbonement', price:'6€/mois', img:'subscription.jpg', desc:"1 animation courte/mois + 3 PP simples/mois. Annulable.", paypal:'REPLACE_PAYPAL_SUBSCRIPTION' }
