@@ -11,9 +11,8 @@
       --bg-1:#06070a;
       --accent:#ff7a18;
       --accent-2:#ff9b3b;
-      --muted:rgba(234,240,255,0.72);
-      --glass-bg: rgba(7,16,24,0.88);
-      --card-bg: rgba(255,255,255,0.02);
+      --muted:rgba(255,255,255,0.65);
+      --card-bg: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
       --max-w:1180px;
     }
     *{box-sizing:border-box}
@@ -38,7 +37,7 @@
       100%{ background-position: 0% 50% }
     }
 
-    /* Topbar (sticky, frosted) */
+    /* === TOPBAR - COPIÉ DE L'INDEX (mêmes styles exacts) === */
     nav.topbar{
       display:flex;
       align-items:center;
@@ -46,88 +45,80 @@
       gap:16px;
       padding:12px 18px;
       border-radius:22px;
-      max-width:var(--max-w);
-      margin:0 auto 22px auto;
+      max-width:1180px;
+      margin:0 auto;
       position:sticky;
       top:22px;
-      z-index:50;
-      background: var(--glass-bg);
+      z-index:40;
+      background: rgba(7,16,24,0.88); /* moins transparent comme demandé */
       border:1px solid rgba(255,255,255,0.03);
       -webkit-backdrop-filter: blur(10px);
       backdrop-filter: blur(10px);
       box-shadow: 0 10px 30px rgba(0,0,0,0.6);
     }
-
     .brand{display:flex;align-items:center;gap:12px}
     .brand img{width:44px;height:44px;border-radius:10px;object-fit:cover}
-    .brand .title{font-weight:800;letter-spacing:0.2px;color:#eaf0ff}
-
+    .brand .title{font-weight:700;letter-spacing:0.4px;color:#eaf0ff}
     .navlinks{display:flex;gap:12px;align-items:center}
     .navlinks a{
-      padding:8px 14px;border-radius:12px;text-decoration:none;color:var(--muted);font-weight:700;transition:all .18s;
+      padding:8px 14px;border-radius:12px;text-decoration:none;color:var(--muted);font-weight:600;transition:all .18s ease;border:1px solid transparent;
     }
-    .navlinks a:hover{ transform:translateY(-2px); color:#fff }
-    .navlinks a.active{ color:#fff; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); }
-
+    .navlinks a:hover{ background:rgba(255,255,255,0.02); color:#fff; transform:translateY(-1px) }
+    .navlinks a.active{
+      color:#fff;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      box-shadow: inset 0 -2px 0 rgba(255,255,255,0.02);
+    }
     .btn-discord{
       background:linear-gradient(180deg,var(--accent),var(--accent-2));
-      padding:8px 16px;border-radius:12px;color:#0b0a0b;font-weight:800;border:none;cursor:pointer;box-shadow:0 8px 22px rgba(255,122,24,0.12)
+      padding:8px 16px;border-radius:12px;color:#0b0a0b;font-weight:700;border:none;cursor:pointer;box-shadow:0 6px 18px rgba(255,122,24,0.12);
     }
     .btn-discord:hover{ transform:translateY(-2px) }
+    /* === FIN TOPBAR === */
 
-    /* Layout */
+    /* page layout */
     .wrap{max-width:var(--max-w);margin:0 auto}
     header{max-width:var(--max-w);margin:0 auto 18px auto;padding:0 6px}
     header h1{margin:0 0 6px 0;font-size:28px}
     header p{margin:0;color:rgba(234,240,255,0.76)}
 
     .container{display:grid;grid-template-columns:1fr 360px;gap:28px;margin-top:18px}
-    .left{min-width:0} /* for overflow */
+    .left{min-width:0}
     .card{background:var(--card-bg);border-radius:16px;padding:16px;border:1px solid rgba(255,255,255,0.03);box-shadow:0 20px 50px rgba(0,0,0,0.5)}
 
-    /* Hero video (responsive 16:9) */
     .hero-video { border-radius:12px; overflow:hidden; background:#000; }
-    .video-embed{position:relative;width:100%;padding-top:56.25%} /* 16:9 */
+    .video-embed{position:relative;width:100%;padding-top:56.25%}
     .video-embed iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0;display:block}
 
-    /* Thumbnails column */
     .side-title{font-weight:800;margin-bottom:8px;color:var(--muted)}
     .thumbs{display:grid;grid-template-columns:1fr;gap:12px;margin-top:12px}
-    .thumb{
-      display:flex;gap:12px;align-items:center;padding:10px;border-radius:12px;background:rgba(255,255,255,0.02);cursor:pointer;border:1px solid rgba(255,255,255,0.01);
-      transition:transform .15s, box-shadow .15s;
-    }
+    .thumb{display:flex;gap:12px;align-items:center;padding:10px;border-radius:12px;background:rgba(255,255,255,0.02);cursor:pointer;border:1px solid rgba(255,255,255,0.01);transition:transform .15s, box-shadow .15s}
     .thumb:focus, .thumb:hover{ transform:translateY(-4px); box-shadow:0 18px 40px rgba(255,122,24,0.06); outline:none }
     .thumb img{width:120px;height:70px;object-fit:cover;border-radius:8px;flex-shrink:0}
     .thumb .meta{display:flex;flex-direction:column}
     .thumb .meta strong{font-weight:700}
     .thumb .meta small{color:var(--muted);font-size:13px;margin-top:6px}
 
-    /* Footer */
     footer{margin-top:28px;text-align:center;color:rgba(255,255,255,0.18);font-size:13px}
 
-    /* Mobile & responsiveness */
+    /* mobile */
     #burger{display:none;border:0;background:transparent;color:var(--muted);font-weight:800;font-size:20px;cursor:pointer}
-    @media(max-width:980px){
-      .container{grid-template-columns:1fr}
-      .video-embed{padding-top:56.25%}
-    }
+    @media(max-width:980px){ .container{grid-template-columns:1fr} }
     @media(max-width:720px){
-      .navlinks{display:none;position:absolute;right:18px;top:82px;flex-direction:column;background:var(--glass-bg);padding:8px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
+      .navlinks{display:none;position:absolute;right:18px;top:82px;flex-direction:column;background:rgba(7,16,24,0.88);padding:8px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
       #burger{display:block}
       .brand img{width:40px;height:40px}
       .thumb img{width:100px;height:60px}
       header h1{font-size:22px}
     }
 
-    /* Accessibility focus */
     a:focus, button:focus, .thumb:focus{ outline:3px solid rgba(255,155,59,0.12); outline-offset:4px; border-radius:8px; }
   </style>
 </head>
 <body>
+  <!-- === NAVBAR: IDENTIQUE À L'INDEX === -->
   <nav class="topbar" role="navigation" aria-label="Barre principale">
-    <div class="brand" style="gap:10px">
-      <!-- Logo BlockFrame -->
+    <div class="brand">
       <img src="Blockframe.png" alt="BlockFrame — logo">
       <div class="title">BlockFrame</div>
     </div>
@@ -143,6 +134,7 @@
       </div>
     </div>
   </nav>
+  <!-- === FIN NAVBAR === -->
 
   <div class="wrap">
     <header>
@@ -154,7 +146,7 @@
       <div class="left">
         <div class="card hero-video" aria-live="polite">
           <div class="video-embed" id="heroContainer">
-            <!-- Remplace REPLACE_VIDEO_ID_1 par l'ID YouTube de la vidéo principale -->
+            <!-- Remplace REPLACE_VIDEO_ID_1 par l'ID YouTube -->
             <iframe id="heroIframe"
                     title="Vidéo principale — BlockFrame"
                     src="https://www.youtube.com/embed/REPLACE_VIDEO_ID_1?rel=0"
@@ -175,7 +167,6 @@
         <div class="card">
           <div class="side-title">Projets</div>
           <div class="thumbs" id="thumbs">
-            <!-- Exemple de miniature : remplace les data-video par tes IDs -->
             <button class="thumb" data-video="REPLACE_VIDEO_ID_1" aria-label="Lire Projet 1">
               <img src="https://i.ytimg.com/vi/REPLACE_VIDEO_ID_1/hqdefault.jpg" alt="Projet 1 miniature">
               <div class="meta">
@@ -200,7 +191,6 @@
               </div>
             </button>
 
-            <!-- Ajoute / duplique autant que nécessaire -->
           </div>
 
           <div style="margin-top:12px;color:var(--muted);font-size:13px">
@@ -214,7 +204,9 @@
   </div>
 
   <script>
-    // Mobile burger toggle (same behaviour as index)
+    // === SCRIPT : même comportement que l'index (burger, discord, thumbs) ===
+
+    // Mobile burger toggle
     const burger = document.getElementById('burger');
     const navlinks = document.getElementById('main-nav');
     if (burger) {
@@ -225,13 +217,13 @@
       });
     }
 
-    // Discord button
+    // Discord invite (même lien)
     const btnDiscord = document.getElementById('btnDiscord');
     if (btnDiscord) {
       btnDiscord.addEventListener('click', () => window.open('https://discord.gg/KURpXHzRTE', '_blank', 'noopener'));
     }
 
-    // Thumbnails: replace hero iframe src on click (and focus for accessibility)
+    // Thumbnails -> remplace la vidéo principale
     const heroIframe = document.getElementById('heroIframe');
     const thumbs = document.getElementById('thumbs');
     thumbs.addEventListener('click', (e) => {
@@ -239,7 +231,6 @@
       if (!btn) return;
       const videoId = btn.getAttribute('data-video');
       if (!videoId) return;
-      // change src to new video (no autoplay to avoid multiple starts)
       const newSrc = 'https://www.youtube.com/embed/' + encodeURIComponent(videoId) + '?rel=0';
       heroIframe.src = newSrc;
       heroIframe.focus();
@@ -254,10 +245,10 @@
       }
     });
 
-    // Ensure external links open in new tab (if any)
+    // Ensure external links open in new tab
     document.querySelectorAll('a[href^="http"]').forEach(a => { a.setAttribute('target','_blank'); a.setAttribute('rel','noopener'); });
 
-    // Small: ensure nav is visible on large screens (in case inline style set earlier)
+    // Ensure nav visible on resize
     function ensureNavDisplay() {
       if (window.innerWidth > 720) navlinks.style.display = 'flex';
     }
