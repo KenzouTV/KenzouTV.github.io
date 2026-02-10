@@ -19,153 +19,132 @@
     html,body{height:100%}
     body{
       margin:0;
+      padding:48px 24px; /* identique entre pages */
       font-family:Inter,system-ui,Arial;
       color:#eaf0ff;
       -webkit-font-smoothing:antialiased;
-      padding:48px 24px;
       background:
         radial-gradient(800px 400px at 10% 80%, rgba(255,122,24,0.06), transparent 8%),
         radial-gradient(900px 450px at 90% 20%, rgba(255,155,59,0.04), transparent 8%),
         linear-gradient(180deg,var(--bg-1), #071018 60%);
       background-size:200% 200%;
-      animation: shiftGradient 24s linear infinite;
       min-height:100vh;
-    }
-    @keyframes shiftGradient {
-      0%{ background-position: 0% 50% }
-      50%{ background-position: 100% 50% }
-      100%{ background-position: 0% 50% }
     }
 
     .wrap{max-width:var(--max-w);margin:32px auto}
 
-    /* === TOPBAR (same on both pages) === */
+    /* TOPBAR : même sur les deux pages */
     nav.topbar{
       display:flex;
       align-items:center;
       justify-content:space-between;
-      gap:16px;
       padding:12px 18px;
-      border-radius:30px;            /* EXACT rounding */
-      max-width:var(--max-w);
-      margin:0 auto;
-      position:sticky;
-      top:22px;
-      z-index:40;
-      background: rgba(7,16,24,0.88);
+      border-radius:30px; /* courbure identique */
+      background: rgba(7,16,24,0.88); /* moins transparent */
       border:1px solid rgba(255,255,255,0.03);
       -webkit-backdrop-filter: blur(10px);
       backdrop-filter: blur(10px);
       box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+      position:sticky;
+      top:22px;
+      z-index:40;
+      margin:0 auto;
+      max-width:var(--max-w);
     }
-    .brand{display:flex;align-items:center;gap:12px}
+    .brand{display:flex;gap:12px;align-items:center}
     .brand img{width:44px;height:44px;border-radius:10px;object-fit:cover}
-    .brand .title{font-weight:700;letter-spacing:0.4px;color:#eaf0ff}
+    .brand .title{font-weight:700;color:#eaf0ff}
     .navlinks{display:flex;gap:12px;align-items:center}
-    .navlinks a{
-      padding:8px 14px;border-radius:12px;text-decoration:none;color:var(--muted);font-weight:600;transition:all .18s ease;border:1px solid transparent;
-    }
-    .navlinks a:hover{ background:rgba(255,255,255,0.02); color:#fff; transform:translateY(-1px) }
-    .navlinks a.active{
-      color:#fff;
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      box-shadow: inset 0 -2px 0 rgba(255,255,255,0.02);
-    }
-    .btn-discord{
-      background:linear-gradient(180deg,var(--accent),var(--accent-2));
-      padding:8px 16px;border-radius:12px;color:#0b0a0b;font-weight:700;border:none;cursor:pointer;box-shadow:0 6px 18px rgba(255,122,24,0.12);
-    }
-    /* === end topbar === */
+    .navlinks a{padding:8px 14px;border-radius:12px;text-decoration:none;color:var(--muted);font-weight:600}
+    .navlinks a.active{ color:#fff; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); }
+    .btn-discord{ background:linear-gradient(180deg,var(--accent),var(--accent-2)); padding:8px 14px;border-radius:12px;color:#0b0a0b;font-weight:800;border:none;cursor:pointer; box-shadow:0 6px 18px rgba(255,122,24,0.12) }
 
     /* layout */
     .hero{display:grid;grid-template-columns:1fr 420px;gap:34px;margin-top:28px}
     .card-left{padding:36px;border-radius:26px;background:var(--card-bg);box-shadow:0 30px 60px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.02)}
+    .badge{color:var(--accent-2);font-weight:700;letter-spacing:1px;font-size:13px}
     h1{font-size:48px;line-height:0.95;margin:6px 0 18px;font-weight:800}
     .lead{color:rgba(234,240,255,0.75);max-width:66%;margin-bottom:18px}
+    .small-dashed{margin-top:20px;padding:14px;border-radius:12px;border:1px dashed rgba(255,255,255,0.06);display:inline-block;color:var(--muted)}
 
-    .right-col{display:flex;flex-direction:column;gap:20px}
+    /* right column blocks */
     .profile-square{padding:12px;border-radius:22px;background:var(--card-bg);box-shadow:0 20px 50px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.02)}
     .big-ava{width:100%;height:320px;border-radius:20px;overflow:hidden}
-    .label-box{text-align:center;padding:18px;border-radius:18px;background:rgba(255,255,255,0.01);font-weight:700;color:var(--accent-2)}
+    .label-box{text-align:center;padding:14px 12px;border-radius:14px;background:rgba(255,255,255,0.01);font-weight:700;color:var(--accent-2);margin-top:12px}
 
-    /* featured video (example) */
+    /* Additional UI blocks (static content) */
+    .ui-block{margin-top:12px;padding:12px;border-radius:12px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.02)}
+    .ui-block h4{margin:0 0 6px 0;font-size:13px}
+    .ui-block p{margin:0;color:rgba(234,240,255,0.78);font-size:14px}
+
+    /* featured video */
     .featured-video{border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,0.03);box-shadow:0 20px 50px rgba(0,0,0,0.5);background:#000}
     .video-embed{position:relative;width:100%;padding-top:56.25%}
     .video-embed iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0;display:block}
-
-    /* UI notes panel */
-    .ui-panel{margin-top:20px;background:rgba(255,255,255,0.02);padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,0.02)}
-    .panel-controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-    .btn{padding:8px 12px;border-radius:10px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.02);color:var(--muted);font-weight:700;cursor:pointer}
-    .notes-area{min-height:120px;border-radius:10px;padding:10px;display:flex;gap:10px;flex-wrap:wrap}
-
-    .note{
-      min-width:120px;max-width:240px;padding:8px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));cursor:grab;border:1px solid rgba(255,255,255,0.02);
-    }
-    .note[contenteditable]{outline:none}
-    .note .del{display:block;margin-top:8px;color:rgba(255,80,80,0.95);font-weight:700;cursor:pointer;text-decoration:underline;background:none;border:none;padding:0}
 
     footer{margin-top:46px;text-align:center;color:rgba(255,255,255,0.16);font-size:13px}
 
     /* responsive */
     @media(max-width:980px){.hero{grid-template-columns:1fr}.big-ava{height:260px}h1{font-size:36px}}
-    @media(max-width:720px){.navlinks{display:none;position:absolute;right:24px;top:76px;flex-direction:column;background:rgba(7,16,24,0.88);padding:10px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}#burger{display:block}}
+    @media(max-width:720px){ .navlinks{display:none;position:absolute;right:24px;top:76px;flex-direction:column;background:rgba(7,16,24,0.88);padding:10px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)} }
   </style>
 </head>
 <body>
   <div class="wrap">
+    <!-- NAV (identique sur les deux pages) -->
     <nav class="topbar" role="navigation" aria-label="Barre principale">
       <div class="brand">
-        <img src="profile-0.png" alt="logo">
+        <img src="profile-0.png" alt="logo KenzouTV">
         <div class="title">KenzouTV</div>
       </div>
 
-      <div style="display:flex;align-items:center;gap:12px">
-        <button id="burger" aria-expanded="false" aria-controls="main-nav" aria-label="Ouvrir le menu" style="display:none">☰</button>
-        <div class="navlinks" id="main-nav">
-          <a href="index.html" class="active">Accueil</a>
-          <a href="links.html">Mes Réseaux</a>
-          <a href="boutique.html">Boutique</a>
-          <a href="blockframe.html">BlockFrame</a>
-          <button class="btn-discord btn" id="btnDiscord">Discord</button>
-        </div>
+      <div class="navlinks" id="main-nav">
+        <a href="index.html" class="active">Accueil</a>
+        <a href="links.html">Mes Réseaux</a>
+        <a href="boutique.html">Boutique</a>
+        <a href="blockframe.html">BlockFrame</a>
+        <button class="btn-discord" id="btnDiscord">Discord</button>
       </div>
     </nav>
 
-    <main class="hero">
+    <main class="hero" aria-labelledby="hero-title">
       <section class="card-left">
         <div class="badge">CRÉATEUR VIDÉO & ANIMATION</div>
-        <h1>EN CONSTRUCTION, MAIS DÉJÀ EN MOUVEMENT.</h1>
+        <h1 id="hero-title">EN CONSTRUCTION, MAIS DÉJÀ EN MOUVEMENT.</h1>
         <p class="lead">Je me lance dans l’animation et la création de vidéos.</p>
 
-        <a class="cta" href="index.html" style="display:inline-block;margin-top:22px;padding:12px 18px;border-radius:14px;background:linear-gradient(180deg,var(--accent),var(--accent-2));color:#0b0a0b;font-weight:800;text-decoration:none">DÉCOUVRIR LE STUDIO</a>
-
-        <!-- UI panel: add/edit/move notes -->
-        <div class="ui-panel" id="uiPanelIndex">
-          <div class="panel-controls">
-            <button class="btn" id="addNoteIndex">Ajouter une note</button>
-            <div style="color:var(--muted);font-weight:700">Glisse et édite les notes pour animer la page.</div>
-          </div>
-          <div class="notes-area" id="notesAreaIndex"></div>
+        <div class="ui-block" aria-hidden="false">
+          <h4>CRÉATION & ANIMATION</h4>
+          <p>Des idées qui prennent forme. Animations, intros, bumpers et expériences visuelles.</p>
         </div>
+
+        <div class="ui-block">
+          <h4>SERVICES</h4>
+          <p>Montage, motion design et commandes personnalisées — rendez-vous sur la boutique pour commander.</p>
+        </div>
+
+        <div class="small-dashed">Autre Info - Le site web est encore en cours de création.</div>
+
+        <a class="cta" href="blockframe.html" style="display:inline-block;margin-top:16px;padding:12px 18px;border-radius:14px;background:linear-gradient(180deg,var(--accent),var(--accent-2));color:#0b0a0b;font-weight:800;text-decoration:none">DÉCOUVRIR LE STUDIO</a>
       </section>
 
       <aside class="right-col">
         <div class="profile-square">
-          <div class="big-ava"><img src="profile.jpg" alt="grosse tete"></div>
-        </div>
-        <div class="label-box">DERNIÈRE VIDÉO</div>
+          <div class="big-ava"><img src="profile.jpg" alt="grosse tete" style="width:100%;height:100%;object-fit:cover;display:block"></div>
+          <div class="label-box">DERNIÈRE VIDÉO</div>
 
-        <!-- space between intro text and this big video -->
-        <div style="height:12px"></div>
+          <!-- petit espace entre intro et vidéo -->
+          <div style="height:12px"></div>
 
-        <div class="featured-video">
-          <div class="video-embed">
-            <iframe id="indexIframe" src="https://www.youtube.com/embed/REPLACE_WITH_VIDEO_ID?rel=0" title="Dernière vidéo" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <div class="featured-video" aria-hidden="false">
+            <div class="video-embed">
+              <!-- Remplace REPLACE_WITH_VIDEO_ID -->
+              <iframe src="https://www.youtube.com/embed/REPLACE_WITH_VIDEO_ID?rel=0" title="Dernière vidéo" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
           </div>
-        </div>
 
-        <div class="label-box" style="text-transform:uppercase">CRÉATION & ANIMATION — Des idées qui prennent forme.</div>
+          <div class="label-box" style="margin-top:12px">CRÉATION & ANIMATION — Des idées qui prennent forme.</div>
+        </div>
       </aside>
     </main>
 
@@ -173,88 +152,13 @@
   </div>
 
   <script>
-    // nav burger (same on both pages)
-    const burger = document.getElementById('burger');
-    const navlinks = document.getElementById('main-nav');
-    if (burger) {
-      burger.addEventListener('click', () => {
-        const open = burger.getAttribute('aria-expanded') === 'true';
-        burger.setAttribute('aria-expanded', String(!open));
-        navlinks.style.display = navlinks.style.display === 'flex' ? 'none' : 'flex';
-      });
-    }
+    // Discord button
+    document.getElementById('btnDiscord').addEventListener('click', ()=> {
+      window.open('https://discord.gg/KURpXHzRTE','_blank','noopener');
+    });
 
-    // discord
-    const btnDiscord = document.getElementById('btnDiscord');
-    if (btnDiscord) btnDiscord.addEventListener('click', ()=> window.open('https://discord.gg/KURpXHzRTE','_blank','noopener'));
-
-    /* =========== UI NOTES (add/edit/drag/drop) =========== */
-    // Simple drag & drop using pointer events + localStorage persistence
-    (function(){
-      const area = document.getElementById('notesAreaIndex');
-      const storageKey = 'kf_notes_index_v1';
-      let notes = JSON.parse(localStorage.getItem(storageKey) || '[]');
-
-      function render(){
-        area.innerHTML = '';
-        notes.forEach(n => {
-          const el = document.createElement('div');
-          el.className = 'note';
-          el.setAttribute('draggable','true');
-          el.style.order = n.order || 0;
-          el.innerHTML = `<div contenteditable="true" class="note-text">${n.text || 'Nouvelle note'}</div>
-                          <button class="del">Supprimer</button>`;
-          // delete
-          el.querySelector('.del').addEventListener('click', ()=> {
-            notes = notes.filter(x=> x.id !== n.id); saveAndRender();
-          });
-          // save on blur
-          el.querySelector('.note-text').addEventListener('blur', (e)=>{
-            n.text = e.target.innerText; saveAndRender();
-          });
-          // drag
-          el.addEventListener('dragstart', (ev)=> {
-            ev.dataTransfer.setData('text/plain', n.id);
-            el.style.opacity = '0.6';
-          });
-          el.addEventListener('dragend', ()=> el.style.opacity = '1');
-          area.appendChild(el);
-        });
-      }
-
-      function saveAndRender(){
-        localStorage.setItem(storageKey, JSON.stringify(notes));
-        render();
-      }
-
-      // drop handling (reorder)
-      area.addEventListener('dragover', (e)=> { e.preventDefault(); });
-      area.addEventListener('drop', (e)=> {
-        e.preventDefault();
-        const id = e.dataTransfer.getData('text/plain');
-        const target = e.target.closest('.note');
-        if (!id) return;
-        // find index and move to end (simple)
-        const idx = notes.findIndex(x=> x.id === id);
-        if (idx >= 0) {
-          const item = notes.splice(idx,1)[0];
-          notes.push(item);
-          saveAndRender();
-        }
-      });
-
-      document.getElementById('addNoteIndex').addEventListener('click', ()=>{
-        const obj = { id: 'n_'+Date.now(), text:'Edit me', order: notes.length };
-        notes.push(obj); saveAndRender();
-        // focus last note after small delay
-        setTimeout(()=> {
-          const last = area.lastElementChild;
-          if (last) last.querySelector('.note-text').focus();
-        },80);
-      });
-
-      render();
-    })();
+    // ensure external links open in new tab if any
+    document.querySelectorAll('a[href^="http"]').forEach(a => { a.setAttribute('target','_blank'); a.setAttribute('rel','noopener'); });
   </script>
 </body>
 </html>
