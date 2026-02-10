@@ -5,13 +5,15 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>KenzouTV — Accueil</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
-  <meta name="description" content="KenzouTV — Création & animation, dernières vidéos.">
+  <meta name="description" content="KenzouTV — Création & animation, vidéos en cours de production.">
+  <link rel="icon" href="/favicon.ico">
   <style>
     :root{
       --bg-1:#06070a;
       --accent:#ff7a18;
       --accent-2:#ff9b3b;
       --muted:rgba(255,255,255,0.65);
+      --card-bg: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
     }
     *{box-sizing:border-box}
     html,body{height:100%}
@@ -19,160 +21,166 @@
       margin:0;
       font-family:Inter,system-ui,Arial;
       color:#eaf0ff;
+      -webkit-font-smoothing:antialiased;
       padding:48px 24px;
       background:
         radial-gradient(800px 400px at 10% 80%, rgba(255,122,24,0.06), transparent 8%),
         radial-gradient(900px 450px at 90% 20%, rgba(255,155,59,0.06), transparent 8%),
-        linear-gradient(180deg,#06070a, #071018 60%);
-      background-size:200% 200%;
+        linear-gradient(180deg,var(--bg-1), #071018 60%);
+      background-size: 200% 200%;
       animation: shiftGradient 20s linear infinite;
     }
-    @keyframes shiftGradient { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
+    @keyframes shiftGradient {
+      0% { background-position: 0% 50% ; }
+      50% { background-position: 100% 50% ; }
+      100% { background-position: 0% 50% ; }
+    }
 
-    /* Topbar : moins transparent + flou arrière (frosted glass) */
+    /* Topbar: moins transparent + effet flou (frosted glass) */
     nav.topbar{
       display:flex;
       align-items:center;
       justify-content:space-between;
+      gap:16px;
       padding:12px 18px;
-      border-radius:18px;
-      max-width:1180px;margin:0 auto;
-      position:sticky; top:22px; z-index:40;
-      /* fond plus opaque */
-      background: rgba(7,16,24,0.80);
+      border-radius:22px;
+      max-width:1180px;
+      margin:0 auto;
+      position:sticky;
+      top:22px;
+      z-index:40;
+      /* plus opaque pour moins voir derrière */
+      background: rgba(7,16,24,0.88);
       border:1px solid rgba(255,255,255,0.03);
-      /* blur arrière */
-      -webkit-backdrop-filter: blur(8px);
-      backdrop-filter: blur(8px);
+      /* blur arrière (frosted glass) */
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
       box-shadow: 0 10px 30px rgba(0,0,0,0.6);
     }
 
-    .brand{display:flex;gap:12px;align-items:center}
+    .brand{display:flex;align-items:center;gap:12px}
     .brand img{width:44px;height:44px;border-radius:10px;object-fit:cover}
-    .title{font-weight:700}
+    .brand .title{font-weight:700;letter-spacing:0.4px;color:#eaf0ff}
     .navlinks{display:flex;gap:12px;align-items:center}
-    .btn-discord{background:linear-gradient(180deg,var(--accent),var(--accent-2));padding:8px 14px;border-radius:12px;color:#0b0a0b;font-weight:700;border:none;cursor:pointer}
+    .navlinks a{
+      padding:8px 14px;border-radius:12px;text-decoration:none;color:var(--muted);font-weight:600;transition:all .18s ease;border:1px solid transparent;
+    }
+    .navlinks a:hover{ background:rgba(255,255,255,0.02); color:#fff; transform:translateY(-1px) }
+    .navlinks a.active{
+      color:#fff;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      box-shadow: inset 0 -2px 0 rgba(255,255,255,0.02);
+    }
+    .btn-discord{
+      background:linear-gradient(180deg,var(--accent),var(--accent-2));
+      padding:8px 16px;border-radius:12px;color:#0b0a0b;font-weight:700;border:none;cursor:pointer;box-shadow:0 6px 18px rgba(255,122,24,0.12);
+    }
+    .btn-discord:hover{ transform:translateY(-2px) }
 
+    /* Layout */
     .wrap{max-width:1180px;margin:32px auto}
     .hero{display:grid;grid-template-columns:1fr 420px;gap:34px;margin-top:28px}
-    .card-left{padding:28px;border-radius:18px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.02)}
-    h1{font-size:40px;margin:6px 0 14px;font-weight:800}
-    .lead{color:rgba(234,240,255,0.8);margin-bottom:12px}
+    .card-left{padding:36px;border-radius:26px;background:var(--card-bg);box-shadow:0 30px 60px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.02)}
+    .badge{color:var(--accent-2);font-weight:700;letter-spacing:1px;font-size:13px}
+    h1{font-size:48px;line-height:0.95;margin:6px 0 18px;font-weight:800}
+    .lead{color:rgba(234,240,255,0.75);max-width:66%;margin-bottom:18px}
+    .small-dashed{margin-top:20px;padding:14px;border-radius:12px;border:1px dashed rgba(255,255,255,0.06);display:inline-block;color:var(--muted)}
+    .right-col{display:flex;flex-direction:column;gap:20px}
+    .profile-square{padding:12px;border-radius:22px;background:var(--card-bg);box-shadow:0 20px 50px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.02)}
+    .big-ava{width:100%;height:320px;border-radius:20px;overflow:hidden}
+    .big-ava img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .45s}
+    .big-ava:hover img{transform:scale(1.02) rotate(-0.6deg)}
+    .label-box{text-align:center;padding:18px;border-radius:18px;background:rgba(255,255,255,0.01);font-weight:700;color:var(--accent-2)}
+    footer{margin-top:46px;text-align:center;color:rgba(255,255,255,0.16);font-size:13px}
 
-    /* Featured video style (simple embed) */
-    .featured-video{border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,0.03);box-shadow:0 18px 40px rgba(0,0,0,0.5);background:#000}
-    .featured-video iframe{width:100%;height:100%;min-height:320px;border:0;display:block}
+    /* Featured video - embed classique 16:9 responsive */
+    .featured-video{border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,0.03);box-shadow:0 20px 50px rgba(0,0,0,0.5);background:#000}
+    .video-embed{position:relative;width:100%;padding-top:56.25%} /* 16:9 */
+    .video-embed iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0;display:block}
 
-    @media(max-width:980px){ .hero{grid-template-columns:1fr} .featured-video iframe{min-height:240px} h1{font-size:30px} }
+    @media(max-width:980px){
+      .hero{grid-template-columns:1fr}
+      .big-ava{height:260px}
+      h1{font-size:36px}
+    }
 
-    footer{margin-top:26px;text-align:center;color:rgba(255,255,255,0.18);font-size:13px}
+    /* Small helpers */
+    .muted{color:var(--muted)}
+    a:focus, button:focus{ outline:3px solid rgba(255,155,59,0.12); outline-offset:4px; border-radius:8px }
   </style>
 </head>
 <body>
-  <nav class="topbar" aria-label="Navigation">
-    <div class="brand">
-      <img src="profile-0.png" alt="logo KenzouTV">
-      <div class="title">KenzouTV</div>
-    </div>
-    <div class="navlinks">
-      <a href="#" class="active">Accueil</a>
-      <button class="btn-discord" id="btnDiscord">Discord</button>
-    </div>
-  </nav>
+  <div class="wrap">
+    <nav class="topbar" role="navigation" aria-label="Barre principale">
+      <div class="brand">
+        <img src="profile-0.png" alt="Logo KenzouTV">
+        <div class="title">KenzouTV</div>
+      </div>
 
-  <main class="wrap">
-    <section class="hero">
+      <div class="navlinks">
+        <a href="index.html" class="active">Accueil</a>
+        <button class="btn-discord" id="btnDiscord">Discord</button>
+      </div>
+    </nav>
+
+    <main class="hero" aria-labelledby="hero-title">
       <section class="card-left">
-        <h1>EN CONSTRUCTION, MAIS DÉJÀ EN MOUVEMENT.</h1>
+        <div class="badge">CRÉATEUR VIDÉO & ANIMATION</div>
+        <h1 id="hero-title">EN CONSTRUCTION, MAIS DÉJÀ EN MOUVEMENT.</h1>
         <p class="lead">Je me lance dans l’animation et la création de vidéos.</p>
 
-        <div class="small">Dernière vidéo automatiquement récupérée depuis la chaîne (les lives sont ignorés).</div>
+        <div class="list" aria-hidden="false">
+          <div class="item"><strong>01. Création & Animation</strong><div style="color:rgba(255,255,255,0.6);margin-top:6px">Je découvre l’animation, le montage et la mise en scène visuelle.</div></div>
+          <div class="item"><strong>02. Vidéos & Expérimentations</strong><div style="color:rgba(255,255,255,0.6);margin-top:6px">Je crée des contenus autour de mes idées, de mes essais et de mes futurs projets.</div></div>
+          <div class="item"><strong>03. Projet en évolution</strong><div style="color:rgba(255,255,255,0.6);margin-top:6px">Ce site, comme mes vidéos, est en développement.</div></div>
+        </div>
+
+        <div class="small-dashed">Autre Info - Le site web est encore en cours de création.</div>
+
+        <a class="cta" href="index.html" style="display:inline-block;margin-top:22px;padding:12px 18px;border-radius:14px;background:linear-gradient(180deg,var(--accent),var(--accent-2));color:#0b0a0b;font-weight:800;text-decoration:none">DÉCOUVRIR LE STUDIO</a>
       </section>
 
-      <aside>
-        <div class="featured-video" id="featuredContainer" aria-live="polite">
-          <!-- iframe mis à jour automatiquement -->
-          <iframe id="featuredIframe" title="Dernière vidéo KenzouTV" src="about:blank"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <aside class="right-col" aria-labelledby="video-label">
+        <div class="profile-square">
+          <div class="label-box" id="video-label">DERNIÈRE VIDÉO</div>
+
+          <!-- Embed classique : remplace REPLACE_WITH_VIDEO_ID par ton ID YouTube -->
+          <div class="featured-video" aria-hidden="false">
+            <div class="video-embed">
+              <iframe id="featuredIframe"
+                      title="Dernière vidéo KenzouTV"
+                      src="https://www.youtube.com/embed/REPLACE_WITH_VIDEO_ID?rel=0"
+                      loading="lazy"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowfullscreen>
+              </iframe>
+            </div>
+          </div>
+
+          <div style="margin-top:12px;text-align:center;font-weight:700;color:var(--muted)">Clique sur la vidéo pour la lire</div>
         </div>
-        <div id="videoMeta" style="margin-top:10px;color:rgba(255,255,255,0.8);font-weight:600"></div>
+
+        <div class="label-box" style="text-transform:uppercase">CRÉATION & ANIMATION — Des idées qui prennent forme.</div>
       </aside>
-    </section>
+    </main>
 
     <footer>© 2026 KenzouTV — TOUS DROITS RÉSERVÉS</footer>
-  </main>
+  </div>
 
   <script>
-    // ===== CONFIG =====
-    // Option rapide (client-side). Remplace par ta clé & ton channelId.
-    const API_KEY = 'YOUR_API_KEY';           // <<-- Remplace (client-side : exposé)
-    const CHANNEL_ID = 'YOUR_CHANNEL_ID';     // <<-- Remplace (ex: UCxxxxxxxx)
-
-    // YouTube API helper: cherche les vidéos les plus récentes et ignore les lives.
-    // On utilise search.list?order=date&type=video&part=snippet pour lister par date,
-    // puis on prend le premier résultat avec snippet.liveBroadcastContent === 'none'.
-    // Docs: search.list (order=date, type=video). Si besoin d'info détaillée, on peut appeler videos.list ensuite.
-    // (Note: l'approche est standard ; si une vidéo live apparaît tu dois boucler jusqu'au prochain item).
-    async function fetchLatestNonLiveVideo(channelId, apiKey) {
-      const maxFetch = 10; // nombre max de résultats à vérifier (sécurité)
-      const url = 'https://www.googleapis.com/youtube/v3/search?part=snippet&channelId='
-                + encodeURIComponent(channelId)
-                + '&order=date&type=video&maxResults=' + maxFetch
-                + '&key=' + encodeURIComponent(apiKey);
-      const res = await fetch(url);
-      if (!res.ok) throw new Error('YouTube API error: ' + res.status);
-      const data = await res.json();
-      if (!data.items || data.items.length === 0) return null;
-      // Trouve le premier item qui n'est pas live (snippet.liveBroadcastContent === 'none')
-      for (const item of data.items) {
-        const liveFlag = item.snippet && item.snippet.liveBroadcastContent;
-        if (liveFlag === 'none') {
-          return {
-            id: item.id.videoId,
-            title: item.snippet.title,
-            publishedAt: item.snippet.publishedAt,
-            thumb: item.snippet.thumbnails && (item.snippet.thumbnails.high || item.snippet.thumbnails.default)
-          };
-        }
-      }
-      return null;
+    // Discord invite
+    const btn = document.getElementById('btnDiscord');
+    if (btn) {
+      btn.addEventListener('click', () => {
+        window.open('https://discord.gg/KURpXHzRTE', '_blank', 'noopener');
+      });
     }
 
-    // Initialise l'iframe avec la vidéo trouvée (autoplay=false par défaut)
-    async function init() {
-      const iframe = document.getElementById('featuredIframe');
-      const meta = document.getElementById('videoMeta');
-
-      if (!API_KEY || API_KEY === 'YOUR_API_KEY') {
-        // fallback : laisse une vidéo par défaut si pas de clé
-        const fallbackId = 'REPLACE_WITH_FALLBACK_ID';
-        iframe.src = 'https://www.youtube.com/embed/' + fallbackId + '?rel=0';
-        meta.textContent = 'Clé API manquante — affichage de la vidéo fallback.';
-        return;
-      }
-
-      try {
-        const vid = await fetchLatestNonLiveVideo(CHANNEL_ID, API_KEY);
-        if (!vid) {
-          meta.textContent = 'Aucune vidéo récente non-live trouvée.';
-          // fallback si tu veux : charger une vidéo statique
-          iframe.src = 'about:blank';
-          return;
-        }
-        iframe.src = 'https://www.youtube.com/embed/' + encodeURIComponent(vid.id) + '?rel=0';
-        const published = new Date(vid.publishedAt).toLocaleDateString('fr-FR', {year:'numeric',month:'short',day:'numeric'});
-        meta.textContent = vid.title + ' — publié le ' + published;
-      } catch (err) {
-        console.error(err);
-        meta.textContent = 'Erreur récupération vidéo : ' + err.message;
-      }
-    }
-
-    // Discord button (si tu veux garder)
-    document.getElementById('btnDiscord').addEventListener('click', ()=> window.open('https://discord.gg/KURpXHzRTE','_blank','noopener'));
-
-    // Lance
-    init();
+    // Optionnel : améliorer l'accessibilité du iframe (focalisation)
+    const iframe = document.getElementById('featuredIframe');
+    iframe.setAttribute('tabindex', '0');
+    // Si tu veux remplacer la vidéo dynamiquement plus tard : 
+    // iframe.src = 'https://www.youtube.com/embed/NOUVEL_ID?rel=0';
   </script>
 </body>
 </html>
