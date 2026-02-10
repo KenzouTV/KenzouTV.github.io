@@ -22,8 +22,7 @@
       font-family:Inter,system-ui,Arial;
       color:#eaf0ff;
       -webkit-font-smoothing:antialiased;
-      /* === même padding que l'index === */
-      padding:48px 24px;
+      padding:48px 24px; /* same as index */
       background:
         radial-gradient(800px 400px at 10% 80%, rgba(255,122,24,0.06), transparent 8%),
         radial-gradient(900px 450px at 90% 20%, rgba(255,155,59,0.04), transparent 8%),
@@ -38,31 +37,30 @@
       100%{ background-position: 0% 50% }
     }
 
-    /* === wrap exactly like index === */
-    .wrap{ max-width:var(--max-w); margin:32px auto; }
+    .wrap{ max-width:var(--max-w); margin:32px auto; } /* same as index */
 
-    /* === TOPBAR COPIÉ EXACTEMENT DE L'INDEX === */
+    /* === TOPBAR: exact same look as index === */
     nav.topbar{
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap:16px;
       padding:12px 18px;
-      border-radius:30px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
-      box-shadow: 0 6px 20px rgba(0,0,0,0.6);
-      border:1px solid rgba(255,255,255,0.02);
+      border-radius:30px;                        /* exact same rounding */
+      max-width:var(--max-w);
+      margin:0 auto;
       position:sticky;
       top:22px;
       z-index:40;
-      margin:0 auto;
-      /* moins transparent + blur like you wanted */
+      /* less transparent + blur */
       background: rgba(7,16,24,0.88);
+      border:1px solid rgba(255,255,255,0.03);
       -webkit-backdrop-filter: blur(10px);
       backdrop-filter: blur(10px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
     }
     .brand{display:flex;align-items:center;gap:12px}
-    .brand img{width:44px;height:44px;border-radius:10px;object-fit:cover}
+    .brand img{width:44px;height:44px;border-radius:10px;object-fit:cover} /* same size */
     .brand .title{font-weight:700;letter-spacing:0.4px;color:#eaf0ff}
     .navlinks{display:flex;gap:12px;align-items:center}
     .navlinks a{
@@ -79,48 +77,58 @@
       padding:8px 16px;border-radius:12px;color:#0b0a0b;font-weight:700;border:none;cursor:pointer;box-shadow:0 6px 18px rgba(255,122,24,0.12);
     }
     .btn-discord:hover{ transform:translateY(-2px) }
-    /* === fin topbar === */
+    /* === end topbar === */
 
-    header{ max-width:var(--max-w); margin:0 auto 18px auto; padding:0 6px; }
-    header h1{ margin:0 0 6px 0; font-size:28px; }
+    header{ max-width:var(--max-w); margin:0 auto; padding:0 6px; /* keep inside wrap */ }
+    header h1{ margin:28px 0 6px 0; font-size:28px; } /* margin-top = 28px to match index spacing between nav and hero */
     header p{ margin:0; color:rgba(234,240,255,0.76); }
 
-    .container{ display:grid; grid-template-columns:1fr 360px; gap:28px; margin-top:28px; } /* hero margin-top = 28px like index */
+    .container{ display:grid; grid-template-columns:1fr 360px; gap:28px; margin-top:0; } /* hero spacing is handled by header margin to match index */
     .left{ min-width:0 }
     .card{ padding:16px; border-radius:16px; background:var(--card-bg); border:1px solid rgba(255,255,255,0.02); box-shadow:0 20px 50px rgba(0,0,0,0.5) }
 
+    /* hero video 16:9 responsive */
     .hero-video{ border-radius:12px; overflow:hidden; background:#000 }
     .video-embed{ position:relative; width:100%; padding-top:56.25% }
     .video-embed iframe{ position:absolute; top:0; left:0; width:100%; height:100%; border:0; display:block }
 
+    /* side content */
     .side-title{ font-weight:800; margin-bottom:8px; color:var(--muted) }
     .thumbs{ display:grid; grid-template-columns:1fr; gap:12px; margin-top:12px }
     .thumb{ display:flex; gap:12px; align-items:center; padding:10px; border-radius:12px; background:rgba(255,255,255,0.02); cursor:pointer; border:1px solid rgba(255,255,255,0.01); transition:transform .15s, box-shadow .15s }
     .thumb:focus, .thumb:hover{ transform:translateY(-4px); box-shadow:0 18px 40px rgba(255,122,24,0.06); outline:none }
-    .thumb img{ width:120px; height:70px; object-fit:cover; border-radius:8px; flex-shrink:0 }
+    .thumb img{ width:80px; height:80px; object-fit:cover; border-radius:8px; flex-shrink:0 }
     .thumb .meta{ display:flex; flex-direction:column }
     .thumb .meta strong{ font-weight:700 }
     .thumb .meta small{ color:var(--muted); font-size:13px; margin-top:6px }
+
+    /* collaborations block */
+    .collab-list{ display:flex; flex-direction:column; gap:10px; margin-top:12px }
+    .collab{ display:flex; gap:12px; align-items:center; background:rgba(255,255,255,0.02); padding:8px; border-radius:10px; border:1px solid rgba(255,255,255,0.01) }
+    .collab img{ width:48px; height:48px; border-radius:8px; object-fit:cover; cursor:pointer }
+    .collab a{ color:var(--muted); font-weight:700; text-decoration:none; }
+    .collab a:hover{ color:#fff; text-decoration:underline }
+
+    .order-btn{ display:inline-block; margin-top:12px; padding:10px 14px; border-radius:12px; background:linear-gradient(180deg,var(--accent),var(--accent-2)); color:#0b0a0b; font-weight:800; text-decoration:none; }
 
     footer{ margin-top:46px; text-align:center; color:rgba(255,255,255,0.16); font-size:13px }
 
     /* mobile */
     #burger{ display:none; border:0; background:transparent; color:var(--muted); font-weight:800; font-size:20px; cursor:pointer }
-    @media(max-width:980px){ .container{ grid-template-columns:1fr } .video-embed{ padding-top:56.25% } }
+    @media(max-width:980px){ .container{ grid-template-columns:1fr } .video-embed{ padding-top:56.25% } .thumb img{ width:72px; height:72px } }
     @media(max-width:720px){
       .navlinks{ display:none; position:absolute; right:24px; top:76px; flex-direction:column; background: rgba(7,16,24,0.88); padding:10px; border-radius:12px; border:1px solid rgba(255,255,255,0.03) }
       #burger{ display:block }
       .brand img{ width:40px; height:40px }
-      .thumb img{ width:100px; height:60px }
-      header h1{ font-size:22px }
+      header h1{ margin-top:18px; font-size:22px }
     }
 
-    a:focus, button:focus, .thumb:focus{ outline:3px solid rgba(255,155,59,0.12); outline-offset:4px; border-radius:8px; }
+    a:focus, button:focus, .thumb:focus, .collab:focus{ outline:3px solid rgba(255,155,59,0.12); outline-offset:4px; border-radius:8px; }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <!-- NAV BAR exactly like index (now INSIDE .wrap to match spacing) -->
+    <!-- NAVBAR (INSIDE .wrap so spacing matches index exactly) -->
     <nav class="topbar" role="navigation" aria-label="Barre principale">
       <div class="brand">
         <img src="Blockframe.png" alt="BlockFrame — logo">
@@ -145,7 +153,7 @@
       <p>Présente tes meilleures animations et projets. Clique sur une miniature pour la lire dans la vidéo principale.</p>
     </header>
 
-    <main class="container">
+    <main class="container" role="main">
       <div class="left">
         <div class="card hero-video" aria-live="polite">
           <div class="video-embed" id="heroContainer">
@@ -160,9 +168,36 @@
           </div>
         </div>
 
-        <div style="margin-top:12px;color:var(--muted);font-weight:700">Description</div>
+        <div style="margin-top:12px;color:var(--muted);font-weight:700">À propos</div>
         <div style="margin-top:8px;color:rgba(234,240,255,0.78)">
-          <p>BlockFrame — studio de création : animations courtes, bumpers, intros et petites séries animées. Remplace les IDs YouTube ci-dessous pour afficher tes propres vidéos.</p>
+          <p>BlockFrame — studio de création : animations courtes, bumpers, intros et petites séries animées. Nous réalisons des commandes pour les créateurs et marques.</p>
+
+          <!-- Order CTA -->
+          <a href="boutique.html" class="order-btn" role="button">Commander une animation — Voir la boutique</a>
+        </div>
+
+        <!-- Collaborations (images + names clickable) -->
+        <div style="margin-top:16px;color:var(--muted);font-weight:700">Collaborations</div>
+        <div class="collab-list">
+          <div class="collab">
+            <a href="REPLACE_YT_URL_WAMONIXX" target="_blank" rel="noopener">
+              <img src="Wamonixx.jpg" alt="Wamonixx — avatar">
+            </a>
+            <div>
+              <a href="REPLACE_YT_URL_WAMONIXX" target="_blank" rel="noopener">Wamonixx</a>
+              <div style="font-size:13px;color:rgba(255,255,255,0.6)">Collaboration</div>
+            </div>
+          </div>
+
+          <div class="collab">
+            <a href="REPLACE_YT_URL_XOMINO" target="_blank" rel="noopener">
+              <img src="Xomino.jpg" alt="Xomino — avatar">
+            </a>
+            <div>
+              <a href="REPLACE_YT_URL_XOMINO" target="_blank" rel="noopener">Xomino</a>
+              <div style="font-size:13px;color:rgba(255,255,255,0.6)">Collaboration</div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -196,7 +231,7 @@
           </div>
 
           <div style="margin-top:12px;color:var(--muted);font-size:13px">
-            Astuce : pour utiliser une vidéo YouTube, prends l'ID (ex: <code>dQw4w9WgXcQ</code>) et remplace les valeurs <code>REPLACE_VIDEO_ID_x</code>.
+            Astuce : remplace les <code>REPLACE_VIDEO_ID_x</code> par les IDs YouTube de tes vidéos.
           </div>
         </div>
       </aside>
@@ -206,9 +241,7 @@
   </div>
 
   <script>
-    // === same scripts as index ===
-
-    // Mobile burger toggle
+    // Mobile burger toggle (same as index)
     const burger = document.getElementById('burger');
     const navlinks = document.getElementById('main-nav');
     if (burger) {
@@ -225,7 +258,7 @@
       btnDiscord.addEventListener('click', () => window.open('https://discord.gg/KURpXHzRTE', '_blank', 'noopener'));
     }
 
-    // Thumbnails -> replace hero iframe src on click (and focus for accessibility)
+    // Thumbnails: replace hero iframe src on click (and focus)
     const heroIframe = document.getElementById('heroIframe');
     const thumbs = document.getElementById('thumbs');
     thumbs.addEventListener('click', (e) => {
@@ -246,6 +279,11 @@
         e.target.closest('.thumb').click();
       }
     });
+
+    // Make collaborator images behave like links (open in new tab) when clicked
+    document.querySelectorAll('.collab a').forEach(a => a.addEventListener('click', (ev)=> {
+      // normal behaviour: open in new tab because we set target="_blank" in markup
+    }));
 
     // Ensure external links open in new tab
     document.querySelectorAll('a[href^="http"]').forEach(a => { a.setAttribute('target','_blank'); a.setAttribute('rel','noopener'); });
