@@ -5,28 +5,40 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>KenzouTV — Accueil</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <meta name="description" content="KenzouTV — Création & animation, vidéos en cours de production.">
+  <link rel="icon" href="/favicon.ico">
   <style>
     :root{
       --bg-1:#06070a;
       --accent:#ff7a18;
       --accent-2:#ff9b3b;
-      --muted:rgba(255,255,255,0.6);
+      --muted:rgba(255,255,255,0.65);
+      --card-bg: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
     }
     *{box-sizing:border-box}
     html,body{height:100%}
     body{
       margin:0;
       font-family:Inter,system-ui,Arial;
+      color:#eaf0ff;
+      -webkit-font-smoothing:antialiased;
+      padding:48px 24px;
+      /* Animated gradient background */
       background:
         radial-gradient(800px 400px at 10% 80%, rgba(255,122,24,0.06), transparent 8%),
         radial-gradient(900px 450px at 90% 20%, rgba(255,155,59,0.06), transparent 8%),
         linear-gradient(180deg,var(--bg-1), #071018 60%);
-      color:#eaf0ff;
-      -webkit-font-smoothing:antialiased;
-      padding:48px 24px;
+      background-size: 200% 200%;
+      animation: shiftGradient 20s linear infinite;
     }
 
-    /* NAV COMMUNE */
+    @keyframes shiftGradient {
+      0% { background-position: 0% 50% ; }
+      50% { background-position: 100% 50% ; }
+      100% { background-position: 0% 50% ; }
+    }
+
+    /* NAV */
     nav.topbar{
       display:flex;
       align-items:center;
@@ -34,9 +46,14 @@
       gap:16px;
       padding:12px 18px;
       border-radius:30px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
+      background: rgba(255,255,255,0.01);
       box-shadow: 0 6px 20px rgba(0,0,0,0.6);
       border:1px solid rgba(255,255,255,0.02);
+      position:sticky;
+      top:22px;
+      z-index:40;
+      max-width:1180px;
+      margin:0 auto;
     }
     .brand{display:flex;align-items:center;gap:12px}
     .brand img{width:44px;height:44px;border-radius:10px;object-fit:cover}
@@ -57,74 +74,189 @@
     }
     .btn-discord:hover{ transform:translateY(-2px) }
 
+    /* Layout */
     .wrap{max-width:1180px;margin:32px auto}
     .hero{display:grid;grid-template-columns:1fr 420px;gap:34px;margin-top:28px}
-    .card-left{padding:36px;border-radius:26px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));box-shadow:0 30px 60px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.02)}
+    .card-left{padding:36px;border-radius:26px;background:var(--card-bg);box-shadow:0 30px 60px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.02)}
     .badge{color:var(--accent-2);font-weight:700;letter-spacing:1px;font-size:13px}
     h1{font-size:48px;line-height:0.95;margin:6px 0 18px;font-weight:800}
     .lead{color:rgba(234,240,255,0.75);max-width:66%;margin-bottom:18px}
     .small-dashed{margin-top:20px;padding:14px;border-radius:12px;border:1px dashed rgba(255,255,255,0.06);display:inline-block;color:var(--muted)}
     .right-col{display:flex;flex-direction:column;gap:20px}
-    .profile-square{padding:12px;border-radius:22px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.00));box-shadow:0 20px 50px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.02)}
+    .profile-square{padding:12px;border-radius:22px;background:var(--card-bg);box-shadow:0 20px 50px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.02)}
     .big-ava{width:100%;height:320px;border-radius:20px;overflow:hidden}
     .big-ava img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .45s}
     .big-ava:hover img{transform:scale(1.02) rotate(-0.6deg)}
     .label-box{text-align:center;padding:18px;border-radius:18px;background:rgba(255,255,255,0.01);font-weight:700;color:var(--accent-2)}
     footer{margin-top:46px;text-align:center;color:rgba(255,255,255,0.16);font-size:13px}
-    @media(max-width:980px){.hero{grid-template-columns:1fr}.big-ava{height:260px}h1{font-size:36px}}
+
+    /* Videos section */
+    .videos-section{margin-top:28px;display:grid;grid-template-columns:1fr 360px;gap:24px}
+    .featured-video{border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,0.03);box-shadow:0 20px 50px rgba(0,0,0,0.5);background:#000}
+    .featured-video iframe{width:100%;height:420px;border:0;display:block}
+    .thumbs{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:12px}
+    .thumb{display:flex;gap:8px;align-items:center;padding:8px;border-radius:10px;background:rgba(255,255,255,0.02);cursor:pointer;text-decoration:none;color:inherit}
+    .thumb img{width:120px;height:70px;object-fit:cover;border-radius:8px;flex-shrink:0}
+    .thumb .meta{font-size:14px}
+    .thumb .meta strong{display:block;font-weight:700}
+    .thumb:focus, .thumb:hover{transform:translateY(-4px);box-shadow:0 18px 40px rgba(255,122,24,0.06)}
+
+    /* Responsive & mobile nav */
+    #burger{display:none;border:0;background:transparent;color:var(--muted);font-weight:700;font-size:20px;cursor:pointer}
+    @media(max-width:980px){ .hero{grid-template-columns:1fr}.featured-video iframe{height:260px} .videos-section{grid-template-columns:1fr} .big-ava{height:260px} h1{font-size:36px} }
+    @media(max-width:720px){
+      .navlinks{display:none;position:absolute;right:24px;top:76px;flex-direction:column;background:#071018;padding:10px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
+      #burger{display:block}
+      .thumb img{width:100px;height:60px}
+      .thumbs{grid-template-columns:repeat(2,1fr)}
+    }
+
+    /* Focus */
+    a:focus, button:focus{ outline:3px solid rgba(255,155,59,0.12); outline-offset:4px; border-radius:8px }
+    .cta{ transition: transform .18s, box-shadow .18s }
+    .cta:hover{ transform:translateY(-4px); box-shadow:0 18px 40px rgba(255,122,24,0.12) }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <nav class="topbar">
+    <nav class="topbar" role="navigation" aria-label="Barre de navigation">
       <div class="brand">
-        <img src="profile-0.png" alt="logo">
+        <img src="profile-0.png" alt="logo KenzouTV">
         <div class="title">Accueil - KenzouTV</div>
       </div>
 
-      <div class="navlinks">
-        <a href="index.html" class="active">Accueil</a>
-        <a href="index.html">Bloqué</a>
-        <a href="index.html">Bloqué</a>
-        <a href="index.html">Bientôt</a>
-        <button class="btn-discord" id="btnDiscord">Discord</button>
+      <div style="display:flex;align-items:center;gap:12px">
+        <button id="burger" aria-expanded="false" aria-controls="main-nav">☰</button>
+        <div class="navlinks" id="main-nav">
+          <a href="index.html" class="active">Accueil</a>
+          <a href="index.html">Bloqué</a>
+          <a href="index.html">Bloqué</a>
+          <a href="index.html">Bientôt</a>
+          <button class="btn-discord" id="btnDiscord">Discord</button>
+        </div>
       </div>
     </nav>
 
-    <main class="hero">
-      <section class="card-left">
-        <div class="badge">CRÉATEUR VIDÉO & ANIMATION</div>
-        <h1>EN CONSTRUCTION, MAIS DÉJÀ EN MOUVEMENT.</h1>
-        <p class="lead">Je me lance dans l’animation et la création de vidéos.</p>
+    <main>
+      <section class="hero" aria-labelledby="hero-title">
+        <section class="card-left">
+          <div class="badge">CRÉATEUR VIDÉO & ANIMATION</div>
+          <h1 id="hero-title">EN CONSTRUCTION, MAIS DÉJÀ EN MOUVEMENT.</h1>
+          <p class="lead">Je me lance dans l’animation et la création de vidéos.</p>
 
-        <div class="list">
-          <div class="item"><strong>01. Création & Animation</strong><div style="color:rgba(255,255,255,0.6);margin-top:6px">Je découvre l’animation, le montage et la mise en scène visuelle.</div></div>
-          <div class="item"><strong>02. Vidéos & Expérimentations</strong><div style="color:rgba(255,255,255,0.6);margin-top:6px">Je crée des contenus autour de mes idées, de mes essais et de mes futurs projets.</div></div>
-          <div class="item"><strong>03. Projet en évolution</strong><div style="color:rgba(255,255,255,0.6);margin-top:6px">Ce site, comme mes vidéos, est en développement.</div></div>
-        </div>
+          <div class="list" aria-hidden="false">
+            <div class="item"><strong>01. Création & Animation</strong><div style="color:rgba(255,255,255,0.6);margin-top:6px">Je découvre l’animation, le montage et la mise en scène visuelle.</div></div>
+            <div class="item"><strong>02. Vidéos & Expérimentations</strong><div style="color:rgba(255,255,255,0.6);margin-top:6px">Je crée des contenus autour de mes idées, de mes essais et de mes futurs projets.</div></div>
+            <div class="item"><strong>03. Projet en évolution</strong><div style="color:rgba(255,255,255,0.6);margin-top:6px">Ce site, comme mes vidéos, est en développement.</div></div>
+          </div>
 
-        <div class="small-dashed">Autre Info - Le site web est encore en cours de création.</div>
+          <div class="small-dashed">Autre Info - Le site web est encore en cours de création.</div>
 
-        <!-- CTA now points to blockframe.html -->
-        <a class="cta" href="index.html" style="display:inline-block;margin-top:22px;padding:12px 18px;border-radius:14px;background:linear-gradient(180deg,var(--accent),var(--accent-2));color:#0b0a0b;font-weight:800;text-decoration:none">DÉCOUVRIR LE STUDIO</a>
+          <a class="cta" href="index.html" style="display:inline-block;margin-top:22px;padding:12px 18px;border-radius:14px;background:linear-gradient(180deg,var(--accent),var(--accent-2));color:#0b0a0b;font-weight:800;text-decoration:none">DÉCOUVRIR LE STUDIO</a>
+        </section>
+
+        <aside class="right-col" aria-labelledby="latest-label">
+          <div class="profile-square" id="latest-label">
+            <div class="label-box" style="margin-bottom:12px">DERNIÈRE VIDÉO</div>
+
+            <!-- Featured video: change ID below or let script set it -->
+            <div class="big-ava featured-video" id="featured">
+              <!-- Fallback poster shown for browsers blocking autoplay -->
+              <iframe id="featuredIframe" src="about:blank" title="Vidéo principale" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+
+            <div style="margin-top:12px;color:var(--muted);font-size:13px">Clique sur une miniature pour la lire.</div>
+          </div>
+
+          <div class="label-box" style="text-transform:uppercase">CRÉATION & ANIMATION — Des idées qui prennent forme.</div>
+        </aside>
       </section>
 
-      <aside class="right-col">
-        <div class="profile-square">
-          <div class="big-ava"><img src="profile.jpg" alt="grosse tete"></div>
+      <!-- Section vidéos (grid de miniatures) -->
+      <section class="videos-section" aria-label="Vidéos récentes">
+        <div class="featured-card">
+          <!-- laisse vide: iframe déjà dans la right-col pour visibilité -->
         </div>
-        <div class="label-box">CRÉATION & ANIMATION — Des idées qui prennent forme.</div>
-      </aside>
-    </main>
 
-    <footer>© 2026 KenzouTV — TOUS DROITS RÉSERVÉS</footer>
+        <aside>
+          <h3 style="margin:0 0 10px 0;font-size:18px">Autres vidéos</h3>
+          <div class="thumbs" id="thumbsContainer">
+            <!-- Thumbnails injectées par JS -->
+          </div>
+        </aside>
+      </section>
+
+      <footer>© 2026 KenzouTV — TOUS DROITS RÉSERVÉS</footer>
+    </main>
   </div>
 
   <script>
-    // Discord invite + external links behaviour
+    // CONFIG -> remplace les IDs par tes vidéos YouTube
+    const LATEST_VIDEO_ID = 'REPLACE_WITH_YOUR_LATEST_VIDEO_ID'; // ex: 'dQw4w9WgXcQ'
+    const videoData = [
+      { id: 'REPLACE_WITH_YOUR_LATEST_VIDEO_ID', title: 'Dernière vidéo — Titre', thumb: 'thumb-latest.jpg', duration: '4:02' },
+      { id: 'VIDEO_ID_2', title: 'Vidéo 2 — Petit projet', thumb: 'thumb-2.jpg', duration: '2:15' },
+      { id: 'VIDEO_ID_3', title: 'Vidéo 3 — Test d’animation', thumb: 'thumb-3.jpg', duration: '3:48' },
+      { id: 'VIDEO_ID_4', title: 'Vidéo 4 — Making of', thumb: 'thumb-4.jpg', duration: '1:20' }
+    ];
+
+    // Utility: build embed URL (autoplay off by default)
+    function buildEmbedUrl(id, autoplay = false) {
+      return 'https://www.youtube.com/embed/' + encodeURIComponent(id) + '?rel=0' + (autoplay ? '&autoplay=1' : '');
+    }
+
+    // Initialize featured iframe
+    const featuredIframe = document.getElementById('featuredIframe');
+    const initialId = (LATEST_VIDEO_ID && LATEST_VIDEO_ID !== 'REPLACE_WITH_YOUR_LATEST_VIDEO_ID') ? LATEST_VIDEO_ID : videoData[0].id;
+    featuredIframe.src = buildEmbedUrl(initialId, false);
+
+    // Render thumbnails
+    const thumbsContainer = document.getElementById('thumbsContainer');
+    thumbsContainer.innerHTML = ''; // clear
+    videoData.forEach(v => {
+      const a = document.createElement('button'); // button for accessibility
+      a.className = 'thumb';
+      a.type = 'button';
+      a.setAttribute('aria-label', 'Lire ' + v.title);
+      a.innerHTML = `
+        <img loading="lazy" src="${v.thumb}" alt="${v.title}">
+        <div class="meta"><strong>${v.title}</strong><span style="color:var(--muted);font-size:12px">${v.duration || ''}</span></div>
+      `;
+      a.addEventListener('click', () => {
+        featuredIframe.src = buildEmbedUrl(v.id, true);
+        // Move focus to iframe for keyboard users (iframe can't receive focus reliably), so focus the featured container
+        document.getElementById('featured').focus && document.getElementById('featured').focus();
+      });
+      thumbsContainer.appendChild(a);
+    });
+
+    // Discord invite button
     var btn = document.getElementById('btnDiscord');
     if(btn){ btn.addEventListener('click', function(){ window.open('https://discord.gg/KURpXHzRTE','_blank','noopener'); }); }
+
+    // External links open in new tab (if any)
     document.querySelectorAll('a[href^="http"]').forEach(function(a){ a.setAttribute('target','_blank'); a.setAttribute('rel','noopener'); });
+
+    // Mobile burger menu
+    const burger = document.getElementById('burger');
+    const navlinks = document.querySelector('.navlinks');
+    if(burger){
+      burger.addEventListener('click', ()=> {
+        const expanded = burger.getAttribute('aria-expanded') === 'true';
+        burger.setAttribute('aria-expanded', String(!expanded));
+        navlinks.style.display = navlinks.style.display === 'flex' ? 'none' : 'flex';
+      });
+    }
+
+    // Accessibility: allow keyboard navigation to thumbnails via Enter
+    thumbsContainer.addEventListener('keydown', (e) => {
+      if(e.key === 'Enter' && e.target.classList.contains('thumb')){
+        e.target.click();
+      }
+    });
+
+    // Note: pour lister automatiquement la dernière vidéo depuis ta chaîne YouTube,
+    // on peut plus tard ajouter une requête à l'API YouTube (nécessite clé API). Là c'est simple et fiable.
   </script>
 </body>
 </html>
