@@ -3,67 +3,279 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Mes Réseaux — KenzouTV</title>
+  <title>Mes Liens — KenzouTV</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <meta name="description" content="Liens officiels — KenzouTV (YouTube, Twitch, Discord, etc.)" />
   <style>
-    :root{--accent:#ff7a18;--accent-2:#ff9b3b;--muted:rgba(255,255,255,0.6)}
+    :root{
+      --bg-1:#06070a;
+      --accent:#ff7a18;
+      --accent-2:#ff9b3b;
+      --muted:rgba(255,255,255,0.68);
+      --glass: rgba(7,16,24,0.88);
+      --card: rgba(255,255,255,0.02);
+      --max-w:1180px;
+      --gap:18px;
+    }
     *{box-sizing:border-box}
-    body{margin:0;font-family:Inter,system-ui,Arial;background:radial-gradient(700px 300px at 10% 90%, rgba(255,122,24,0.04),transparent),linear-gradient(180deg,#040607 0%,#071018 100%);color:#eaf0ff;min-height:100vh;padding:28px}
-    .wrap{max-width:1180px;margin:0 auto}
-    /* NAV same as other pages */
-    nav.topbar{display:flex;align-items:center;justify-content:space-between;padding:12px 18px;border-radius:30px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));box-shadow:0 6px 20px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.02);margin-bottom:22px}
-    .brand{display:flex;align-items:center;gap:12px}.brand img{width:44px;height:44px;border-radius:10px;object-fit:cover}.brand .title{font-weight:700;color:#eaf0ff}
+    html,body{height:100%}
+    body{
+      margin:0;padding:48px 24px;font-family:Inter,system-ui,Arial;color:#eaf0ff;
+      background:
+        radial-gradient(800px 400px at 10% 80%, rgba(255,122,24,0.06), transparent 8%),
+        radial-gradient(900px 450px at 90% 20%, rgba(255,155,59,0.04), transparent 8%),
+        linear-gradient(180deg,var(--bg-1), #071018 60%);
+      -webkit-font-smoothing:antialiased;
+      min-height:100vh;
+    }
+
+    .wrap{ max-width:var(--max-w); margin:32px auto; }
+
+    /* Topbar (pixel-matched) */
+    nav.topbar{
+      display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 18px;border-radius:30px;
+      max-width:var(--max-w);margin:0 auto;position:sticky;top:22px;z-index:40;background:var(--glass);
+      border:1px solid rgba(255,255,255,0.03);-webkit-backdrop-filter: blur(10px);backdrop-filter: blur(10px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+    }
+    .brand{display:flex;align-items:center;gap:12px}
+    .brand img{width:44px;height:44px;border-radius:10px;object-fit:cover}
+    .brand .title{font-weight:700;letter-spacing:0.4px;color:#eaf0ff}
     .navlinks{display:flex;gap:12px;align-items:center}
-    .navlinks a{padding:8px 14px;border-radius:12px;text-decoration:none;color:rgba(255,255,255,0.60);font-weight:600}
-    .navlinks a.active{color:#fff;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01))}
-    .btn-discord{background:linear-gradient(180deg,var(--accent),var(--accent-2));padding:8px 16px;border-radius:12px;color:#0b0a0b;font-weight:700;border:none;cursor:pointer}
-    .card{background:rgba(255,255,255,0.02);padding:28px;border-radius:18px;box-shadow:0 40px 80px rgba(0,0,0,0.7)}
-    .head{display:flex;gap:16px;align-items:center}
-    .head img{width:64px;height:64px;border-radius:12px;object-fit:cover}
-    .links-grid{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
-    .link{flex:1 1 220px;padding:14px;border-radius:12px;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#071018;font-weight:800;text-decoration:none;text-align:center}
-    .link.secondary{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--accent-2);font-weight:700}
-    .note{margin-top:18px;color:rgba(255,255,255,0.25);font-size:13px}
-    @media(max-width:540px){.links-grid{flex-direction:column}}
+    .navlinks a{padding:8px 14px;border-radius:12px;text-decoration:none;color:var(--muted);font-weight:600}
+    .navlinks a.active{ color:#fff; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); }
+    .btn-discord{ background:linear-gradient(180deg,var(--accent),var(--accent-2)); padding:8px 16px;border-radius:12px;color:#071018;font-weight:800;border:none;cursor:pointer;box-shadow:0 6px 18px rgba(255,122,24,0.12); }
+
+    header{ max-width:var(--max-w); margin:18px auto 6px auto; padding:0 6px; }
+    header h1{ margin:0 0 6px 0; font-size:28px; }
+    header p{ margin:0; color:rgba(234,240,255,0.76) }
+
+    /* links grid */
+    .links-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:var(--gap); margin-top:22px }
+    .link-card{
+      background:var(--card); padding:14px; border-radius:12px; border:1px solid rgba(255,255,255,0.02);
+      box-shadow:0 12px 30px rgba(0,0,0,0.45); display:flex; flex-direction:column; gap:12px; align-items:stretch;
+    }
+
+    .link-head{ display:flex; align-items:center; gap:12px }
+    .icon{ width:56px; height:56px; border-radius:10px; display:grid; place-items:center; flex-shrink:0; background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00)); border:1px solid rgba(255,255,255,0.03) }
+    .icon svg{ width:28px; height:28px; display:block }
+
+    .link-title{ font-weight:800; font-size:16px }
+    .link-desc{ color:var(--muted); font-size:13px; margin-top:4px }
+
+    .link-actions{ margin-top:auto; display:flex; gap:10px; align-items:center }
+    .open-btn{ background:linear-gradient(90deg,var(--accent),var(--accent-2)); padding:9px 12px;border-radius:10px;color:#071018;font-weight:800;border:none;text-decoration:none; cursor:pointer; box-shadow:0 6px 18px rgba(255,122,24,0.12) }
+    .copy-btn{ background:transparent;border:1px solid rgba(255,255,255,0.06); color:var(--muted); padding:9px 10px;border-radius:10px;font-weight:700; cursor:pointer }
+    .small{ font-size:12px;color:var(--muted); text-align:right }
+
+    footer{ margin-top:32px; text-align:center; color:rgba(255,255,255,0.14); font-size:13px }
+
+    @media(max-width:980px){ .links-grid{ grid-template-columns:repeat(2,1fr) } }
+    @media(max-width:620px){ .links-grid{ grid-template-columns:1fr } .brand img{ width:40px; height:40px } header h1{ font-size:22px } }
+
+    /* tiny toast */
+    .toast{ position:fixed; right:20px; bottom:20px; background:linear-gradient(90deg,var(--accent),var(--accent-2)); color:#071018; padding:10px 14px; border-radius:10px; font-weight:800; box-shadow:0 8px 30px rgba(0,0,0,0.6); display:none; z-index:3000 }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <nav class="topbar">
-      <div class="brand"><img src="profile.jpg" alt="logo"><div class="title">KenzouTV</div></div>
-      <div class="navlinks">
+    <nav class="topbar" aria-label="Barre de navigation">
+      <div class="brand">
+        <img src="profile-0.png" alt="logo KenzouTV">
+        <div class="title">KenzouTV</div>
+      </div>
+
+      <div class="navlinks" id="main-nav">
         <a href="index.html">Accueil</a>
-        <a href="links.html" class="active">Mes Réseaux</a>
+        <a href="links.html" class="active">Mes Liens</a>
         <a href="boutique.html">Boutique</a>
         <a href="blockframe.html">BlockFrame</a>
         <button class="btn-discord" id="btnDiscord">Discord</button>
       </div>
     </nav>
 
-    <div class="card">
-      <div class="head">
-        <img src="profile.jpg" alt="avatar">
-        <div>
-          <h1 style="margin:0;font-size:22px">KenzouTV — Mes Réseaux</h1>
-          <p style="margin:6px 0 18px;color:rgba(234,240,255,0.8)">Retrouve-moi sur mes plateformes. Clique pour ouvrir chaque lien.</p>
-        </div>
-      </div>
+    <header>
+      <h1>Mes liens officiels</h1>
+      <p>Tu peux remplacer les URLs ci-dessous par tes liens YouTube, Twitch, Discord, etc.</p>
+    </header>
 
-      <div class="links-grid">
-        <a class="link" href="https://discord.gg/KURpXHzRTE" rel="noopener" target="_blank">Rejoindre le Discord</a>
-        <a class="link secondary" href="#" rel="noopener">YouTube (à ajouter)</a>
-        <a class="link secondary" href="#" rel="noopener">Instagram (à ajouter)</a>
-        <a class="link secondary" href="#" rel="noopener">Twitter (à ajouter)</a>
-      </div>
+    <main>
+      <section class="links-grid" id="linksGrid">
+        <!-- YouTube -->
+        <article class="link-card" data-url="https://www.youtube.com/">
+          <div class="link-head">
+            <div class="icon" aria-hidden="true">
+              <!-- play icon -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="#ff7a18" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3v18l15-9L5 3z"/></svg>
+            </div>
+            <div>
+              <div class="link-title">YouTube</div>
+              <div class="link-desc">Chaîne officielle — vidéos et projets</div>
+            </div>
+          </div>
+          <div class="link-actions">
+            <a href="#" class="open-btn" data-open>Ouvrir</a>
+            <button class="copy-btn" data-copy>Copier le lien</button>
+            <div class="small">YouTube</div>
+          </div>
+        </article>
 
-      <div class="note">Astuce : remplace les liens secondaires par tes URLs. L'image <code>profile.jpg</code> doit être dans le même dossier.</div>
-    </div>
+        <!-- Twitch -->
+        <article class="link-card" data-url="https://www.twitch.tv/">
+          <div class="link-head">
+            <div class="icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#2b8cff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v12l-3 3h-3l-3 3v-3H4z"/></svg>
+            </div>
+            <div>
+              <div class="link-title">Twitch</div>
+              <div class="link-desc">Streams & live — suis le planning</div>
+            </div>
+          </div>
+          <div class="link-actions">
+            <a href="#" class="open-btn" data-open>Ouvrir</a>
+            <button class="copy-btn" data-copy>Copier le lien</button>
+            <div class="small">Twitch</div>
+          </div>
+        </article>
+
+        <!-- Discord -->
+        <article class="link-card" data-url="https://discord.gg/KURpXHzRTE">
+          <div class="link-head">
+            <div class="icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#7ad0ff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 8v6a5 5 0 0 0 10 0V8"/><path d="M8 10h.01M16 10h.01"/></svg>
+            </div>
+            <div>
+              <div class="link-title">Discord</div>
+              <div class="link-desc">Serveur officiel — tickets & communauté</div>
+            </div>
+          </div>
+          <div class="link-actions">
+            <a href="#" class="open-btn" data-open>Ouvrir</a>
+            <button class="copy-btn" data-copy>Copier le lien</button>
+            <div class="small">Discord</div>
+          </div>
+        </article>
+
+        <!-- Instagram -->
+        <article class="link-card" data-url="https://www.instagram.com/">
+          <div class="link-head">
+            <div class="icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#ff9b3b" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M16 11.37A4 4 0 1 1 12.63 8"/><path d="M17.5 6.5h.01"/></svg>
+            </div>
+            <div>
+              <div class="link-title">Instagram</div>
+              <div class="link-desc">Coulisses & mini-clips</div>
+            </div>
+          </div>
+          <div class="link-actions">
+            <a href="#" class="open-btn" data-open>Ouvrir</a>
+            <button class="copy-btn" data-copy>Copier le lien</button>
+            <div class="small">Insta</div>
+          </div>
+        </article>
+
+        <!-- TikTok -->
+        <article class="link-card" data-url="https://www.tiktok.com/">
+          <div class="link-head">
+            <div class="icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2v12a4 4 0 1 0 4-4V2"/></svg>
+            </div>
+            <div>
+              <div class="link-title">TikTok</div>
+              <div class="link-desc">Shorts & tendances</div>
+            </div>
+          </div>
+          <div class="link-actions">
+            <a href="#" class="open-btn" data-open>Ouvrir</a>
+            <button class="copy-btn" data-copy>Copier le lien</button>
+            <div class="small">TikTok</div>
+          </div>
+        </article>
+
+        <!-- Site perso / Boutique -->
+        <article class="link-card" data-url="https://kenzoutv.github.io/boutique.html">
+          <div class="link-head">
+            <div class="icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#ffd166" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h18M12 3v18"/></svg>
+            </div>
+            <div>
+              <div class="link-title">Boutique</div>
+              <div class="link-desc">Commandes, PP et animations</div>
+            </div>
+          </div>
+          <div class="link-actions">
+            <a href="#" class="open-btn" data-open>Ouvrir</a>
+            <button class="copy-btn" data-copy>Copier le lien</button>
+            <div class="small">Boutique</div>
+          </div>
+        </article>
+
+      </section>
+    </main>
+
+    <footer>© 2026 KenzouTV — Liens officiels</footer>
   </div>
 
+  <div class="toast" id="toast">Copié !</div>
+
   <script>
-    var btn = document.getElementById('btnDiscord');
-    if(btn){ btn.addEventListener('click', function(){ window.open('https://discord.gg/KURpXHzRTE','_blank','noopener'); }); }
-    document.querySelectorAll('a[href^="http"]').forEach(function(a){ a.setAttribute('target','_blank'); a.setAttribute('rel','noopener'); });
+    // Replaceable notes:
+    // -> Change the data-url attributes to your actual URLs (YouTube, Twitch, etc.)
+    // -> The "Ouvrir" buttons open the link in a new tab.
+    // -> The "Copier le lien" button copies the URL to clipboard and shows a toast.
+
+    const toast = document.getElementById('toast');
+
+    function showToast(text='Copié !'){
+      toast.textContent = text;
+      toast.style.display = 'block';
+      toast.style.opacity = '1';
+      setTimeout(()=> {
+        toast.style.transition = 'opacity 400ms';
+        toast.style.opacity = '0';
+        setTimeout(()=> toast.style.display = 'none', 420);
+      }, 900);
+    }
+
+    // Open links in new tab
+    document.querySelectorAll('.link-card').forEach(card=>{
+      const url = card.getAttribute('data-url') || '#';
+      const openBtn = card.querySelector('[data-open]');
+      if (openBtn){
+        openBtn.addEventListener('click', (e)=>{
+          e.preventDefault();
+          // open in new tab
+          window.open(url, '_blank', 'noopener');
+        });
+      }
+      const copyBtn = card.querySelector('[data-copy]');
+      if (copyBtn){
+        copyBtn.addEventListener('click', async (e)=>{
+          e.preventDefault();
+          try {
+            await navigator.clipboard.writeText(url);
+            showToast('Lien copié !');
+          } catch (err) {
+            // fallback: select text
+            const ta = document.createElement('textarea');
+            ta.value = url;
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            ta.remove();
+            showToast('Lien copié !');
+          }
+        });
+      }
+    });
+
+    // Discord quick button in topbar
+    const btnDiscord = document.getElementById('btnDiscord');
+    if (btnDiscord) btnDiscord.addEventListener('click', ()=> window.open('https://discord.gg/KURpXHzRTE','_blank','noopener'));
+
+    // External links open in new tab (if any normal anchors)
+    document.querySelectorAll('a[href^="http"]').forEach(a => { a.setAttribute('target','_blank'); a.setAttribute('rel','noopener'); });
   </script>
 </body>
 </html>
