@@ -81,12 +81,7 @@
 
     .note{ margin-top:12px; color:rgba(255,255,255,0.35) }
 
-    /* PP gallery (use product-3 & product-4 as main samples) */
-    .pp-gallery{ margin-top:22px; display:grid; grid-template-columns:repeat(4,1fr); gap:10px }
-    .pp-sample{ border-radius:8px; overflow:hidden; cursor:pointer; border:1px solid rgba(255,255,255,0.03); background:var(--card); }
-    .pp-sample img{ width:100%; height:100px; object-fit:cover; display:block }
-
-    /* modal (stronger blur & opacity) */
+    /* modal */
     .modal-backdrop{ position:fixed; inset:0; background:rgba(0,0,0,0.86); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); display:none; align-items:center; justify-content:center; z-index:2200; padding:24px }
     .modal{ width:100%; max-width:920px; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-radius:14px; padding:18px; border:1px solid rgba(255,255,255,0.03); box-shadow:0 40px 120px rgba(0,0,0,0.8); display:flex; gap:18px; color:#eaf0ff; align-items:flex-start }
     .modal .left{ flex:1; display:flex; flex-direction:column; gap:12px }
@@ -95,8 +90,8 @@
     .modal .right{ width:340px; display:flex; flex-direction:column; gap:12px }
     .modal .close{ background:transparent;border:0;color:var(--muted);cursor:pointer;font-weight:800;align-self:flex-end }
 
-    @media(max-width:980px){ .grid{ grid-template-columns:1fr } .modal{ flex-direction:column } .modal .right{ width:100% } .modal .left img{ height:220px } .pp-gallery{ grid-template-columns:repeat(2,1fr) } }
-    @media(max-width:720px){ .navlinks{ display:none; position:absolute; right:24px; top:76px; flex-direction:column; background:var(--glass); padding:10px; border-radius:12px; border:1px solid rgba(255,255,255,0.03) } #burger{ display:block } .pp-gallery{ grid-template-columns:repeat(2,1fr) } }
+    @media(max-width:980px){ .grid{ grid-template-columns:1fr } .modal{ flex-direction:column } .modal .right{ width:100% } .modal .left img{ height:220px } }
+    @media(max-width:720px){ .navlinks{ display:none; position:absolute; right:24px; top:76px; flex-direction:column; background:var(--glass); padding:10px; border-radius:12px; border:1px solid rgba(255,255,255,0.03) } #burger{ display:block } }
 
     a:focus, button:focus{ outline:3px solid rgba(255,155,59,0.12); outline-offset:4px; border-radius:8px }
   </style>
@@ -136,7 +131,8 @@
         <div class="actions" style="margin-top:auto">
           <button class="primary-btn" data-id="product-1">Voir détails</button>
           <button class="primary-btn" onclick="openOrder()">Commander</button>
-          <button class="example-btn" data-examples="PP-1.jpg,PP-2.jpg,PP-3.jpg">Voir Exemple</button>
+          <!-- For animations: redirect to blockframe -->
+          <button class="example-btn" data-target="blockframe.html">Voir Exemple</button>
         </div>
       </article>
 
@@ -148,7 +144,7 @@
         <div class="actions" style="margin-top:auto">
           <button class="primary-btn" data-id="product-2">Voir détails</button>
           <button class="primary-btn" onclick="openOrder()">Commander</button>
-          <button class="example-btn" data-examples="PP-1.jpg,PP-2.jpg,PP-3.jpg">Voir Exemple</button>
+          <button class="example-btn" data-target="blockframe.html">Voir Exemple</button>
         </div>
       </article>
 
@@ -176,7 +172,7 @@
         </div>
       </article>
 
-      <!-- Abbonement -->
+      <!-- Abbonement (no example button) -->
       <article class="product" id="product-subscription">
         <img src="subscription.jpg" alt="Abbonement exemple">
         <div class="meta"><strong>Abbonement</strong><span class="price">6€/mois</span></div>
@@ -184,21 +180,8 @@
         <div class="actions" style="margin-top:auto">
           <button class="primary-btn" data-id="product-subscription">Voir détails</button>
           <button class="primary-btn" onclick="openOrder()">S'abonner</button>
-          <button class="example-btn" data-examples="PP-1.jpg,PP-2.jpg,PP-3.jpg">Voir Exemple</button>
         </div>
       </article>
-    </section>
-
-    <!-- PP gallery (main samples use product-3 & product-4) -->
-    <section style="margin-top:22px">
-      <h3 style="margin:0 0 8px 0">Galerie — Styles de PP</h3>
-      <p style="margin:0 0 12px 0;color:var(--muted)">Exemples que nous réalisons. Clique pour agrandir (ou utilisez "Voir Exemple").</p>
-      <div class="pp-gallery" id="ppGallery">
-        <div class="pp-sample" data-sample="product-3.jpg"><img src="product-3.jpg" alt="Sample product-3"></div>
-        <div class="pp-sample" data-sample="product-4.jpg"><img src="product-4.jpg" alt="Sample product-4"></div>
-        <div class="pp-sample" data-sample="PP-1.jpg"><img src="PP-1.jpg" alt="PP-1"></div>
-        <div class="pp-sample" data-sample="PP-2.jpg"><img src="PP-2.jpg" alt="PP-2"></div>
-      </div>
     </section>
 
     <div style="margin-top:18px;color:var(--muted);font-size:13px">
@@ -255,7 +238,6 @@
     const modalDesc = document.getElementById('modalDesc');
     const modalPaypal = document.getElementById('modalPaypal');
     const modalClose = document.getElementById('modalClose');
-    const modalTicket = document.getElementById('modalTicket');
     const prevExample = document.getElementById('prevExample');
     const nextExample = document.getElementById('nextExample');
 
@@ -277,7 +259,7 @@
       document.body.classList.add('modal-open');
       lastFocused = document.activeElement;
       modalClose.focus();
-      // remove any example set
+      // clear examples (unless set)
       exampleImages = [];
       exampleIndex = 0;
       updateCarouselControls();
@@ -300,7 +282,6 @@
       lastFocused = document.activeElement;
       modalClose.focus();
       updateCarouselControls();
-      // set hash to indicate examples opened (optional)
       if (location.hash !== '#examples') history.pushState(null,'', '#examples');
     }
 
@@ -309,7 +290,6 @@
       modalBackdrop.setAttribute('aria-hidden','true');
       document.body.classList.remove('modal-open');
       if (lastFocused) lastFocused.focus();
-      // remove product hash if present
       if (location.hash && (location.hash.startsWith('#product-') || location.hash === '#examples')) {
         history.pushState(null,'', location.pathname + location.search);
       }
@@ -343,21 +323,18 @@
       });
     });
 
-    // example buttons (open PP-1..PP-3)
+    // example buttons:
     document.querySelectorAll('.example-btn').forEach(btn=>{
       btn.addEventListener('click', ()=>{
-        const raw = btn.getAttribute('data-examples') || 'PP-1.jpg,PP-2.jpg,PP-3.jpg';
-        const list = raw.split(',').map(s=>s.trim()).filter(Boolean);
+        const target = btn.getAttribute('data-target');
+        const raw = btn.getAttribute('data-examples');
+        if (target) {
+          // redirect for animations
+          window.location.href = target;
+          return;
+        }
+        const list = raw ? raw.split(',').map(s=>s.trim()).filter(Boolean) : ['PP-1.jpg','PP-2.jpg','PP-3.jpg'];
         openExamples(list);
-      });
-    });
-
-    // clicking gallery samples opens them in modal as preview
-    document.querySelectorAll('.pp-sample').forEach(el=>{
-      el.addEventListener('click', ()=>{
-        const src = el.getAttribute('data-sample');
-        if(!src) return;
-        openExamples([src]);
       });
     });
 
@@ -366,7 +343,7 @@
     modalBackdrop.addEventListener('click', (e)=> { if (e.target === modalBackdrop) closeModal(); });
     window.addEventListener('keydown', (e)=> { if (e.key === 'Escape' && modalBackdrop.style.display === 'flex') closeModal(); });
 
-    // hash handling (open modal when linking to #product-1, etc.)
+    // hash handling
     window.addEventListener('hashchange', ()=>{
       const h = location.hash.replace('#','');
       if (h && h.startsWith('product-') && PRODUCTS[h]) {
@@ -383,10 +360,9 @@
       if (h === 'examples') setTimeout(()=>openExamples(['PP-1.jpg','PP-2.jpg','PP-3.jpg']),80);
     })();
 
-    // helper openOrder (go to order anchor or set hash)
+    // openOrder helper
     function openOrder(){
-      // replace by your real order page or #order anchor
-      window.location.href = '#order';
+      window.location.href = '#order'; // you can replace with a real page or anchor
     }
 
     // burger + nav
@@ -400,10 +376,9 @@
       });
     }
 
-    // discord button
+    // discord btn
     document.getElementById('btnDiscord').addEventListener('click', ()=> { window.open('https://discord.gg/KURpXHzRTE','_blank','noopener'); });
 
-    // open PayPal link in new tab (modalPaypal already has href)
     // ensure external links open in new tab
     document.querySelectorAll('a[href^="http"]').forEach(a => { a.setAttribute('target','_blank'); a.setAttribute('rel','noopener'); });
   </script>
