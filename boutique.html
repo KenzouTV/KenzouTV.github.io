@@ -1,13 +1,251 @@
-<script>
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Boutique — KenzouTV</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <meta name="description" content="Boutique — BlockFrame (KenzouTV)"/>
+  <style>
+    :root{
+      --bg-1:#06070a;
+      --accent:#ff7a18;
+      --accent-2:#ff9b3b;
+      --accent-blue:#2b8cff;
+      --muted:rgba(255,255,255,0.65);
+      --glass: rgba(7,16,24,0.88);
+      --card: rgba(255,255,255,0.02);
+      --max-w:1180px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;padding:48px 24px;font-family:Inter,system-ui,Arial;color:#eaf0ff;
+      -webkit-font-smoothing:antialiased;
+      background:
+        radial-gradient(800px 400px at 10% 80%, rgba(255,122,24,0.06), transparent 8%),
+        radial-gradient(900px 450px at 90% 20%, rgba(255,155,59,0.04), transparent 8%),
+        linear-gradient(180deg,var(--bg-1), #071018 60%);
+      background-size:200% 200%;
+      min-height:100vh;
+    }
+    .wrap{ max-width:var(--max-w); margin:32px auto; }
+
+    /* NAV same as index */
+    nav.topbar{
+      display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 18px;border-radius:30px;
+      max-width:var(--max-w);margin:0 auto;position:sticky;top:22px;z-index:40;background:var(--glass);
+      border:1px solid rgba(255,255,255,0.03);-webkit-backdrop-filter: blur(10px);backdrop-filter: blur(10px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+      gap:12px;
+      min-height:56px;
+      position:relative;
+    }
+    .brand{display:flex;align-items:center;gap:12px}
+    .brand img{width:44px;height:44px;border-radius:10px;object-fit:cover}
+    .brand .title{font-weight:700;letter-spacing:0.4px;color:#eaf0ff}
+    .navlinks{display:flex;gap:12px;align-items:center}
+    .navlinks a{padding:8px 14px;border-radius:12px;text-decoration:none;color:var(--muted);font-weight:600}
+    .navlinks a.active{ color:#fff; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); }
+    .btn-discord{ background:linear-gradient(180deg,var(--accent),var(--accent-2)); padding:8px 16px;border-radius:12px;color:#071018;font-weight:800;border:none;cursor:pointer;box-shadow:0 6px 18px rgba(255,122,24,0.12); }
+
+    /* unified hamburger & mobile menu styles */
+    #burger{ display:none; background:transparent; border:0; padding:6px; width:44px; height:44px; align-items:center; justify-content:center; cursor:pointer; border-radius:10px; position:absolute; right:12px; top:8px; }
+    #burger .bar{ display:block; width:20px; height:2.5px; margin:3px 0; border-radius:2px; background:linear-gradient(90deg,var(--accent),var(--accent-2)); }
+    .topbar.compact .navlinks{ display:none !important; }
+    .topbar.compact #burger{ display:flex !important; }
+    .mobile-menu{ display:none; position:absolute; right:12px; top:calc(100% + 8px); z-index:2600; background: rgba(7,16,24,0.98); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); padding:8px; border-radius:12px; min-width:180px; box-shadow:0 12px 40px rgba(0,0,0,0.6); border:1px solid rgba(255,255,255,0.03); }
+    .mobile-menu.open{ display:block; }
+    .mobile-menu a, .mobile-menu button { display:block; width:100%; text-align:left; padding:10px 12px; border-radius:8px; color:var(--muted); text-decoration:none; font-weight:700; background:transparent; border:0; font-size:15px; box-sizing:border-box; }
+    .mobile-menu a.active{ color:#fff; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); }
+    @media(min-width:880px){ #burger{ display:none !important } .mobile-menu{ display:none !important } }
+
+    header{ max-width:var(--max-w); margin:18px auto 6px auto; padding:0 6px; }
+    header h1{ margin:0 0 6px 0; font-size:28px; }
+    header p{ margin:0; color:rgba(234,240,255,0.76) }
+
+    .grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:18px; margin-top:18px }
+    .product{ background:var(--card); padding:14px; border-radius:12px; border:1px solid rgba(255,255,255,0.02); box-shadow:0 12px 30px rgba(0,0,0,0.45); display:flex; flex-direction:column; gap:10px; min-height:280px }
+    .product img{ width:100%; height:200px; object-fit:cover; border-radius:10px; display:block }
+    .meta{ display:flex; justify-content:space-between; align-items:center; gap:12px; }
+    .meta strong{ font-weight:700 }
+    .price{ color:var(--muted); font-weight:700 }
+    .actions{ display:flex; gap:8px; align-items:center; margin-top:auto; justify-content:flex-start }
+
+    .primary-btn{ background:linear-gradient(90deg,var(--accent),var(--accent-2)); padding:10px 12px;border-radius:10px;color:#071018;font-weight:800;text-decoration:none; cursor:pointer; border:none; box-shadow:0 8px 22px rgba(255,122,24,0.12); }
+    .example-btn{ background:linear-gradient(90deg,var(--accent-blue),#1a6ef0); padding:10px 12px;border-radius:10px;color:#fff;font-weight:800;text-decoration:none; cursor:pointer; border:none; box-shadow:0 8px 22px rgba(43,140,255,0.12); margin-left:auto; }
+    .info{ background:transparent; padding:8px 10px; border-radius:10px; color:var(--muted); border:1px solid rgba(255,255,255,0.03) }
+
+    .note{ margin-top:12px; color:rgba(255,255,255,0.35) }
+
+    /* modal */
+    .modal-backdrop{ position:fixed; inset:0; background:rgba(0,0,0,0.86); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); display:none; align-items:center; justify-content:center; z-index:2200; padding:24px }
+    .modal{ width:100%; max-width:920px; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-radius:14px; padding:18px; border:1px solid rgba(255,255,255,0.03); box-shadow:0 40px 120px rgba(0,0,0,0.8); display:flex; gap:18px; color:#eaf0ff; align-items:flex-start }
+    .modal .left{ flex:1; display:flex; flex-direction:column; gap:12px }
+    .modal .left img{ width:100%; height:320px; object-fit:cover; border-radius:10px }
+    .modal .left .carousel-controls{ display:flex; gap:8px; justify-content:center; align-items:center }
+    .modal .right{ width:340px; display:flex; flex-direction:column; gap:12px }
+    .modal .close{ background:transparent;border:0;color:var(--muted);cursor:pointer;font-weight:800;align-self:flex-end }
+
+    /* thank-you */
+    .thanks-backdrop{ position:fixed; inset:0; display:none; align-items:center; justify-content:center; z-index:2500; padding:20px; }
+    .thanks-card{ width:100%; max-width:700px; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); padding:22px; border-radius:14px; box-shadow:0 30px 80px rgba(0,0,0,0.7); text-align:center; border:1px solid rgba(255,255,255,0.03); }
+    .thanks-card h2{ margin:0 0 8px 0; font-size:22px }
+    .thanks-card p{ margin:0 0 12px 0; color:rgba(234,240,255,0.9) }
+    .thanks-card .actions{ margin-top:12px; display:flex; gap:8px; justify-content:center }
+    .thanks-card .btn{ padding:10px 14px; border-radius:10px; font-weight:800; border:none; cursor:pointer }
+    .btn-primary{ background:linear-gradient(90deg,var(--accent),var(--accent-2)); color:#071018 }
+    .btn-secondary{ background:transparent; border:1px solid rgba(255,255,255,0.06); color:var(--muted) }
+
+    #confetti-canvas{ position:fixed; inset:0; pointer-events:none; z-index:2600; display:none; }
+
+    @media(max-width:980px){ .grid{ grid-template-columns:1fr } .modal{ flex-direction:column } .modal .right{ width:100% } .modal .left img{ height:220px } }
+    @media(max-width:720px){ .navlinks{ display:none; position:absolute; right:24px; top:76px; flex-direction:column; background:var(--glass); padding:10px; border-radius:12px; border:1px solid rgba(255,255,255,0.03) } }
+    a:focus, button:focus{ outline:3px solid rgba(255,155,59,0.12); outline-offset:4px; border-radius:8px }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <nav class="topbar" aria-label="Barre de navigation">
+      <div class="brand">
+        <img src="profile-0.png" alt="logo KenzouTV">
+        <div class="title">KenzouTV</div>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:10px">
+        <div class="navlinks" id="main-nav">
+          <a href="index.html">Accueil</a>
+          <a href="links.html">Mes Réseaux</a>
+          <a href="#product-grid" class="active">Boutique</a>
+          <a href="blockframe.html">BlockFrame</a>
+          <button class="btn-discord" id="btnDiscord">Discord</button>
+        </div>
+      </div>
+
+      <div class="mobile-menu" aria-hidden="true"></div>
+    </nav>
+
+    <header>
+      <h1>Boutique — Animations & PP</h1>
+      <p class="note">Prix indicatifs : 1€ (PP simple) • Pack 5 PP = 4€ • 2€ animation courte • Abbonement : 6€/mois. Paiement via PayPal (liens dans les fiches).</p>
+    </header>
+
+    <section id="product-grid" class="grid" aria-label="Liste des produits">
+      <article class="product" id="product-1">
+        <img src="Produit-1.jpg" alt="Animation courte 1">
+        <div class="meta"><strong>Animation courte</strong><span class="price">2€</span></div>
+        <p style="margin:0;color:rgba(234,240,255,0.78)">Intro/bumpers &lt;1min. MP4 720p. 1 révision incluse.</p>
+        <div class="actions" style="margin-top:auto">
+          <button class="primary-btn" data-id="product-1">Voir détails</button>
+          <a class="primary-btn" id="buy-product-1" href="https://www.paypal.com/ncp/payment/GG7ZXTNYLZLS6" target="_blank" rel="noopener">Commander</a>
+          <button class="example-btn" data-target="blockframe.html">Voir Exemple</button>
+        </div>
+      </article>
+
+      <article class="product" id="product-2">
+        <img src="Produit-2.jpg" alt="Pack 3 animations">
+        <div class="meta"><strong>Pack 3 animations</strong><span class="price">5€</span></div>
+        <p style="margin:0;color:rgba(234,240,255,0.78)">Trois courts rendus séparés. Idéal pour séries.</p>
+        <div class="actions" style="margin-top:auto">
+          <button class="primary-btn" data-id="product-2">Voir détails</button>
+          <a class="primary-btn" id="buy-product-2" href="https://www.paypal.com/ncp/payment/Z2KD45BKQUXSA" target="_blank" rel="noopener">Commander</a>
+          <button class="example-btn" data-target="blockframe.html">Voir Exemple</button>
+        </div>
+      </article>
+
+      <article class="product" id="product-pp-single">
+        <img src="Bientot.jpg" alt="PP simple exemple">
+        <div class="meta"><strong>PP simple</strong><span class="price">1€</span></div>
+        <p style="margin:0;color:rgba(234,240,255,0.78)">PP simple. Indique ton pseudo Minecraft OU ouvre un ticket Discord. Peut être autre chose qu'un skin.</p>
+        <div class="actions" style="margin-top:auto">
+          <button class="primary-btn" data-id="product-pp-single">Voir détails</button>
+          <button class="primary-btn" onclick="openOrder()">Commander</button>
+          <button class="example-btn" data-examples="PP-1.jpg,PP-2.jpg,PP-3.jpg">Voir Exemple</button>
+        </div>
+      </article>
+
+      <article class="product" id="product-pp-pack">
+        <img src="Bientot.jpg" alt="Pack PP exemple">
+        <div class="meta"><strong>Pack 5 PP</strong><span class="price">4€</span></div>
+        <p style="margin:0;color:rgba(234,240,255,0.78)">Cinq PP personnalisées. Précise les idées pour chaque PP.</p>
+        <div class="actions" style="margin-top:auto">
+          <button class="primary-btn" data-id="product-pp-pack">Voir détails</button>
+          <button class="primary-btn" onclick="openOrder()">Commander</button>
+          <button class="example-btn" data-examples="PP-1.jpg,PP-2.jpg,PP-3.jpg">Voir Exemple</button>
+        </div>
+      </article>
+
+      <article class="product" id="product-subscription">
+        <img src="Bientot.jpg" alt="Abbonement exemple">
+        <div class="meta"><strong>Abbonement</strong><span class="price">6€/mois</span></div>
+        <p style="margin:0;color:rgba(234,240,255,0.78)">1 animation courte/mois + 3 PP simples/mois. Annulable. Tarif préférentiel et livraisons priorisées.</p>
+        <div class="actions" style="margin-top:auto">
+          <button class="primary-btn" data-id="product-subscription">Voir détails</button>
+          <button class="primary-btn" onclick="openOrder()">S'abonner</button>
+        </div>
+      </article>
+    </section>
+
+    <div style="margin-top:18px;color:var(--muted);font-size:13px">
+      Les liens de paiement PayPal sont renseignés dans les fiches produits !
+    </div>
+
+    <footer style="margin-top:28px;color:rgba(255,255,255,0.16);text-align:center">© 2026 KenzouTV — Boutique</footer>
+  </div>
+
+  <!-- product modal -->
+  <div class="modal-backdrop" id="modalBackdrop" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="left">
+        <img src="" alt="" id="modalImg">
+        <div class="carousel-controls" style="margin-top:6px;display:flex;gap:8px;justify-content:center;">
+          <button id="prevExample" class="info">◀</button>
+          <button id="nextExample" class="info">▶</button>
+        </div>
+      </div>
+
+      <div class="right">
+        <button class="close" id="modalClose" aria-label="Fermer">✕</button>
+        <h3 id="modalTitle">Titre</h3>
+        <div id="modalPrice" style="font-weight:800;color:var(--muted)"></div>
+        <p id="modalDesc" style="color:rgba(234,240,255,0.85)"></p>
+
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <a id="modalPaypal" class="primary-btn" href="#" target="_blank" rel="noopener">Payer via PayPal</a>
+          <a id="modalTicket" class="info" href="https://discord.gg/KURpXHzRTE" target="_blank" rel="noopener">Ouvrir un ticket Discord</a>
+        </div>
+
+        <div style="margin-top:6px;color:var(--muted);font-size:13px">
+          Important : indique ton pseudo Minecraft OU ouvre un ticket Discord pour envoyer les infos. Les PPs peuvent être autre chose qu’un skin.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- thank-you popup + confetti canvas -->
+  <div class="thanks-backdrop" id="thanksBackdrop" aria-hidden="true">
+    <div class="thanks-card" role="status" aria-live="polite">
+      <h2 id="thanksTitle">Merci !</h2>
+      <p id="thanksMessage">Nous avons bien reçu ta commande.</p>
+      <div class="actions">
+        <button class="btn btn-primary" id="thanksDone">Retour au site</button>
+        <a class="btn btn-secondary" id="thanksTicket" href="https://discord.gg/KURpXHzRTE" target="_blank" rel="noopener">Ouvrir un ticket Discord</a>
+      </div>
+    </div>
+  </div>
+  <canvas id="confetti-canvas" aria-hidden="true"></canvas>
+
+  <script>
 /* === boutique.full.js === */
 (function(){
-  /* NAV UNIFIÉE */
+  /* NAV */
   const topbar = document.querySelector('nav.topbar');
   if (!topbar) return;
   document.querySelectorAll('.nav-overlay, .overlay-inner').forEach(n => n.remove());
   const navlinks = topbar.querySelector('.navlinks');
   if (!navlinks) return;
 
+  // burger
   let burger = document.getElementById('burger');
   if (!burger) {
     burger = document.createElement('button');
@@ -18,6 +256,7 @@
     burger.innerHTML = '<span class="bar" aria-hidden="true"></span><span class="bar" aria-hidden="true"></span><span class="bar" aria-hidden="true"></span>';
     topbar.appendChild(burger);
   }
+  // mobile container
   let mobileMenu = topbar.querySelector('.mobile-menu');
   if (!mobileMenu){
     mobileMenu = document.createElement('div');
@@ -25,6 +264,7 @@
     mobileMenu.setAttribute('role','menu');
     topbar.appendChild(mobileMenu);
   }
+
   function rebuildMobileMenu(){
     mobileMenu.innerHTML = '';
     navlinks.querySelectorAll('a, button').forEach(node=>{
@@ -53,23 +293,26 @@
       }
     });
   }
+
   function openMobileMenu(){ rebuildMobileMenu(); mobileMenu.classList.add('open'); burger.setAttribute('aria-expanded','true'); const first = mobileMenu.querySelector('a, button'); if (first) first.focus(); document.documentElement.style.overflow='hidden'; document.body.style.overflow='hidden'; }
   function closeMobileMenu(){ mobileMenu.classList.remove('open'); burger.setAttribute('aria-expanded','false'); document.documentElement.style.overflow=''; document.body.style.overflow=''; burger.focus(); }
+
   burger.addEventListener('click', (e)=> { e.stopPropagation(); mobileMenu.classList.contains('open') ? closeMobileMenu() : openMobileMenu(); });
   document.addEventListener('click', (e)=> { if (!mobileMenu.contains(e.target) && !burger.contains(e.target)) closeMobileMenu(); });
   window.addEventListener('keydown', (e)=> { if (e.key === 'Escape') closeMobileMenu(); });
+
   function checkNavOverflow(){ if (window.innerWidth >= 880) { topbar.classList.remove('compact'); return; } const tbRect = topbar.getBoundingClientRect(); const navRect = navlinks.getBoundingClientRect(); const marginRight = 60; const overflows = (navRect.right > (tbRect.right - marginRight)) || (navlinks.scrollWidth > navlinks.clientWidth); if (overflows) topbar.classList.add('compact'); else topbar.classList.remove('compact'); }
   window.addEventListener('load', ()=> setTimeout(checkNavOverflow,60));
   window.addEventListener('resize', ()=> setTimeout(checkNavOverflow,40));
   if (window.ResizeObserver){ const ro = new ResizeObserver(checkNavOverflow); ro.observe(navlinks); ro.observe(topbar); }
   checkNavOverflow();
 
-  // Discord quick button
+  // discord button
   const btnDiscord = document.getElementById('btnDiscord');
   if (btnDiscord) btnDiscord.addEventListener('click', ()=> window.open('https://discord.gg/KURpXHzRTE','_blank','noopener'));
   document.querySelectorAll('a[href^="http"]').forEach(a => { a.setAttribute('target','_blank'); a.setAttribute('rel','noopener'); });
 
-  /* PRODUITS (modal) */
+  /* PRODUITS modal */
   const PRODUCTS = {
     'product-1': { id:'product-1', title:'Animation courte', price:'2€', img:'Produit-1.jpg', desc:'Intro/bumpers <1min. MP4 720p. 1 révision incluse.', paypal:'https://www.paypal.com/ncp/payment/GG7ZXTNYLZLS6' },
     'product-2': { id:'product-2', title:'Pack 3 animations', price:'5€', img:'Produit-2.jpg', desc:'Trois courts rendus séparés. Idéal pour séries.', paypal:'https://www.paypal.com/ncp/payment/Z2KD45BKQUXSA' },
@@ -182,7 +425,7 @@
   });
   (function checkInitialHash(){ const h = location.hash.replace('#',''); if (h && h.startsWith('product-') && PRODUCTS[h]) setTimeout(()=>openModal(h),80); if (h && h.startsWith('remerciement-')) { const key = h.split('-')[1]; setTimeout(()=> showThanks && showThanks(key), 120); } })();
 
-  /* CONFETTI + THANKS */
+  /* CONFETTI */
   const thanksBackdrop = document.getElementById('thanksBackdrop');
   const thanksTitle = document.getElementById('thanksTitle');
   const thanksMessage = document.getElementById('thanksMessage');
@@ -243,9 +486,11 @@
   function closeThanks(){ if (!thanksBackdrop) return; thanksBackdrop.style.display = 'none'; thanksBackdrop.setAttribute('aria-hidden','true'); document.body.classList.remove('modal-open'); }
   thanksDone && thanksDone.addEventListener('click', closeThanks);
 
-  // helper openOrder global
+  // helper
   function openOrder(){ window.location.href = '#order'; }
   window.openOrder = openOrder;
 
 })();
-</script>
+  </script>
+</body>
+</html>
