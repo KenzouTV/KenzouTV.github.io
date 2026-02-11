@@ -19,7 +19,7 @@
     html,body{height:100%}
     body{
       margin:0;
-      padding:48px 24px; /* identique entre pages */
+      padding:48px 24px;
       font-family:Inter,system-ui,Arial;
       color:#eaf0ff;
       -webkit-font-smoothing:antialiased;
@@ -33,14 +33,14 @@
 
     .wrap{max-width:var(--max-w);margin:32px auto}
 
-    /* TOPBAR : même sur les deux pages */
+    /* TOPBAR (unifiée) */
     nav.topbar{
       display:flex;
       align-items:center;
       justify-content:space-between;
       padding:12px 18px;
-      border-radius:30px; /* courbure identique */
-      background: rgba(7,16,24,0.88); /* moins transparent */
+      border-radius:30px;
+      background: rgba(7,16,24,0.88);
       border:1px solid rgba(255,255,255,0.03);
       -webkit-backdrop-filter: blur(10px);
       backdrop-filter: blur(10px);
@@ -59,6 +59,18 @@
     .navlinks a.active{ color:#fff; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); }
     .btn-discord{ background:linear-gradient(180deg,var(--accent),var(--accent-2)); padding:8px 14px;border-radius:12px;color:#0b0a0b;font-weight:800;border:none;cursor:pointer; box-shadow:0 6px 18px rgba(255,122,24,0.12) }
 
+    /* overlay (shared styles for responsive menu) */
+    #burger { display:none; background:transparent; border:0; color:var(--muted); font-size:20px; padding:6px 10px; border-radius:10px; cursor:pointer; }
+    .topbar.compact #burger { display:inline-flex; align-items:center; justify-content:center; }
+    .topbar.compact .navlinks { display:none; }
+    .nav-overlay { display:none; position:fixed; inset:0; z-index:2600; background:rgba(7,16,24,0.96); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); padding:56px 20px 24px; overflow:auto; }
+    .nav-overlay.open { display:block; }
+    .nav-overlay .overlay-inner { max-width:420px; margin:0 auto; display:flex; flex-direction:column; gap:12px; }
+    .nav-overlay a, .nav-overlay button.btn-discord { display:block; padding:12px 14px; border-radius:12px; text-decoration:none; color:var(--muted); font-weight:700; background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00)); border:1px solid rgba(255,255,255,0.03); }
+    .nav-overlay a.active { color:#fff; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); }
+    .nav-overlay .close-overlay { position:absolute; right:14px; top:12px; background:transparent; border:0; color:var(--muted); font-size:20px; cursor:pointer; }
+    @media(min-width:880px) { #burger { display:none !important; } .nav-overlay { display:none !important; } }
+
     /* layout */
     .hero{display:grid;grid-template-columns:1fr 420px;gap:34px;margin-top:28px}
     .card-left{padding:36px;border-radius:26px;background:var(--card-bg);box-shadow:0 30px 60px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.02)}
@@ -66,32 +78,16 @@
     h1{font-size:48px;line-height:0.95;margin:6px 0 18px;font-weight:800}
     .lead{color:rgba(234,240,255,0.75);max-width:66%;margin-bottom:18px}
     .small-dashed{margin-top:20px;padding:14px;border-radius:12px;border:1px dashed rgba(255,255,255,0.06);display:inline-block;color:var(--muted)}
-
-    /* right column blocks */
     .profile-square{padding:12px;border-radius:22px;background:var(--card-bg);box-shadow:0 20px 50px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.02)}
     .big-ava{width:100%;height:320px;border-radius:20px;overflow:hidden}
     .label-box{text-align:center;padding:14px 12px;border-radius:14px;background:rgba(255,255,255,0.01);font-weight:700;color:var(--accent-2);margin-top:12px}
 
-    /* Additional UI blocks (static content) */
-    .ui-block{margin-top:12px;padding:12px;border-radius:12px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.02)}
-    .ui-block h4{margin:0 0 6px 0;font-size:13px}
-    .ui-block p{margin:0;color:rgba(234,240,255,0.78);font-size:14px}
-
-    /* featured video */
-    .featured-video{border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,0.03);box-shadow:0 20px 50px rgba(0,0,0,0.5);background:#000}
-    .video-embed{position:relative;width:100%;padding-top:56.25%}
-    .video-embed iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0;display:block}
-
-    footer{margin-top:46px;text-align:center;color:rgba(255,255,255,0.16);font-size:13px}
-
-    /* responsive */
     @media(max-width:980px){.hero{grid-template-columns:1fr}.big-ava{height:260px}h1{font-size:36px}}
     @media(max-width:720px){ .navlinks{display:none;position:absolute;right:24px;top:76px;flex-direction:column;background:rgba(7,16,24,0.88);padding:10px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)} }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <!-- NAV (identique sur les deux pages) -->
     <nav class="topbar" role="navigation" aria-label="Barre principale">
       <div class="brand">
         <img src="profile-0.png" alt="logo KenzouTV">
@@ -133,12 +129,10 @@
           <div class="big-ava"><img src="profile.jpg" alt="grosse tete" style="width:100%;height:100%;object-fit:cover;display:block"></div>
           <div class="label-box">DERNIÈRE VIDÉO</div>
 
-          <!-- petit espace entre intro et vidéo -->
           <div style="height:12px"></div>
 
           <div class="featured-video" aria-hidden="false">
             <div class="video-embed">
-              <!-- Remplace REPLACE_WITH_VIDEO_ID -->
               <iframe src="https://www.youtube.com/embed/i0gz2bGtDW4?rel=0" title="Dernière vidéo" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
           </div>
@@ -151,14 +145,116 @@
     <footer>© 2026 KenzouTV — TOUS DROITS RÉSERVÉS</footer>
   </div>
 
-  <script>
-    // Discord button
-    document.getElementById('btnDiscord').addEventListener('click', ()=> {
-      window.open('https://discord.gg/KURpXHzRTE','_blank','noopener');
-    });
+  <!-- overlay element (created by script but included here in markup for progressive enhancement) -->
+  <div class="nav-overlay" aria-hidden="true" style="display:none;"></div>
 
-    // ensure external links open in new tab if any
-    document.querySelectorAll('a[href^="http"]').forEach(a => { a.setAttribute('target','_blank'); a.setAttribute('rel','noopener'); });
+  <script>
+/* === index.js — nav responsive + discord + utilitaires === */
+(function(){
+  // topbar
+  const topbar = document.querySelector('nav.topbar');
+  if (!topbar) return;
+  // create burger if missing (progressive)
+  let burger = document.getElementById('burger');
+  if (!burger) {
+    burger = document.createElement('button');
+    burger.id = 'burger';
+    burger.setAttribute('aria-expanded','false');
+    burger.setAttribute('aria-controls','main-nav');
+    burger.setAttribute('aria-label','Ouvrir le menu');
+    burger.style.display = 'none';
+    burger.textContent = '☰';
+    const brand = topbar.querySelector('.brand');
+    brand && brand.insertAdjacentElement('afterend', burger);
+  }
+
+  // overlay
+  let overlay = document.querySelector('.nav-overlay');
+  if (!overlay) {
+    overlay = document.createElement('div');
+    overlay.className = 'nav-overlay';
+    overlay.setAttribute('role','dialog');
+    overlay.setAttribute('aria-modal','true');
+    overlay.innerHTML = `<button class="close-overlay" aria-label="Fermer le menu">✕</button><div class="overlay-inner" id="overlayInner"></div>`;
+    document.body.appendChild(overlay);
+  }
+
+  function buildOverlayContent(){
+    const navlinks = topbar.querySelector('.navlinks');
+    const inner = document.getElementById('overlayInner');
+    inner.innerHTML = '';
+    if (!navlinks) return;
+    navlinks.querySelectorAll('a, button').forEach(node=>{
+      let clone;
+      if (node.tagName.toLowerCase() === 'a') {
+        clone = document.createElement('a');
+        clone.href = node.href || '#';
+        clone.innerHTML = node.innerHTML;
+        if (node.classList.contains('active')) clone.classList.add('active');
+      } else {
+        clone = node.cloneNode(true);
+      }
+      if (clone.tagName.toLowerCase() === 'a' && clone.href.startsWith('http')) {
+        clone.setAttribute('target','_blank');
+        clone.setAttribute('rel','noopener');
+      }
+      inner.appendChild(clone);
+    });
+  }
+
+  function openOverlay(){
+    buildOverlayContent();
+    overlay.classList.add('open');
+    overlay.setAttribute('aria-hidden','false');
+    document.body.style.overflow = 'hidden';
+    burger.setAttribute('aria-expanded','true');
+    const first = overlay.querySelector('a, button');
+    if (first) first.focus();
+  }
+  function closeOverlay(){
+    overlay.classList.remove('open');
+    overlay.setAttribute('aria-hidden','true');
+    document.body.style.overflow = '';
+    burger.setAttribute('aria-expanded','false');
+    burger.focus();
+  }
+
+  burger.addEventListener('click', ()=> overlay.classList.contains('open') ? closeOverlay() : openOverlay());
+  overlay.addEventListener('click', (e)=> { if (e.target === overlay || e.target.classList.contains('close-overlay')) closeOverlay(); });
+  window.addEventListener('keydown', (e)=> { if (e.key === 'Escape') closeOverlay(); });
+
+  // detection overflow
+  function checkNavOverflow(){
+    const navlinks = topbar.querySelector('.navlinks');
+    const brand = topbar.querySelector('.brand');
+    if (!navlinks || !brand) return;
+    const tbRect = topbar.getBoundingClientRect();
+    const navRect = navlinks.getBoundingClientRect();
+    const marginRight = 16;
+    const overflows = (navRect.right > (tbRect.right - marginRight)) || (navlinks.scrollWidth > navlinks.clientWidth);
+    if (overflows) topbar.classList.add('compact');
+    else topbar.classList.remove('compact');
+  }
+
+  window.addEventListener('load', ()=> setTimeout(checkNavOverflow,80));
+  window.addEventListener('resize', ()=> setTimeout(checkNavOverflow,40));
+  if (window.ResizeObserver) {
+    const navlinks = topbar.querySelector('.navlinks');
+    if (navlinks) {
+      const ro = new ResizeObserver(checkNavOverflow);
+      ro.observe(navlinks);
+      ro.observe(topbar);
+    }
+  }
+  checkNavOverflow();
+
+  // Discord quick button
+  const btnDiscord = document.getElementById('btnDiscord');
+  if (btnDiscord) btnDiscord.addEventListener('click', ()=> window.open('https://discord.gg/KURpXHzRTE','_blank','noopener'));
+
+  // ensure external anchors open in new tab
+  document.querySelectorAll('a[href^="http"]').forEach(a => { a.setAttribute('target','_blank'); a.setAttribute('rel','noopener'); });
+})();
   </script>
 </body>
 </html>
