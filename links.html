@@ -31,9 +31,9 @@
 
     .wrap{ max-width:var(--max-w); margin:32px auto; }
 
-    /* Topbar (pixel-matched) */
+    /* NAVBAR: normalized to match index/boutique */
     nav.topbar{
-      display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 18px;border-radius:30px;
+      display:flex;align-items:center;justify-content:space-between;padding:12px 18px;border-radius:30px;
       max-width:var(--max-w);margin:0 auto;position:sticky;top:22px;z-index:40;background:var(--glass);
       border:1px solid rgba(255,255,255,0.03);-webkit-backdrop-filter: blur(10px);backdrop-filter: blur(10px);
       box-shadow: 0 10px 30px rgba(0,0,0,0.6);
@@ -44,7 +44,7 @@
     .navlinks{display:flex;gap:12px;align-items:center}
     .navlinks a{padding:8px 14px;border-radius:12px;text-decoration:none;color:var(--muted);font-weight:600}
     .navlinks a.active{ color:#fff; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); }
-    .btn-discord{ background:linear-gradient(180deg,var(--accent),var(--accent-2)); padding:8px 16px;border-radius:12px;color:#071018;font-weight:800;border:none;cursor:pointer;box-shadow:0 6px 18px rgba(255,122,24,0.12); }
+    .btn-discord{ background:linear-gradient(180deg,var(--accent),var(--accent-2)); padding:8px 14px;border-radius:12px;color:#0b0a0b;font-weight:800;border:none;cursor:pointer;box-shadow:0 6px 18px rgba(255,122,24,0.12); }
 
     header{ max-width:var(--max-w); margin:18px auto 6px auto; padding:0 6px; }
     header h1{ margin:0 0 6px 0; font-size:28px; }
