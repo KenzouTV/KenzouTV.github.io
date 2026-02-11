@@ -1,4 +1,193 @@
-<script>
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>BlockFrame — Réalisations (vidéos)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <meta name="description" content="BlockFrame — Portfolio vidéo du studio (KenzouTV).">
+  <style>
+    :root{
+      --bg-1:#06070a;
+      --accent:#ff7a18;
+      --accent-2:#ff9b3b;
+      --muted:rgba(255,255,255,0.65);
+      --card-bg: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
+      --max-w:1180px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      padding:48px 24px;
+      font-family:Inter,system-ui,Arial;
+      color:#eaf0ff;
+      -webkit-font-smoothing:antialiased;
+      background:
+        radial-gradient(800px 400px at 10% 80%, rgba(255,122,24,0.06), transparent 8%),
+        radial-gradient(900px 450px at 90% 20%, rgba(255,155,59,0.04), transparent 8%),
+        linear-gradient(180deg,var(--bg-1), #071018 60%);
+      background-size:200% 200%;
+      min-height:100vh;
+    }
+
+    .wrap{max-width:var(--max-w);margin:32px auto}
+
+    nav.topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:12px 18px;
+      border-radius:30px;
+      background: rgba(7,16,24,0.88);
+      border:1px solid rgba(255,255,255,0.03);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+      position:sticky;
+      top:22px;
+      z-index:40;
+      margin:0 auto;
+      max-width:var(--max-w);
+      gap:12px;
+      min-height:56px;
+      position:relative;
+    }
+    .brand{display:flex;gap:12px;align-items:center}
+    .brand img{width:44px;height:44px;border-radius:10px;object-fit:cover}
+    .brand .title{font-weight:700;color:#eaf0ff}
+    .navlinks{display:flex;gap:12px;align-items:center}
+    .navlinks a{padding:8px 14px;border-radius:12px;text-decoration:none;color:var(--muted);font-weight:600}
+    .navlinks a.active{ color:#fff; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); }
+    .btn-discord{ background:linear-gradient(180deg,var(--accent),var(--accent-2)); padding:8px 14px;border-radius:12px;color:#0b0a0b;font-weight:800;border:none;cursor:pointer; box-shadow:0 6px 18px rgba(255,122,24,0.12) }
+
+    header{max-width:var(--max-w);margin:0 auto;padding:0 6px}
+    header h1{margin:28px 0 6px 0;font-size:28px}
+    header p{margin:0;color:rgba(234,240,255,0.76)}
+
+    .container{display:grid;grid-template-columns:1fr 360px;gap:28px;margin-top:0}
+    .card{padding:16px;border-radius:16px;background:var(--card-bg);border:1px solid rgba(255,255,255,0.02);box-shadow:0 20px 50px rgba(0,0,0,0.5)}
+    .hero-video{border-radius:12px;overflow:hidden;background:#000}
+    .video-embed{position:relative;width:100%;padding-top:56.25%}
+    .video-embed iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0;display:block}
+
+    .side-title{font-weight:800;margin-bottom:8px;color:var(--muted)}
+    .thumbs{display:grid;grid-template-columns:1fr;gap:12px;margin-top:12px}
+    .thumb{display:flex;gap:12px;align-items:center;padding:8px;border-radius:12px;background:rgba(255,255,255,0.02);cursor:pointer;border:1px solid rgba(255,255,255,0.01);transition:transform .15s, box-shadow .15s}
+    .thumb:hover{transform:translateY(-4px);box-shadow:0 18px 40px rgba(255,122,24,0.06)}
+    .thumb img{width:120px;height:70px;object-fit:cover;border-radius:8px;flex-shrink:0}
+    .thumb .meta{display:flex;flex-direction:column}
+    .thumb .meta strong{font-weight:700}
+    .thumb .meta small{color:var(--muted);font-size:13px;margin-top:6px}
+
+    .collab-list{display:flex;flex-direction:column;gap:10px;margin-top:12px}
+    .collab{display:flex;gap:12px;align-items:center;background:rgba(255,255,255,0.02);padding:8px;border-radius:10px;border:1px solid rgba(255,255,255,0.01)}
+    .collab img{width:48px;height:48px;border-radius:8px;object-fit:cover;cursor:pointer}
+    .collab a{color:var(--muted);font-weight:700;text-decoration:none}
+
+    .order-btn{display:inline-block;margin-top:12px;padding:10px 14px;border-radius:12px;background:linear-gradient(180deg,var(--accent),var(--accent-2));color:#0b0a0b;font-weight:800;text-decoration:none}
+
+    footer{margin-top:46px;text-align:center;color:rgba(255,255,255,0.16);font-size:13px}
+
+    /* mobile menu & burger */
+    #burger{ display:none; background:transparent; border:0; padding:6px; width:44px; height:44px; align-items:center; justify-content:center; cursor:pointer; border-radius:10px; position:absolute; right:12px; top:8px; }
+    #burger .bar{ display:block; width:20px; height:2.5px; margin:3px 0; border-radius:2px; background:linear-gradient(90deg,var(--accent),var(--accent-2)); }
+    .topbar.compact .navlinks{ display:none !important; }
+    .topbar.compact #burger{ display:flex !important; }
+    .mobile-menu{ display:none; position:absolute; right:12px; top:calc(100% + 8px); z-index:2600; background: rgba(7,16,24,0.98); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); padding:8px; border-radius:12px; min-width:180px; box-shadow:0 12px 40px rgba(0,0,0,0.6); border:1px solid rgba(255,255,255,0.03); }
+    .mobile-menu.open{ display:block; }
+    .mobile-menu a, .mobile-menu button { display:block; width:100%; text-align:left; padding:10px 12px; border-radius:8px; color:var(--muted); text-decoration:none; font-weight:700; background:transparent; border:0; font-size:15px; box-sizing:border-box; }
+    .mobile-menu a.active{ color:#fff; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); }
+
+    @media(max-width:980px){.container{grid-template-columns:1fr}.video-embed{padding-top:56.25%}}
+    @media(max-width:720px){ .navlinks{display:none;position:absolute;right:24px;top:76px;flex-direction:column;background:rgba(7,16,24,0.88);padding:10px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)} }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <nav class="topbar" role="navigation" aria-label="Barre principale">
+      <div class="brand">
+        <img src="Blockframe.png" alt="BlockFrame — logo">
+        <div class="title">BlockFrame</div>
+      </div>
+
+      <div class="navlinks" id="main-nav">
+        <a href="index.html">Accueil</a>
+        <a href="links.html">Mes Réseaux</a>
+        <a href="boutique.html">Boutique</a>
+        <a href="blockframe.html" class="active">BlockFrame</a>
+        <button class="btn-discord" id="btnDiscord">Discord</button>
+      </div>
+
+      <div class="mobile-menu" aria-hidden="true"></div>
+    </nav>
+
+    <header>
+      <h1>Portfolio — Réalisations vidéo</h1>
+      <p>Présente tes meilleures animations et projets. Clique sur une miniature pour la lire dans la vidéo principale.</p>
+    </header>
+
+    <main class="container">
+      <div class="left">
+        <div class="card hero-video" aria-live="polite">
+          <div class="video-embed">
+            <iframe id="heroIframe" title="Vidéo principale — BlockFrame" src="https://www.youtube.com/embed/REPLACE_VIDEO_ID_1?rel=0" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </div>
+
+        <div class="ui-block">
+          <h4>CRÉATION & ANIMATION</h4>
+          <p>Des idées qui prennent forme. Animations et intros pour créateurs.</p>
+        </div>
+
+        <div class="ui-block">
+          <h4>COMMANDES</h4>
+          <p>Nous réalisons des commandes sur mesure — <a href="boutique.html" style="color:#ffd6b8;font-weight:700">Voir la boutique</a>.</p>
+        </div>
+      </div>
+
+      <aside>
+        <div class="card">
+          <div class="side-title">Projets</div>
+
+          <div class="thumbs" id="thumbs">
+            <button class="thumb" data-video="Qqx-HJelLeo" aria-label="Projet 1">
+              <img src="https://i.ytimg.com/vi/Qqx-HJelLeo/hqdefault.jpg" alt="Projet 1 miniature">
+              <div class="meta"><strong>Projet 1</strong><small>Fonds Animé — 0:16</small></div>
+            </button>
+
+            <button class="thumb" data-video="nMy8IujKg3o" aria-label="Projet 2">
+              <img src="https://i.ytimg.com/vi/nMy8IujKg3o/hqdefault.jpg" alt="Projet 2 miniature">
+              <div class="meta"><strong>Projet 2</strong><small>Fonds Animé — 0:09</small></div>
+            </button>
+          </div>
+
+          <div style="margin-top:12px">
+            <div class="side-title">Collaborations</div>
+            <div class="collab-list">
+              <div class="collab">
+                <a href="https://www.youtube.com/@Wamonixx" target="_blank" rel="noopener">
+                  <img src="Wamonixx.jpg" alt="Wamonixx">
+                </a>
+                <div><a href="https://www.youtube.com/channel/REPLACE_WAMONIXX" target="_blank" rel="noopener">Wamonixx</a><div style="font-size:13px;color:rgba(255,255,255,0.6)">Collaboration</div></div>
+              </div>
+
+              <div class="collab">
+                <a href="https://www.youtube.com/channel/@xomino365" target="_blank" rel="noopener">
+                  <img src="Xomino.jpg" alt="Xomino">
+                </a>
+                <div><a href="https://www.youtube.com/channel/REPLACE_XOMINO" target="_blank" rel="noopener">Xomino</a><div style="font-size:13px;color:rgba(255,255,255,0.6)">Collaboration</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <footer>© 2026 BlockFrame — Studio (KenzouTV)</footer>
+  </div>
+
+  <script>
 /* === blockframe.full.js === */
 (function(){
   const topbar = document.querySelector('nav.topbar');
@@ -58,6 +247,7 @@
   burger.addEventListener('click', (e)=> { e.stopPropagation(); mobileMenu.classList.contains('open') ? closeMobileMenu() : openMobileMenu(); });
   document.addEventListener('click', (e)=> { if (!mobileMenu.contains(e.target) && !burger.contains(e.target)) closeMobileMenu(); });
   window.addEventListener('keydown', (e)=> { if (e.key === 'Escape') closeMobileMenu(); });
+
   function checkNavOverflow(){ if (window.innerWidth >= 880) { topbar.classList.remove('compact'); return; } const tbRect = topbar.getBoundingClientRect(); const navRect = navlinks.getBoundingClientRect(); const marginRight = 60; const overflows = (navRect.right > (tbRect.right - marginRight)) || (navlinks.scrollWidth > navlinks.clientWidth); if (overflows) topbar.classList.add('compact'); else topbar.classList.remove('compact'); }
   window.addEventListener('load', ()=> setTimeout(checkNavOverflow,60));
   window.addEventListener('resize', ()=> setTimeout(checkNavOverflow,40));
@@ -85,4 +275,6 @@
   }
 
 })();
-</script>
+  </script>
+</body>
+</html>
