@@ -31,14 +31,12 @@
 
     .wrap{ max-width:var(--max-w); margin:32px auto; }
 
+    /* Topbar (pixel-matched) */
     nav.topbar{
       display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 18px;border-radius:30px;
       max-width:var(--max-w);margin:0 auto;position:sticky;top:22px;z-index:40;background:var(--glass);
       border:1px solid rgba(255,255,255,0.03);-webkit-backdrop-filter: blur(10px);backdrop-filter: blur(10px);
       box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-      gap:12px;
-      min-height:56px;
-      position:relative;
     }
     .brand{display:flex;align-items:center;gap:12px}
     .brand img{width:44px;height:44px;border-radius:10px;object-fit:cover}
@@ -52,6 +50,7 @@
     header h1{ margin:0 0 6px 0; font-size:28px; }
     header p{ margin:0; color:rgba(234,240,255,0.76) }
 
+    /* links grid */
     .links-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:var(--gap); margin-top:22px }
     .link-card{
       background:var(--card); padding:14px; border-radius:12px; border:1px solid rgba(255,255,255,0.02);
@@ -75,17 +74,8 @@
     @media(max-width:980px){ .links-grid{ grid-template-columns:repeat(2,1fr) } }
     @media(max-width:620px){ .links-grid{ grid-template-columns:1fr } .brand img{ width:40px; height:40px } header h1{ font-size:22px } }
 
+    /* tiny toast */
     .toast{ position:fixed; right:20px; bottom:20px; background:linear-gradient(90deg,var(--accent),var(--accent-2)); color:#071018; padding:10px 14px; border-radius:10px; font-weight:800; box-shadow:0 8px 30px rgba(0,0,0,0.6); display:none; z-index:3000 }
-
-    /* mobile menu & burger */
-    #burger{ display:none; background:transparent; border:0; padding:6px; width:44px; height:44px; align-items:center; justify-content:center; cursor:pointer; border-radius:10px; position:absolute; right:12px; top:8px; }
-    #burger .bar{ display:block; width:20px; height:2.5px; margin:3px 0; border-radius:2px; background:linear-gradient(90deg,var(--accent),var(--accent-2)); }
-    .topbar.compact .navlinks{ display:none !important; }
-    .topbar.compact #burger{ display:flex !important; }
-    .mobile-menu{ display:none; position:absolute; right:12px; top:calc(100% + 8px); z-index:2600; background: rgba(7,16,24,0.98); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); padding:8px; border-radius:12px; min-width:180px; box-shadow:0 12px 40px rgba(0,0,0,0.6); border:1px solid rgba(255,255,255,0.03); }
-    .mobile-menu.open{ display:block; }
-    .mobile-menu a, .mobile-menu button { display:block; width:100%; text-align:left; padding:10px 12px; border-radius:8px; color:var(--muted); text-decoration:none; font-weight:700; background:transparent; border:0; font-size:15px; box-sizing:border-box; }
-    .mobile-menu a.active{ color:#fff; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); }
   </style>
 </head>
 <body>
@@ -103,8 +93,6 @@
         <a href="blockframe.html">BlockFrame</a>
         <button class="btn-discord" id="btnDiscord">Discord</button>
       </div>
-
-      <div class="mobile-menu" aria-hidden="true"></div>
     </nav>
 
     <header>
@@ -114,9 +102,11 @@
 
     <main>
       <section class="links-grid" id="linksGrid">
+        <!-- YouTube -->
         <article class="link-card" data-url="https://www.youtube.com/@Kenzou_TV">
           <div class="link-head">
             <div class="icon" aria-hidden="true">
+              <!-- play icon -->
               <svg viewBox="0 0 24 24" fill="none" stroke="#ff7a18" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3v18l15-9L5 3z"/></svg>
             </div>
             <div>
@@ -131,6 +121,7 @@
           </div>
         </article>
 
+        <!-- Twitch -->
         <article class="link-card" data-url="https://www.twitch.tv/kenzoutv_mc">
           <div class="link-head">
             <div class="icon" aria-hidden="true">
@@ -148,6 +139,7 @@
           </div>
         </article>
 
+        <!-- Discord -->
         <article class="link-card" data-url="https://discord.gg/KURpXHzRTE">
           <div class="link-head">
             <div class="icon" aria-hidden="true">
@@ -165,6 +157,7 @@
           </div>
         </article>
 
+        <!-- Instagram -->
         <article class="link-card" data-url="https://www.instagram.com/kenzoutv/">
           <div class="link-head">
             <div class="icon" aria-hidden="true">
@@ -182,6 +175,7 @@
           </div>
         </article>
 
+        <!-- TikTok -->
         <article class="link-card" data-url="https://www.tiktok.com/@kenzou_tv">
           <div class="link-head">
             <div class="icon" aria-hidden="true">
@@ -199,6 +193,7 @@
           </div>
         </article>
 
+        <!-- Site perso / Boutique -->
         <article class="link-card" data-url="https://kenzoutv.github.io/boutique.html">
           <div class="link-head">
             <div class="icon" aria-hidden="true">
@@ -225,110 +220,62 @@
   <div class="toast" id="toast">Copié !</div>
 
   <script>
-/* === links.full.js === */
-(function(){
-  const topbar = document.querySelector('nav.topbar');
-  if (!topbar) return;
-  document.querySelectorAll('.nav-overlay, .overlay-inner').forEach(n => n.remove());
-  const navlinks = topbar.querySelector('.navlinks');
-  if (!navlinks) return;
+    // Replaceable notes:
+    // -> Change the data-url attributes to your actual URLs (YouTube, Twitch, etc.)
+    // -> The "Ouvrir" buttons open the link in a new tab.
+    // -> The "Copier le lien" button copies the URL to clipboard and shows a toast.
 
-  // burger + mobile menu
-  let burger = document.getElementById('burger');
-  if (!burger) {
-    burger = document.createElement('button');
-    burger.id = 'burger';
-    burger.setAttribute('aria-expanded','false');
-    burger.setAttribute('aria-controls','main-nav');
-    burger.setAttribute('aria-label','Ouvrir le menu');
-    burger.innerHTML = '<span class="bar" aria-hidden="true"></span><span class="bar" aria-hidden="true"></span><span class="bar" aria-hidden="true"></span>';
-    topbar.appendChild(burger);
-  }
-  let mobileMenu = topbar.querySelector('.mobile-menu');
-  if (!mobileMenu){
-    mobileMenu = document.createElement('div');
-    mobileMenu.className = 'mobile-menu';
-    mobileMenu.setAttribute('role','menu');
-    topbar.appendChild(mobileMenu);
-  }
-  function rebuildMobileMenu(){
-    mobileMenu.innerHTML = '';
-    navlinks.querySelectorAll('a, button').forEach(node=>{
-      if (node.tagName.toLowerCase() === 'a') {
-        const a = document.createElement('a');
-        a.href = node.getAttribute('href') || '#';
-        a.innerHTML = node.innerHTML;
-        if (node.classList.contains('active')) a.classList.add('active');
-        if (a.href.startsWith('http')) { a.setAttribute('target','_blank'); a.setAttribute('rel','noopener'); }
-        a.addEventListener('click', ()=> closeMobileMenu());
-        mobileMenu.appendChild(a);
-      } else {
-        const b = document.createElement('button');
-        b.innerHTML = node.innerHTML;
-        if (node.id) b.id = node.id + '-mobile';
-        b.addEventListener('click', ()=>{
-          if (node.id === 'btnDiscord' || node.classList.contains('btn-discord')) {
-            window.open('https://discord.gg/KURpXHzRTE','_blank','noopener');
-            closeMobileMenu();
-          } else {
-            try { node.click(); } catch(e){}
-            closeMobileMenu();
+    const toast = document.getElementById('toast');
+
+    function showToast(text='Copié !'){
+      toast.textContent = text;
+      toast.style.display = 'block';
+      toast.style.opacity = '1';
+      setTimeout(()=> {
+        toast.style.transition = 'opacity 400ms';
+        toast.style.opacity = '0';
+        setTimeout(()=> toast.style.display = 'none', 420);
+      }, 900);
+    }
+
+    // Open links in new tab
+    document.querySelectorAll('.link-card').forEach(card=>{
+      const url = card.getAttribute('data-url') || '#';
+      const openBtn = card.querySelector('[data-open]');
+      if (openBtn){
+        openBtn.addEventListener('click', (e)=>{
+          e.preventDefault();
+          // open in new tab
+          window.open(url, '_blank', 'noopener');
+        });
+      }
+      const copyBtn = card.querySelector('[data-copy]');
+      if (copyBtn){
+        copyBtn.addEventListener('click', async (e)=>{
+          e.preventDefault();
+          try {
+            await navigator.clipboard.writeText(url);
+            showToast('Lien copié !');
+          } catch (err) {
+            // fallback: select text
+            const ta = document.createElement('textarea');
+            ta.value = url;
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            ta.remove();
+            showToast('Lien copié !');
           }
         });
-        mobileMenu.appendChild(b);
       }
     });
-  }
-  function openMobileMenu(){ rebuildMobileMenu(); mobileMenu.classList.add('open'); burger.setAttribute('aria-expanded','true'); const first = mobileMenu.querySelector('a, button'); if (first) first.focus(); document.documentElement.style.overflow='hidden'; document.body.style.overflow='hidden'; }
-  function closeMobileMenu(){ mobileMenu.classList.remove('open'); burger.setAttribute('aria-expanded','false'); document.documentElement.style.overflow=''; document.body.style.overflow=''; burger.focus(); }
-  burger.addEventListener('click', (e)=> { e.stopPropagation(); mobileMenu.classList.contains('open') ? closeMobileMenu() : openMobileMenu(); });
-  document.addEventListener('click', (e)=> { if (!mobileMenu.contains(e.target) && !burger.contains(e.target)) closeMobileMenu(); });
-  window.addEventListener('keydown', (e)=> { if (e.key === 'Escape') closeMobileMenu(); });
-  function checkNavOverflow(){ if (window.innerWidth >= 880) { topbar.classList.remove('compact'); return; } const tbRect = topbar.getBoundingClientRect(); const navRect = navlinks.getBoundingClientRect(); const marginRight = 60; const overflows = (navRect.right > (tbRect.right - marginRight)) || (navlinks.scrollWidth > navlinks.clientWidth); if (overflows) topbar.classList.add('compact'); else topbar.classList.remove('compact'); }
-  window.addEventListener('load', ()=> setTimeout(checkNavOverflow,60));
-  window.addEventListener('resize', ()=> setTimeout(checkNavOverflow,40));
-  if (window.ResizeObserver){ const ro = new ResizeObserver(checkNavOverflow); ro.observe(navlinks); ro.observe(topbar); }
-  checkNavOverflow();
 
-  // COPY + TOAST
-  const toast = document.getElementById('toast');
-  function showToast(text='Copié !'){ if (!toast) return; toast.textContent = text; toast.style.display = 'block'; toast.style.opacity = '1'; setTimeout(()=> { toast.style.transition = 'opacity 400ms'; toast.style.opacity = '0'; setTimeout(()=> toast.style.display = 'none', 420); }, 900); }
+    // Discord quick button in topbar
+    const btnDiscord = document.getElementById('btnDiscord');
+    if (btnDiscord) btnDiscord.addEventListener('click', ()=> window.open('https://discord.gg/KURpXHzRTE','_blank','noopener'));
 
-  document.querySelectorAll('.link-card').forEach(card=>{
-    const url = card.getAttribute('data-url') || '#';
-    const openBtn = card.querySelector('[data-open]');
-    if (openBtn){
-      openBtn.addEventListener('click', (e)=>{
-        e.preventDefault();
-        window.open(url, '_blank', 'noopener');
-      });
-    }
-    const copyBtn = card.querySelector('[data-copy]');
-    if (copyBtn){
-      copyBtn.addEventListener('click', async (e)=>{
-        e.preventDefault();
-        try {
-          await navigator.clipboard.writeText(url);
-          showToast('Lien copié !');
-        } catch (err) {
-          const ta = document.createElement('textarea');
-          ta.value = url;
-          document.body.appendChild(ta);
-          ta.select();
-          document.execCommand('copy');
-          ta.remove();
-          showToast('Lien copié !');
-        }
-      });
-    }
-  });
-
-  // Discord quick button
-  const btnDiscord = document.getElementById('btnDiscord');
-  if (btnDiscord) btnDiscord.addEventListener('click', ()=> window.open('https://discord.gg/KURpXHzRTE','_blank','noopener'));
-  document.querySelectorAll('a[href^="http"]').forEach(a => { a.setAttribute('target','_blank'); a.setAttribute('rel','noopener'); });
-
-})();
+    // External links open in new tab (if any normal anchors)
+    document.querySelectorAll('a[href^="http"]').forEach(a => { a.setAttribute('target','_blank'); a.setAttribute('rel','noopener'); });
   </script>
 </body>
 </html>
