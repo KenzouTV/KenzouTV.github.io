@@ -33,6 +33,7 @@
 
     .wrap{max-width:var(--max-w);margin:32px auto}
 
+    /* TOPBAR identique */
     nav.topbar{
       display:flex;
       align-items:center;
@@ -49,9 +50,6 @@
       z-index:40;
       margin:0 auto;
       max-width:var(--max-w);
-      gap:12px;
-      min-height:56px;
-      position:relative;
     }
     .brand{display:flex;gap:12px;align-items:center}
     .brand img{width:44px;height:44px;border-radius:10px;object-fit:cover}
@@ -89,16 +87,12 @@
 
     footer{margin-top:46px;text-align:center;color:rgba(255,255,255,0.16);font-size:13px}
 
-    /* mobile menu & burger */
-    #burger{ display:none; background:transparent; border:0; padding:6px; width:44px; height:44px; align-items:center; justify-content:center; cursor:pointer; border-radius:10px; position:absolute; right:12px; top:8px; }
-    #burger .bar{ display:block; width:20px; height:2.5px; margin:3px 0; border-radius:2px; background:linear-gradient(90deg,var(--accent),var(--accent-2)); }
-    .topbar.compact .navlinks{ display:none !important; }
-    .topbar.compact #burger{ display:flex !important; }
-    .mobile-menu{ display:none; position:absolute; right:12px; top:calc(100% + 8px); z-index:2600; background: rgba(7,16,24,0.98); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); padding:8px; border-radius:12px; min-width:180px; box-shadow:0 12px 40px rgba(0,0,0,0.6); border:1px solid rgba(255,255,255,0.03); }
-    .mobile-menu.open{ display:block; }
-    .mobile-menu a, .mobile-menu button { display:block; width:100%; text-align:left; padding:10px 12px; border-radius:8px; color:var(--muted); text-decoration:none; font-weight:700; background:transparent; border:0; font-size:15px; box-sizing:border-box; }
-    .mobile-menu a.active{ color:#fff; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); }
+    /* simple UI blocks */
+    .ui-block{margin-top:12px;padding:12px;border-radius:12px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.02)}
+    .ui-block h4{margin:0 0 6px 0;font-size:13px}
+    .ui-block p{margin:0;color:rgba(234,240,255,0.78);font-size:14px}
 
+    /* responsive */
     @media(max-width:980px){.container{grid-template-columns:1fr}.video-embed{padding-top:56.25%}}
     @media(max-width:720px){ .navlinks{display:none;position:absolute;right:24px;top:76px;flex-direction:column;background:rgba(7,16,24,0.88);padding:10px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)} }
   </style>
@@ -118,8 +112,6 @@
         <a href="blockframe.html" class="active">BlockFrame</a>
         <button class="btn-discord" id="btnDiscord">Discord</button>
       </div>
-
-      <div class="mobile-menu" aria-hidden="true"></div>
     </nav>
 
     <header>
@@ -131,6 +123,7 @@
       <div class="left">
         <div class="card hero-video" aria-live="polite">
           <div class="video-embed">
+            <!-- Remplace REPLACE_VIDEO_ID_1 par ton ID -->
             <iframe id="heroIframe" title="Vidéo principale — BlockFrame" src="https://www.youtube.com/embed/REPLACE_VIDEO_ID_1?rel=0" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
           </div>
         </div>
@@ -188,93 +181,28 @@
   </div>
 
   <script>
-/* === blockframe.full.js === */
-(function(){
-  const topbar = document.querySelector('nav.topbar');
-  if (!topbar) return;
-  document.querySelectorAll('.nav-overlay, .overlay-inner').forEach(n => n.remove());
-  const navlinks = topbar.querySelector('.navlinks');
-  if (!navlinks) return;
-
-  // burger/menu
-  let burger = document.getElementById('burger');
-  if (!burger) {
-    burger = document.createElement('button');
-    burger.id = 'burger';
-    burger.setAttribute('aria-expanded','false');
-    burger.setAttribute('aria-controls','main-nav');
-    burger.setAttribute('aria-label','Ouvrir le menu');
-    burger.innerHTML = '<span class="bar" aria-hidden="true"></span><span class="bar" aria-hidden="true"></span><span class="bar" aria-hidden="true"></span>';
-    topbar.appendChild(burger);
-  }
-  let mobileMenu = topbar.querySelector('.mobile-menu');
-  if (!mobileMenu){
-    mobileMenu = document.createElement('div');
-    mobileMenu.className = 'mobile-menu';
-    mobileMenu.setAttribute('role','menu');
-    topbar.appendChild(mobileMenu);
-  }
-  function rebuildMobileMenu(){
-    mobileMenu.innerHTML = '';
-    navlinks.querySelectorAll('a, button').forEach(node=>{
-      if (node.tagName.toLowerCase() === 'a') {
-        const a = document.createElement('a');
-        a.href = node.getAttribute('href') || '#';
-        a.innerHTML = node.innerHTML;
-        if (node.classList.contains('active')) a.classList.add('active');
-        if (a.href.startsWith('http')) { a.setAttribute('target','_blank'); a.setAttribute('rel','noopener'); }
-        a.addEventListener('click', ()=> closeMobileMenu());
-        mobileMenu.appendChild(a);
-      } else {
-        const b = document.createElement('button');
-        b.innerHTML = node.innerHTML;
-        if (node.id) b.id = node.id + '-mobile';
-        b.addEventListener('click', ()=>{
-          if (node.id === 'btnDiscord' || node.classList.contains('btn-discord')) {
-            window.open('https://discord.gg/KURpXHzRTE','_blank','noopener');
-            closeMobileMenu();
-          } else {
-            try { node.click(); } catch(e){}
-            closeMobileMenu();
-          }
-        });
-        mobileMenu.appendChild(b);
-      }
+    // Discord btn
+    document.getElementById('btnDiscord').addEventListener('click', ()=> {
+      window.open('https://discord.gg/KURpXHzRTE','_blank','noopener');
     });
-  }
-  function openMobileMenu(){ rebuildMobileMenu(); mobileMenu.classList.add('open'); burger.setAttribute('aria-expanded','true'); const first = mobileMenu.querySelector('a, button'); if (first) first.focus(); document.documentElement.style.overflow='hidden'; document.body.style.overflow='hidden'; }
-  function closeMobileMenu(){ mobileMenu.classList.remove('open'); burger.setAttribute('aria-expanded','false'); document.documentElement.style.overflow=''; document.body.style.overflow=''; burger.focus(); }
-  burger.addEventListener('click', (e)=> { e.stopPropagation(); mobileMenu.classList.contains('open') ? closeMobileMenu() : openMobileMenu(); });
-  document.addEventListener('click', (e)=> { if (!mobileMenu.contains(e.target) && !burger.contains(e.target)) closeMobileMenu(); });
-  window.addEventListener('keydown', (e)=> { if (e.key === 'Escape') closeMobileMenu(); });
 
-  function checkNavOverflow(){ if (window.innerWidth >= 880) { topbar.classList.remove('compact'); return; } const tbRect = topbar.getBoundingClientRect(); const navRect = navlinks.getBoundingClientRect(); const marginRight = 60; const overflows = (navRect.right > (tbRect.right - marginRight)) || (navlinks.scrollWidth > navlinks.clientWidth); if (overflows) topbar.classList.add('compact'); else topbar.classList.remove('compact'); }
-  window.addEventListener('load', ()=> setTimeout(checkNavOverflow,60));
-  window.addEventListener('resize', ()=> setTimeout(checkNavOverflow,40));
-  if (window.ResizeObserver){ const ro = new ResizeObserver(checkNavOverflow); ro.observe(navlinks); ro.observe(topbar); }
-  checkNavOverflow();
+    // Thumbnails replace hero video (blockframe)
+    const thumbs = document.getElementById('thumbs');
+    const hero = document.getElementById('heroIframe');
+    if (thumbs && hero) {
+      thumbs.addEventListener('click', (e) => {
+        const b = e.target.closest('.thumb');
+        if (!b) return;
+        const id = b.getAttribute('data-video');
+        if (!id) return;
+        hero.src = 'https://www.youtube.com/embed/' + encodeURIComponent(id) + '?rel=0';
+        hero.focus();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
 
-  // Discord
-  const btnDiscord = document.getElementById('btnDiscord');
-  if (btnDiscord) btnDiscord.addEventListener('click', ()=> window.open('https://discord.gg/KURpXHzRTE','_blank','noopener'));
-  document.querySelectorAll('a[href^="http"]').forEach(a => { a.setAttribute('target','_blank'); a.setAttribute('rel','noopener'); });
-
-  // THUMBNAILS -> HERO
-  const thumbs = document.getElementById('thumbs');
-  const hero = document.getElementById('heroIframe');
-  if (thumbs && hero) {
-    thumbs.addEventListener('click', (e) => {
-      const b = e.target.closest('.thumb');
-      if (!b) return;
-      const id = b.getAttribute('data-video');
-      if (!id) return;
-      hero.src = 'https://www.youtube.com/embed/' + encodeURIComponent(id) + '?rel=0';
-      hero.focus();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-  }
-
-})();
+    // ensure external links open in new tab
+    document.querySelectorAll('a[href^="http"]').forEach(a => { a.setAttribute('target','_blank'); a.setAttribute('rel','noopener'); });
   </script>
 </body>
 </html>
