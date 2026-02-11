@@ -31,9 +31,9 @@
 
     .wrap{ max-width:var(--max-w); margin:32px auto; }
 
-    /* NAVBAR: normalized to match index/boutique */
+    /* Topbar (pixel-matched) */
     nav.topbar{
-      display:flex;align-items:center;justify-content:space-between;padding:12px 18px;border-radius:30px;
+      display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 18px;border-radius:30px;
       max-width:var(--max-w);margin:0 auto;position:sticky;top:22px;z-index:40;background:var(--glass);
       border:1px solid rgba(255,255,255,0.03);-webkit-backdrop-filter: blur(10px);backdrop-filter: blur(10px);
       box-shadow: 0 10px 30px rgba(0,0,0,0.6);
@@ -44,7 +44,7 @@
     .navlinks{display:flex;gap:12px;align-items:center}
     .navlinks a{padding:8px 14px;border-radius:12px;text-decoration:none;color:var(--muted);font-weight:600}
     .navlinks a.active{ color:#fff; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); }
-    .btn-discord{ background:linear-gradient(180deg,var(--accent),var(--accent-2)); padding:8px 14px;border-radius:12px;color:#0b0a0b;font-weight:800;border:none;cursor:pointer;box-shadow:0 6px 18px rgba(255,122,24,0.12); }
+    .btn-discord{ background:linear-gradient(180deg,var(--accent),var(--accent-2)); padding:8px 16px;border-radius:12px;color:#071018;font-weight:800;border:none;cursor:pointer;box-shadow:0 6px 18px rgba(255,122,24,0.12); }
 
     header{ max-width:var(--max-w); margin:18px auto 6px auto; padding:0 6px; }
     header h1{ margin:0 0 6px 0; font-size:28px; }
@@ -76,6 +76,17 @@
 
     /* tiny toast */
     .toast{ position:fixed; right:20px; bottom:20px; background:linear-gradient(90deg,var(--accent),var(--accent-2)); color:#071018; padding:10px 14px; border-radius:10px; font-weight:800; box-shadow:0 8px 30px rgba(0,0,0,0.6); display:none; z-index:3000 }
+
+    /* overlay (shared) */
+    #burger { display:none; background:transparent; border:0; color:var(--muted); font-size:20px; padding:6px 10px; border-radius:10px; cursor:pointer; }
+    .topbar.compact #burger { display:inline-flex; align-items:center; justify-content:center; }
+    .topbar.compact .navlinks { display:none; }
+    .nav-overlay { display:none; position:fixed; inset:0; z-index:2600; background:rgba(7,16,24,0.96); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); padding:56px 20px 24px; overflow:auto; }
+    .nav-overlay.open { display:block; }
+    .nav-overlay .overlay-inner { max-width:420px; margin:0 auto; display:flex; flex-direction:column; gap:12px; }
+    .nav-overlay a, .nav-overlay button.btn-discord { display:block; padding:12px 14px; border-radius:12px; text-decoration:none; color:var(--muted); font-weight:700; background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00)); border:1px solid rgba(255,255,255,0.03); }
+    .nav-overlay a.active { color:#fff; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); }
+    .nav-overlay .close-overlay { position:absolute; right:14px; top:12px; background:transparent; border:0; color:var(--muted); font-size:20px; cursor:pointer; }
   </style>
 </head>
 <body>
@@ -106,7 +117,6 @@
         <article class="link-card" data-url="https://www.youtube.com/@Kenzou_TV">
           <div class="link-head">
             <div class="icon" aria-hidden="true">
-              <!-- play icon -->
               <svg viewBox="0 0 24 24" fill="none" stroke="#ff7a18" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3v18l15-9L5 3z"/></svg>
             </div>
             <div>
@@ -218,64 +228,104 @@
   </div>
 
   <div class="toast" id="toast">Copié !</div>
+  <div class="nav-overlay" aria-hidden="true" style="display:none;"></div>
 
   <script>
-    // Replaceable notes:
-    // -> Change the data-url attributes to your actual URLs (YouTube, Twitch, etc.)
-    // -> The "Ouvrir" buttons open the link in a new tab.
-    // -> The "Copier le lien" button copies the URL to clipboard and shows a toast.
-
-    const toast = document.getElementById('toast');
-
-    function showToast(text='Copié !'){
-      toast.textContent = text;
-      toast.style.display = 'block';
-      toast.style.opacity = '1';
-      setTimeout(()=> {
-        toast.style.transition = 'opacity 400ms';
-        toast.style.opacity = '0';
-        setTimeout(()=> toast.style.display = 'none', 420);
-      }, 900);
-    }
-
-    // Open links in new tab
-    document.querySelectorAll('.link-card').forEach(card=>{
-      const url = card.getAttribute('data-url') || '#';
-      const openBtn = card.querySelector('[data-open]');
-      if (openBtn){
-        openBtn.addEventListener('click', (e)=>{
-          e.preventDefault();
-          // open in new tab
-          window.open(url, '_blank', 'noopener');
-        });
+/* === links.js — nav responsive + copy links + toast === */
+(function(){
+  const topbar = document.querySelector('nav.topbar');
+  if (!topbar) return;
+  // burger + overlay
+  let burger = document.getElementById('burger');
+  if (!burger) {
+    burger = document.createElement('button');
+    burger.id = 'burger';
+    burger.setAttribute('aria-expanded','false');
+    burger.setAttribute('aria-controls','main-nav');
+    burger.setAttribute('aria-label','Ouvrir le menu');
+    burger.style.display = 'none';
+    burger.textContent = '☰';
+    const brand = topbar.querySelector('.brand');
+    brand && brand.insertAdjacentElement('afterend', burger);
+  }
+  let overlay = document.querySelector('.nav-overlay');
+  if (!overlay) {
+    overlay = document.createElement('div');
+    overlay.className = 'nav-overlay';
+    overlay.setAttribute('role','dialog');
+    overlay.setAttribute('aria-modal','true');
+    overlay.innerHTML = `<button class="close-overlay" aria-label="Fermer le menu">✕</button><div class="overlay-inner" id="overlayInner"></div>`;
+    document.body.appendChild(overlay);
+  }
+  function buildOverlayContent(){
+    const navlinks = topbar.querySelector('.navlinks');
+    const inner = document.getElementById('overlayInner');
+    inner.innerHTML = '';
+    if (!navlinks) return;
+    navlinks.querySelectorAll('a, button').forEach(node=>{
+      let clone;
+      if (node.tagName.toLowerCase() === 'a') {
+        clone = document.createElement('a');
+        clone.href = node.href || '#';
+        clone.innerHTML = node.innerHTML;
+        if (node.classList.contains('active')) clone.classList.add('active');
+      } else { clone = node.cloneNode(true); }
+      if (clone.tagName.toLowerCase() === 'a' && clone.href.startsWith('http')) {
+        clone.setAttribute('target','_blank');
+        clone.setAttribute('rel','noopener');
       }
-      const copyBtn = card.querySelector('[data-copy]');
-      if (copyBtn){
-        copyBtn.addEventListener('click', async (e)=>{
-          e.preventDefault();
-          try {
-            await navigator.clipboard.writeText(url);
-            showToast('Lien copié !');
-          } catch (err) {
-            // fallback: select text
-            const ta = document.createElement('textarea');
-            ta.value = url;
-            document.body.appendChild(ta);
-            ta.select();
-            document.execCommand('copy');
-            ta.remove();
-            showToast('Lien copié !');
-          }
-        });
-      }
+      inner.appendChild(clone);
     });
+  }
+  function openOverlay(){ buildOverlayContent(); overlay.classList.add('open'); document.body.style.overflow='hidden'; burger.setAttribute('aria-expanded','true'); const first = overlay.querySelector('a,button'); if(first) first.focus(); }
+  function closeOverlay(){ overlay.classList.remove('open'); document.body.style.overflow=''; burger.setAttribute('aria-expanded','false'); burger.focus(); }
+  burger.addEventListener('click', ()=> overlay.classList.contains('open') ? closeOverlay() : openOverlay());
+  overlay.addEventListener('click', (e)=> { if (e.target === overlay || e.target.classList.contains('close-overlay')) closeOverlay(); });
+  window.addEventListener('keydown', (e)=> { if (e.key === 'Escape') closeOverlay(); });
+  function checkNavOverflow(){ const navlinks = topbar.querySelector('.navlinks'); const brand = topbar.querySelector('.brand'); if (!navlinks || !brand) return; const tbRect = topbar.getBoundingClientRect(); const navRect = navlinks.getBoundingClientRect(); const marginRight = 16; const overflows = (navRect.right > (tbRect.right - marginRight)) || (navlinks.scrollWidth > navlinks.clientWidth); if (overflows) topbar.classList.add('compact'); else topbar.classList.remove('compact'); }
+  window.addEventListener('load', ()=> setTimeout(checkNavOverflow,80));
+  window.addEventListener('resize', ()=> setTimeout(checkNavOverflow,40));
+  if (window.ResizeObserver) { const navlinks = topbar.querySelector('.navlinks'); if (navlinks) { const ro = new ResizeObserver(checkNavOverflow); ro.observe(navlinks); ro.observe(topbar); } }
+  checkNavOverflow();
 
-    // Discord quick button in topbar
-    const btnDiscord = document.getElementById('btnDiscord');
-    if (btnDiscord) btnDiscord.addEventListener('click', ()=> window.open('https://discord.gg/KURpXHzRTE','_blank','noopener'));
+  // COPY + TOAST
+  const toast = document.getElementById('toast');
+  function showToast(text='Copié !'){ if (!toast) return; toast.textContent = text; toast.style.display = 'block'; toast.style.opacity = '1'; setTimeout(()=> { toast.style.transition = 'opacity 400ms'; toast.style.opacity = '0'; setTimeout(()=> toast.style.display = 'none', 420); }, 900); }
 
-    // External links open in new tab (if any normal anchors)
-    document.querySelectorAll('a[href^="http"]').forEach(a => { a.setAttribute('target','_blank'); a.setAttribute('rel','noopener'); });
+  document.querySelectorAll('.link-card').forEach(card=>{
+    const url = card.getAttribute('data-url') || '#';
+    const openBtn = card.querySelector('[data-open]');
+    if (openBtn){
+      openBtn.addEventListener('click', (e)=>{
+        e.preventDefault();
+        window.open(url, '_blank', 'noopener');
+      });
+    }
+    const copyBtn = card.querySelector('[data-copy]');
+    if (copyBtn){
+      copyBtn.addEventListener('click', async (e)=>{
+        e.preventDefault();
+        try {
+          await navigator.clipboard.writeText(url);
+          showToast('Lien copié !');
+        } catch (err) {
+          const ta = document.createElement('textarea');
+          ta.value = url;
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          ta.remove();
+          showToast('Lien copié !');
+        }
+      });
+    }
+  });
+
+  // Discord quick button
+  const btnDiscord = document.getElementById('btnDiscord');
+  if (btnDiscord) btnDiscord.addEventListener('click', ()=> window.open('https://discord.gg/KURpXHzRTE','_blank','noopener'));
+  document.querySelectorAll('a[href^="http"]').forEach(a => { a.setAttribute('target','_blank'); a.setAttribute('rel','noopener'); });
+})();
   </script>
 </body>
 </html>
