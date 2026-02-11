@@ -29,41 +29,22 @@
       background-size:200% 200%;
       min-height:100vh;
     }
-    body.modal-open nav.topbar{ background: rgba(7,16,24,0.98); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); }
-
     .wrap{ max-width:var(--max-w); margin:32px auto; }
 
-    /* NAVBAR: aligned with index page styles so both pages match exactly */
+    /* NAVBAR */
     nav.topbar{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      padding:12px 18px;
-      border-radius:30px; /* courbure identique */
-      background: rgba(7,16,24,0.88); /* même opacité que l'index */
-      border:1px solid rgba(255,255,255,0.03);
-      -webkit-backdrop-filter: blur(10px);
-      backdrop-filter: blur(10px);
+      display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 18px;border-radius:30px;
+      max-width:var(--max-w);margin:0 auto;position:sticky;top:22px;z-index:40;background:var(--glass);
+      border:1px solid rgba(255,255,255,0.03);-webkit-backdrop-filter: blur(10px);backdrop-filter: blur(10px);
       box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-      position:sticky;
-      top:22px;
-      z-index:40;
-      margin:0 auto;
-      max-width:var(--max-w);
     }
-
     .brand{display:flex;align-items:center;gap:12px}
     .brand img{width:44px;height:44px;border-radius:10px;object-fit:cover}
     .brand .title{font-weight:700;letter-spacing:0.4px;color:#eaf0ff}
-
     .navlinks{display:flex;gap:12px;align-items:center}
     .navlinks a{padding:8px 14px;border-radius:12px;text-decoration:none;color:var(--muted);font-weight:600}
     .navlinks a.active{ color:#fff; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); }
-
-    .btn-discord{
-      background:linear-gradient(180deg,var(--accent),var(--accent-2));
-      padding:8px 14px;border-radius:12px;color:#0b0a0b;font-weight:800;border:none;cursor:pointer;box-shadow:0 6px 18px rgba(255,122,24,0.12);
-    }
+    .btn-discord{ background:linear-gradient(180deg,var(--accent),var(--accent-2)); padding:8px 16px;border-radius:12px;color:#071018;font-weight:800;border:none;cursor:pointer;box-shadow:0 6px 18px rgba(255,122,24,0.12); }
 
     header{ max-width:var(--max-w); margin:18px auto 6px auto; padding:0 6px; }
     header h1{ margin:0 0 6px 0; font-size:28px; }
@@ -77,17 +58,8 @@
     .price{ color:var(--muted); font-weight:700 }
     .actions{ display:flex; gap:8px; align-items:center; margin-top:auto; justify-content:flex-start }
 
-    .primary-btn{
-      background:linear-gradient(90deg,var(--accent),var(--accent-2));
-      padding:10px 12px;border-radius:10px;color:#071018;font-weight:800;text-decoration:none; cursor:pointer; border:none;
-      box-shadow:0 8px 22px rgba(255,122,24,0.12);
-    }
-    .example-btn{
-      background:linear-gradient(90deg,var(--accent-blue),#1a6ef0);
-      padding:10px 12px;border-radius:10px;color:#fff;font-weight:800;text-decoration:none; cursor:pointer; border:none;
-      box-shadow:0 8px 22px rgba(43,140,255,0.12);
-      margin-left:auto;
-    }
+    .primary-btn{ background:linear-gradient(90deg,var(--accent),var(--accent-2)); padding:10px 12px;border-radius:10px;color:#071018;font-weight:800;text-decoration:none; cursor:pointer; border:none; box-shadow:0 8px 22px rgba(255,122,24,0.12); }
+    .example-btn{ background:linear-gradient(90deg,var(--accent-blue),#1a6ef0); padding:10px 12px;border-radius:10px;color:#fff;font-weight:800;text-decoration:none; cursor:pointer; border:none; box-shadow:0 8px 22px rgba(43,140,255,0.12); margin-left:auto; }
     .info{ background:transparent; padding:8px 10px; border-radius:10px; color:var(--muted); border:1px solid rgba(255,255,255,0.03) }
 
     .note{ margin-top:12px; color:rgba(255,255,255,0.35) }
@@ -114,27 +86,38 @@
     /* confetti canvas is absolute */
     #confetti-canvas{ position:fixed; inset:0; pointer-events:none; z-index:2600; display:none; }
 
+    /* overlay (shared) */
+    #burger { display:none; background:transparent; border:0; color:var(--muted); font-size:20px; padding:6px 10px; border-radius:10px; cursor:pointer; }
+    .topbar.compact #burger { display:inline-flex; align-items:center; justify-content:center; }
+    .topbar.compact .navlinks { display:none; }
+    .nav-overlay { display:none; position:fixed; inset:0; z-index:2600; background:rgba(7,16,24,0.96); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); padding:56px 20px 24px; overflow:auto; }
+    .nav-overlay.open { display:block; }
+    .nav-overlay .overlay-inner { max-width:420px; margin:0 auto; display:flex; flex-direction:column; gap:12px; }
+    .nav-overlay a, .nav-overlay button.btn-discord { display:block; padding:12px 14px; border-radius:12px; text-decoration:none; color:var(--muted); font-weight:700; background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00)); border:1px solid rgba(255,255,255,0.03); }
+    .nav-overlay a.active { color:#fff; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); }
+    .nav-overlay .close-overlay { position:absolute; right:14px; top:12px; background:transparent; border:0; color:var(--muted); font-size:20px; cursor:pointer; }
     @media(max-width:980px){ .grid{ grid-template-columns:1fr } .modal{ flex-direction:column } .modal .right{ width:100% } .modal .left img{ height:220px } }
     @media(max-width:720px){ .navlinks{ display:none; position:absolute; right:24px; top:76px; flex-direction:column; background:var(--glass); padding:10px; border-radius:12px; border:1px solid rgba(255,255,255,0.03) } }
-
     a:focus, button:focus{ outline:3px solid rgba(255,155,59,0.12); outline-offset:4px; border-radius:8px }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <!-- NAV : markup and styles matched to index so topbar is identical -->
     <nav class="topbar" aria-label="Barre de navigation">
       <div class="brand">
         <img src="profile-0.png" alt="logo KenzouTV">
         <div class="title">KenzouTV</div>
       </div>
 
-      <div class="navlinks" id="main-nav">
-        <a href="index.html">Accueil</a>
-        <a href="links.html">Mes Réseaux</a>
-        <a href="#product-grid" class="active">Boutique</a>
-        <a href="blockframe.html">BlockFrame</a>
-        <button class="btn-discord" id="btnDiscord">Discord</button>
+      <div style="display:flex;align-items:center;gap:10px">
+        <button id="burger" aria-expanded="false" aria-controls="main-nav" aria-label="Ouvrir le menu" style="display:none">☰</button>
+        <div class="navlinks" id="main-nav">
+          <a href="index.html">Accueil</a>
+          <a href="links.html">Mes Réseaux</a>
+          <a href="#product-grid" class="active">Boutique</a>
+          <a href="blockframe.html">BlockFrame</a>
+          <button class="btn-discord" id="btnDiscord">Discord</button>
+        </div>
       </div>
     </nav>
 
@@ -144,20 +127,17 @@
     </header>
 
     <section id="product-grid" class="grid" aria-label="Liste des produits">
-      <!-- Animation courte (Commander -> direct PayPal) -->
       <article class="product" id="product-1">
         <img src="Produit-1.jpg" alt="Animation courte 1">
         <div class="meta"><strong>Animation courte</strong><span class="price">2€</span></div>
         <p style="margin:0;color:rgba(234,240,255,0.78)">Intro/bumpers &lt;1min. MP4 720p. 1 révision incluse.</p>
         <div class="actions" style="margin-top:auto">
           <button class="primary-btn" data-id="product-1">Voir détails</button>
-          <!-- direct PayPal link (opens in new tab) -->
           <a class="primary-btn" id="buy-product-1" href="https://www.paypal.com/ncp/payment/GG7ZXTNYLZLS6" target="_blank" rel="noopener">Commander</a>
           <button class="example-btn" data-target="blockframe.html">Voir Exemple</button>
         </div>
       </article>
 
-       <!-- Pack 3 animations -->
       <article class="product" id="product-2">
         <img src="Produit-2.jpg" alt="Pack 3 animations">
         <div class="meta"><strong>Pack 3 animations</strong><span class="price">5€</span></div>
@@ -169,7 +149,6 @@
         </div>
       </article>
 
-      <!-- PP simple -->
       <article class="product" id="product-pp-single">
         <img src="Bientot.jpg" alt="PP simple exemple">
         <div class="meta"><strong>PP simple</strong><span class="price">1€</span></div>
@@ -181,7 +160,6 @@
         </div>
       </article>
 
-      <!-- Pack 5 PP -->
       <article class="product" id="product-pp-pack">
         <img src="Bientot.jpg" alt="Pack PP exemple">
         <div class="meta"><strong>Pack 5 PP</strong><span class="price">4€</span></div>
@@ -193,7 +171,6 @@
         </div>
       </article>
 
-      <!-- Abbonement -->
       <article class="product" id="product-subscription">
         <img src="Bientot.jpg" alt="Abbonement exemple">
         <div class="meta"><strong>Abbonement</strong><span class="price">6€/mois</span></div>
@@ -254,281 +231,287 @@
   </div>
   <canvas id="confetti-canvas" aria-hidden="true"></canvas>
 
+  <div class="nav-overlay" aria-hidden="true" style="display:none;"></div>
+
   <script>
-    /* -----------------------
-       PRODUCTS (PayPal links)
-       ----------------------- */
-    const PRODUCTS = {
-      'product-1': { id:'product-1', title:'Animation courte', price:'2€', img:'Produit-1.jpg', desc:'Intro/bumpers <1min. MP4 720p. 1 révision incluse.', paypal:'https://www.paypal.com/ncp/payment/GG7ZXTNYLZLS6' },
-      'product-2': { id:'product-2', title:'Pack 3 animations', price:'5€', img:'Produit-2.jpg', desc:'Trois courts rendus séparés. Idéal pour séries.', paypal:'https://www.paypal.com/ncp/payment/Z2KD45BKQUXSA' },
-      'product-pp-single': { id:'product-pp-single', title:'PP simple', price:'1€', img:'product-3.jpg', desc:"PP simple. Indique ton pseudo Minecraft OU ouvre un ticket Discord. Peut être autre chose qu'un skin.", paypal:'REPLACE_PAYPAL_PP_SINGLE' },
-      'product-pp-pack': { id:'product-pp-pack', title:'Pack 5 PP', price:'4€', img:'product-4.jpg', desc:"Pack de 5 PP personnalisées. Précise les idées pour chaque PP.", paypal:'REPLACE_PAYPAL_PP_PACK' },
-      'product-subscription': { id:'product-subscription', title:'Abbonement', price:'6€/mois', img:'subscription.jpg', desc:"1 animation courte/mois + 3 PP simples/mois. Annulable.", paypal:'REPLACE_PAYPAL_SUBSCRIPTION' }
-    };
+/* === boutique.js — nav responsive + modal produit + confetti + helpers === */
+(function(){
+  /* ---------- NAV / BURGER / OVERLAY (générique) ---------- */
+  const topbar = document.querySelector('nav.topbar');
+  if (!topbar) return;
+  let burger = document.getElementById('burger');
+  if (!burger) {
+    burger = document.createElement('button');
+    burger.id = 'burger';
+    burger.setAttribute('aria-expanded','false');
+    burger.setAttribute('aria-controls','main-nav');
+    burger.setAttribute('aria-label','Ouvrir le menu');
+    burger.style.display = 'none';
+    burger.textContent = '☰';
+    const brand = topbar.querySelector('.brand');
+    brand && brand.insertAdjacentElement('afterend', burger);
+  }
+  let overlay = document.querySelector('.nav-overlay');
+  if (!overlay) {
+    overlay = document.createElement('div');
+    overlay.className = 'nav-overlay';
+    overlay.setAttribute('role','dialog');
+    overlay.setAttribute('aria-modal','true');
+    overlay.innerHTML = `<button class="close-overlay" aria-label="Fermer le menu">✕</button><div class="overlay-inner" id="overlayInner"></div>`;
+    document.body.appendChild(overlay);
+  }
+  function buildOverlayContent(){
+    const navlinks = topbar.querySelector('.navlinks');
+    const inner = document.getElementById('overlayInner');
+    inner.innerHTML = '';
+    if (!navlinks) return;
+    navlinks.querySelectorAll('a, button').forEach(node=>{
+      let clone;
+      if (node.tagName.toLowerCase() === 'a') {
+        clone = document.createElement('a');
+        clone.href = node.href || '#';
+        clone.innerHTML = node.innerHTML;
+        if (node.classList.contains('active')) clone.classList.add('active');
+      } else { clone = node.cloneNode(true); }
+      if (clone.tagName.toLowerCase() === 'a' && clone.href.startsWith('http')) {
+        clone.setAttribute('target','_blank');
+        clone.setAttribute('rel','noopener');
+      }
+      inner.appendChild(clone);
+    });
+  }
+  function openOverlay(){ buildOverlayContent(); overlay.classList.add('open'); document.body.style.overflow='hidden'; burger.setAttribute('aria-expanded','true'); const first = overlay.querySelector('a,button'); if(first) first.focus(); }
+  function closeOverlay(){ overlay.classList.remove('open'); document.body.style.overflow=''; burger.setAttribute('aria-expanded','false'); burger.focus(); }
 
-    /* -----------------------
-       DOM nodes
-       ----------------------- */
-    const modalBackdrop = document.getElementById('modalBackdrop');
-    const modalImg = document.getElementById('modalImg');
-    const modalTitle = document.getElementById('modalTitle');
-    const modalPrice = document.getElementById('modalPrice');
-    const modalDesc = document.getElementById('modalDesc');
-    const modalPaypal = document.getElementById('modalPaypal');
-    const modalClose = document.getElementById('modalClose');
-    const prevExample = document.getElementById('prevExample');
-    const nextExample = document.getElementById('nextExample');
+  burger.addEventListener('click', ()=> overlay.classList.contains('open') ? closeOverlay() : openOverlay());
+  overlay.addEventListener('click', (e)=> { if (e.target === overlay || e.target.classList.contains('close-overlay')) closeOverlay(); });
+  window.addEventListener('keydown', (e)=> { if (e.key === 'Escape') closeOverlay(); });
 
-    const thanksBackdrop = document.getElementById('thanksBackdrop');
-    const thanksTitle = document.getElementById('thanksTitle');
-    const thanksMessage = document.getElementById('thanksMessage');
-    const thanksDone = document.getElementById('thanksDone');
-    const thanksTicket = document.getElementById('thanksTicket');
-    const confettiCanvas = document.getElementById('confetti-canvas');
+  function checkNavOverflow(){
+    const navlinks = topbar.querySelector('.navlinks');
+    const brand = topbar.querySelector('.brand');
+    if (!navlinks || !brand) return;
+    const tbRect = topbar.getBoundingClientRect();
+    const navRect = navlinks.getBoundingClientRect();
+    const marginRight = 16;
+    const overflows = (navRect.right > (tbRect.right - marginRight)) || (navlinks.scrollWidth > navlinks.clientWidth);
+    if (overflows) topbar.classList.add('compact'); else topbar.classList.remove('compact');
+  }
+  window.addEventListener('load', ()=> setTimeout(checkNavOverflow,80));
+  window.addEventListener('resize', ()=> setTimeout(checkNavOverflow,40));
+  if (window.ResizeObserver) { const navlinks = topbar.querySelector('.navlinks'); if (navlinks) { const ro = new ResizeObserver(checkNavOverflow); ro.observe(navlinks); ro.observe(topbar); } }
+  checkNavOverflow();
 
-    let lastFocused = null;
-    let exampleImages = [];
-    let exampleIndex = 0;
+  // Discord quick button
+  const btnDiscord = document.getElementById('btnDiscord');
+  if (btnDiscord) btnDiscord.addEventListener('click', ()=> window.open('https://discord.gg/KURpXHzRTE','_blank','noopener'));
+  document.querySelectorAll('a[href^="http"]').forEach(a => { a.setAttribute('target','_blank'); a.setAttribute('rel','noopener'); });
 
-    /* -----------------------
-       OPEN / CLOSE PRODUCT MODAL
-       ----------------------- */
-    function openModal(productId){
-      const p = PRODUCTS[productId];
-      if (!p) return;
-      modalImg.src = p.img;
-      modalImg.alt = p.title;
-      modalTitle.textContent = p.title;
-      modalPrice.textContent = p.price;
-      modalDesc.textContent = p.desc;
+  /* ---------- PRODUIT MODAL ---------- */
+  const PRODUCTS = {
+    'product-1': { id:'product-1', title:'Animation courte', price:'2€', img:'Produit-1.jpg', desc:'Intro/bumpers <1min. MP4 720p. 1 révision incluse.', paypal:'https://www.paypal.com/ncp/payment/GG7ZXTNYLZLS6' },
+    'product-2': { id:'product-2', title:'Pack 3 animations', price:'5€', img:'Produit-2.jpg', desc:'Trois courts rendus séparés. Idéal pour séries.', paypal:'https://www.paypal.com/ncp/payment/Z2KD45BKQUXSA' },
+    'product-pp-single': { id:'product-pp-single', title:'PP simple', price:'1€', img:'product-3.jpg', desc:"PP simple. Indique ton pseudo Minecraft OU ouvre un ticket Discord. Peut être autre chose qu'un skin.", paypal:'REPLACE_PAYPAL_PP_SINGLE' },
+    'product-pp-pack': { id:'product-pp-pack', title:'Pack 5 PP', price:'4€', img:'product-4.jpg', desc:"Pack de 5 PP personnalisées. Précise les idées pour chaque PP.", paypal:'REPLACE_PAYPAL_PP_PACK' },
+    'product-subscription': { id:'product-subscription', title:'Abbonement', price:'6€/mois', img:'subscription.jpg', desc:"1 animation courte/mois + 3 PP simples/mois. Annulable.", paypal:'REPLACE_PAYPAL_SUBSCRIPTION' }
+  };
+
+  const modalBackdrop = document.getElementById('modalBackdrop');
+  const modalImg = document.getElementById('modalImg');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalPrice = document.getElementById('modalPrice');
+  const modalDesc = document.getElementById('modalDesc');
+  const modalPaypal = document.getElementById('modalPaypal');
+  const modalClose = document.getElementById('modalClose');
+  const prevExample = document.getElementById('prevExample');
+  const nextExample = document.getElementById('nextExample');
+
+  let lastFocused = null, exampleImages = [], exampleIndex = 0;
+
+  function updateCarouselControls(){
+    const visible = exampleImages.length > 0;
+    prevExample && (prevExample.style.display = visible ? 'inline-block' : 'none');
+    nextExample && (nextExample.style.display = visible ? 'inline-block' : 'none');
+  }
+
+  function openModal(productId){
+    const p = PRODUCTS[productId] || null;
+    if (!modalBackdrop) return;
+    if (p){
+      modalImg.src = p.img || '';
+      modalImg.alt = p.title || '';
+      modalTitle.textContent = p.title || '';
+      modalPrice.textContent = p.price || '';
+      modalDesc.textContent = p.desc || '';
       modalPaypal.href = p.paypal || '#';
-      modalBackdrop.style.display = 'flex';
-      modalBackdrop.setAttribute('aria-hidden','false');
-      document.body.classList.add('modal-open');
-      lastFocused = document.activeElement;
-      modalClose.focus();
       exampleImages = [];
-      exampleIndex = 0;
-      updateCarouselControls();
-      if (location.hash !== '#' + productId) history.pushState(null,'', '#' + productId);
+    } else {
+      const card = document.getElementById(productId);
+      if (card) {
+        modalImg.src = card.querySelector('img')?.src || '';
+        modalImg.alt = card.querySelector('img')?.alt || '';
+        modalTitle.textContent = card.querySelector('.meta strong')?.textContent || '';
+        modalPrice.textContent = card.querySelector('.meta .price')?.textContent || '';
+        modalDesc.textContent = card.querySelector('p')?.textContent || '';
+        modalPaypal.href = '#';
+        exampleImages = [];
+      } else return;
     }
+    modalBackdrop.style.display = 'flex';
+    modalBackdrop.setAttribute('aria-hidden','false');
+    document.body.classList.add('modal-open');
+    lastFocused = document.activeElement;
+    modalClose && modalClose.focus();
+    exampleIndex = 0;
+    updateCarouselControls();
+    if (location.hash !== '#' + productId) history.pushState(null,'', '#' + productId);
+  }
 
-    /* -----------------------
-       OPEN EXAMPLES (PP images)
-       ----------------------- */
-    function openExamples(list){
-      exampleImages = list.slice();
-      if (exampleImages.length === 0) return;
-      exampleIndex = 0;
-      modalImg.src = exampleImages[exampleIndex];
-      modalImg.alt = 'Exemple ' + (exampleIndex+1);
-      modalTitle.textContent = 'Exemples PP';
-      modalPrice.textContent = '';
-      modalDesc.textContent = 'Aperçu des styles. Pour commander, sélectionne une fiche PP et indique le style souhaité.';
-      modalPaypal.href = PRODUCTS['product-pp-single'].paypal || '#';
-      modalBackdrop.style.display = 'flex';
-      modalBackdrop.setAttribute('aria-hidden','false');
-      document.body.classList.add('modal-open');
-      lastFocused = document.activeElement;
-      modalClose.focus();
-      updateCarouselControls();
-      if (location.hash !== '#examples') history.pushState(null,'', '#examples');
+  function openExamples(list){
+    if (!modalBackdrop) return;
+    exampleImages = Array.isArray(list) ? list.slice() : [];
+    if (exampleImages.length === 0) return;
+    exampleIndex = 0;
+    modalImg.src = exampleImages[exampleIndex];
+    modalImg.alt = 'Exemple ' + (exampleIndex+1);
+    modalTitle.textContent = 'Exemples PP';
+    modalPrice.textContent = '';
+    modalDesc.textContent = 'Aperçu des styles. Pour commander, sélectionne une fiche PP et indique le style souhaité.';
+    modalPaypal.href = (PRODUCTS['product-pp-single'] && PRODUCTS['product-pp-single'].paypal) || '#';
+    modalBackdrop.style.display = 'flex';
+    modalBackdrop.setAttribute('aria-hidden','false');
+    document.body.classList.add('modal-open');
+    lastFocused = document.activeElement;
+    modalClose && modalClose.focus();
+    updateCarouselControls();
+    if (location.hash !== '#examples') history.pushState(null,'', '#examples');
+  }
+
+  function closeModal(){
+    if (!modalBackdrop) return;
+    modalBackdrop.style.display = 'none';
+    modalBackdrop.setAttribute('aria-hidden','true');
+    document.body.classList.remove('modal-open');
+    if (lastFocused) lastFocused.focus();
+    if (location.hash && (location.hash.startsWith('#product-') || location.hash === '#examples')) {
+      history.pushState(null,'', location.pathname + location.search);
     }
+    exampleImages = []; exampleIndex = 0; updateCarouselControls();
+  }
 
-    function closeModal(){
-      modalBackdrop.style.display = 'none';
-      modalBackdrop.setAttribute('aria-hidden','true');
-      document.body.classList.remove('modal-open');
-      if (lastFocused) lastFocused.focus();
-      if (location.hash && (location.hash.startsWith('#product-') || location.hash === '#examples')) {
-        history.pushState(null,'', location.pathname + location.search);
-      }
-      exampleImages = []; exampleIndex = 0; updateCarouselControls();
-    }
-
-    function updateCarouselControls(){
-      const visible = exampleImages.length > 0;
-      prevExample.style.display = visible ? 'inline-block' : 'none';
-      nextExample.style.display = visible ? 'inline-block' : 'none';
-    }
-
-    prevExample.addEventListener('click', ()=> {
-      if (exampleImages.length===0) return;
-      exampleIndex = (exampleIndex - 1 + exampleImages.length) % exampleImages.length;
-      modalImg.src = exampleImages[exampleIndex];
-      modalImg.alt = 'Exemple ' + (exampleIndex+1);
+  document.querySelectorAll('.primary-btn[data-id]').forEach(btn=>{
+    btn.addEventListener('click', ()=> openModal(btn.getAttribute('data-id')));
+  });
+  document.querySelectorAll('.example-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const target = btn.getAttribute('data-target');
+      const raw = btn.getAttribute('data-examples');
+      if (target) { window.location.href = target; return; }
+      const list = raw ? raw.split(',').map(s=>s.trim()).filter(Boolean) : ['PP-1.jpg','PP-2.jpg','PP-3.jpg'];
+      openExamples(list);
     });
-    nextExample.addEventListener('click', ()=> {
-      if (exampleImages.length===0) return;
-      exampleIndex = (exampleIndex + 1) % exampleImages.length;
-      modalImg.src = exampleImages[exampleIndex];
-      modalImg.alt = 'Exemple ' + (exampleIndex+1);
-    });
+  });
 
-    document.querySelectorAll('.primary-btn[data-id]').forEach(btn=>{
-      btn.addEventListener('click', (e)=>{
-        const id = btn.getAttribute('data-id');
-        openModal(id);
+  modalClose && modalClose.addEventListener('click', closeModal);
+  modalBackdrop && modalBackdrop.addEventListener('click', (e)=> { if (e.target === modalBackdrop) closeModal(); });
+  window.addEventListener('keydown', (e)=> { if (e.key === 'Escape' && modalBackdrop && modalBackdrop.style.display === 'flex') closeModal(); });
+
+  window.addEventListener('hashchange', () => {
+    const h = location.hash.replace('#','');
+    if (h && h.startsWith('remerciement-')) {
+      const key = h.split('-')[1];
+      showThanks && showThanks(key);
+      return;
+    }
+    if (h && h.startsWith('product-') && PRODUCTS[h]) setTimeout(()=>openModal(h),80);
+    if (h === 'examples') { }
+  });
+  (function checkInitialHash(){ const h = location.hash.replace('#',''); if (h && h.startsWith('product-') && PRODUCTS[h]) setTimeout(()=>openModal(h),80); if (h && h.startsWith('remerciement-')) { const key = h.split('-')[1]; setTimeout(()=> showThanks && showThanks(key), 120); } })();
+
+  /* ---------- CONFETTI + THANKS POPUP ---------- */
+  const thanksBackdrop = document.getElementById('thanksBackdrop');
+  const thanksTitle = document.getElementById('thanksTitle');
+  const thanksMessage = document.getElementById('thanksMessage');
+  const thanksDone = document.getElementById('thanksDone');
+  const confettiCanvas = document.getElementById('confetti-canvas');
+
+  function launchConfetti(){
+    if (!confettiCanvas) return;
+    const canvas = confettiCanvas;
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    canvas.style.display = 'block';
+    const ctx = canvas.getContext('2d');
+    const colors = ['#ff7a18','#ff9b3b','#ffd166','#6ee7b7','#60a5fa','#a78bfa'];
+    const num = Math.floor(120 + Math.random()*60);
+    const pieces = [];
+    for (let i=0;i<num;i++){
+      pieces.push({
+        x: Math.random()*canvas.width,
+        y: Math.random()*canvas.height - canvas.height,
+        w: 6 + Math.random()*10, h: 8 + Math.random()*12,
+        r: Math.random()*360,
+        color: colors[Math.floor(Math.random()*colors.length)],
+        speedX: -1 + Math.random()*2, speedY: 2 + Math.random()*4,
+        rotSpeed: -6 + Math.random()*12, opacity: 0.9 + Math.random()*0.1
       });
-    });
-
-    document.querySelectorAll('.example-btn').forEach(btn=>{
-      btn.addEventListener('click', ()=>{
-        const target = btn.getAttribute('data-target');
-        const raw = btn.getAttribute('data-examples');
-        if (target) {
-          window.location.href = target;
-          return;
-        }
-        const list = raw ? raw.split(',').map(s=>s.trim()).filter(Boolean) : ['PP-1.jpg','PP-2.jpg','PP-3.jpg'];
-        openExamples(list);
-      });
-    });
-
-    // modal close handlers
-    modalClose.addEventListener('click', closeModal);
-    modalBackdrop.addEventListener('click', (e)=> { if (e.target === modalBackdrop) closeModal(); });
-    window.addEventListener('keydown', (e)=> { if (e.key === 'Escape' && modalBackdrop.style.display === 'flex') closeModal(); });
-
-    /* -----------------------
-       THANKS POPUP + CONFETTI
-       ----------------------- */
-    function showThanks(typeKey){
-      // typeKey: '1'..'4'
-      const map = {
-        '1': { title: 'Merci pour votre animation !', msg: 'Ta commande d’animation a bien été reçue. Nous te contacterons via Discord ou email pour les détails.' },
-        '2': { title: 'Merci pour ta PP !', msg: 'Ta commande de PP a bien été reçue. Indique ton pseudo Minecraft ou ouvre un ticket Discord.' },
-        '3': { title: 'Merci pour ton pack PP !', msg: 'Le pack 5 PP a été enregistré. Donne-nous les idées et pseudos via Discord.' },
-        '4': { title: 'Merci pour ton abonnement !', msg: 'Bienvenue dans l’abbonement — tu recevras tes livraisons prioritaires chaque mois.' }
-      };
-      const info = map[typeKey] || map['1'];
-      thanksTitle.textContent = info.title;
-      thanksMessage.textContent = info.msg;
-      thanksBackdrop.style.display = 'flex';
-      thanksBackdrop.setAttribute('aria-hidden','false');
-      document.body.classList.add('modal-open');
-      // confetti
-      launchConfetti();
     }
-
-    function closeThanks(){
-      thanksBackdrop.style.display = 'none';
-      thanksBackdrop.setAttribute('aria-hidden','true');
-      document.body.classList.remove('modal-open');
-      if (location.hash && location.hash.startsWith('#remerciement-')) {
-        history.pushState(null,'', location.pathname + location.search);
+    let start = null;
+    function frame(t){
+      if (!start) start = t;
+      const elapsed = t - start;
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      for (let p of pieces){
+        p.x += p.speedX; p.y += p.speedY; p.r += p.rotSpeed;
+        ctx.save(); ctx.globalAlpha = p.opacity;
+        ctx.translate(p.x,p.y); ctx.rotate(p.r * Math.PI / 180);
+        ctx.fillStyle = p.color; ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h); ctx.restore();
+      }
+      if (elapsed < 4500) requestAnimationFrame(frame);
+      else {
+        let fadeStart = performance.now();
+        (function fade(){
+          const fElapsed = performance.now() - fadeStart;
+          ctx.clearRect(0,0,canvas.width,canvas.height);
+          const alpha = Math.max(0,1 - fElapsed/600);
+          for (let p of pieces){
+            ctx.save(); ctx.globalAlpha = (p.opacity||1)*alpha;
+            ctx.translate(p.x,p.y); ctx.rotate(p.r * Math.PI / 180);
+            ctx.fillStyle = p.color; ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h); ctx.restore();
+          }
+          if (alpha > 0) requestAnimationFrame(fade);
+          else { ctx.clearRect(0,0,canvas.width,canvas.height); canvas.style.display = 'none'; }
+        })();
       }
     }
+    requestAnimationFrame(frame);
+    window.addEventListener('resize', ()=> { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }, { passive:true });
+  }
 
-    thanksDone.addEventListener('click', closeThanks);
+  function showThanks(typeKey){
+    if (!thanksBackdrop) return;
+    const map = {
+      '1': { title: 'Merci pour votre animation !', msg: 'Ta commande d’animation a bien été reçue. Nous te contacterons via Discord ou email pour les détails.' },
+      '2': { title: 'Merci pour ta PP !', msg: 'Ta commande de PP a bien été reçue. Indique ton pseudo Minecraft ou ouvre un ticket Discord.' },
+      '3': { title: 'Merci pour ton pack PP !', msg: 'Le pack 5 PP a été enregistré. Donne-nous les idées et pseudos via Discord.' },
+      '4': { title: 'Merci pour ton abonnement !', msg: 'Bienvenue dans l’abbonement — tu recevras tes livraisons prioritaires chaque mois.' }
+    };
+    const info = map[typeKey] || map['1'];
+    thanksTitle.textContent = info.title;
+    thanksMessage.textContent = info.msg;
+    thanksBackdrop.style.display = 'flex';
+    thanksBackdrop.setAttribute('aria-hidden','false');
+    document.body.classList.add('modal-open');
+    launchConfetti();
+  }
+  function closeThanks(){ if (!thanksBackdrop) return; thanksBackdrop.style.display = 'none'; thanksBackdrop.setAttribute('aria-hidden','true'); document.body.classList.remove('modal-open'); }
+  thanksDone && thanksDone.addEventListener('click', closeThanks);
 
-    // open when hash present
-    window.addEventListener('hashchange', () => {
-      const h = location.hash.replace('#','');
-      if (h && h.startsWith('remerciement-')) {
-        const key = h.split('-')[1];
-        showThanks(key);
-      } else {
-        // close thanks if open
-        if (thanksBackdrop.style.display === 'flex') closeThanks();
-      }
-    });
+  // helpers
+  function openOrder(){ window.location.href = '#order'; }
+  window.openOrder = openOrder;
 
-    (function checkInitialHash(){
-      const h = location.hash.replace('#','');
-      if (h && h.startsWith('product-') && PRODUCTS[h]) setTimeout(()=>openModal(h),80);
-      if (h && h.startsWith('remerciement-')) {
-        const key = h.split('-')[1];
-        setTimeout(()=> showThanks(key), 120);
-      }
-    })();
-
-    /* -----------------------
-       Simple confetti engine (canvas)
-       ----------------------- */
-    function launchConfetti(){
-      const canvas = confettiCanvas;
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      canvas.style.display = 'block';
-      const ctx = canvas.getContext('2d');
-
-      const colors = ['#ff7a18','#ff9b3b','#ffd166','#6ee7b7','#60a5fa','#a78bfa'];
-      const num = Math.floor(120 + Math.random()*60);
-      const pieces = [];
-
-      for (let i=0;i<num;i++){
-        pieces.push({
-          x: Math.random()*canvas.width,
-          y: Math.random()*canvas.height - canvas.height,
-          w: 6 + Math.random()*10,
-          h: 8 + Math.random()*12,
-          r: Math.random()*360,
-          color: colors[Math.floor(Math.random()*colors.length)],
-          speedX: -1 + Math.random()*2,
-          speedY: 2 + Math.random()*4,
-          rotSpeed: -6 + Math.random()*12,
-          opacity: 0.9 + Math.random()*0.1,
-        });
-      }
-
-      let start = null;
-      function frame(t){
-        if (!start) start = t;
-        const elapsed = t - start;
-        ctx.clearRect(0,0,canvas.width,canvas.height);
-        for (let p of pieces){
-          p.x += p.speedX;
-          p.y += p.speedY;
-          p.r += p.rotSpeed;
-          ctx.save();
-          ctx.globalAlpha = p.opacity;
-          ctx.translate(p.x, p.y);
-          ctx.rotate(p.r * Math.PI / 180);
-          ctx.fillStyle = p.color;
-          ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
-          ctx.restore();
-        }
-        if (elapsed < 4500) {
-          requestAnimationFrame(frame);
-        } else {
-          // fade out then hide
-          let fadeStart = performance.now();
-          (function fade(){
-            const fElapsed = performance.now() - fadeStart;
-            ctx.clearRect(0,0,canvas.width,canvas.height);
-            const alpha = Math.max(0,1 - fElapsed/600);
-            for (let p of pieces){
-              ctx.save();
-              ctx.globalAlpha = (p.opacity || 1) * alpha;
-              ctx.translate(p.x, p.y);
-              ctx.rotate(p.r * Math.PI / 180);
-              ctx.fillStyle = p.color;
-              ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
-              ctx.restore();
-            }
-            if (alpha > 0) requestAnimationFrame(fade);
-            else { ctx.clearRect(0,0,canvas.width,canvas.height); canvas.style.display = 'none'; }
-          })();
-        }
-      }
-      requestAnimationFrame(frame);
-      // handle resize
-      window.addEventListener('resize', ()=> { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }, { passive:true });
-    }
-
-    /* -----------------------
-       Helpers: open order anchor or redirect
-       ----------------------- */
-    function openOrder(){
-      window.location.href = '#order';
-    }
-
-    // discord btn (identical behavior as index)
-    document.getElementById('btnDiscord').addEventListener('click', ()=> { window.open('https://discord.gg/KURpXHzRTE','_blank','noopener'); });
-
-    // ensure external links open in new tab
-    document.querySelectorAll('a[href^="http"]').forEach(a => { a.setAttribute('target','_blank'); a.setAttribute('rel','noopener'); });
+})();
   </script>
 </body>
 </html>
