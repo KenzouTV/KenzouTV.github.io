@@ -4,13 +4,14 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
 
-  <title>Mes Liens — KenzouTV</title>
+  <title>Mes Réseaux — KenzouTV</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 
-  <meta name="description" content="Tous les liens officiels de KenzouTV." />
+  <meta name="description" content="Tous les réseaux officiels de KenzouTV." />
 
   <style>
+
     :root{
       --bg-1:#06070a;
       --bg-2:#071018;
@@ -18,11 +19,11 @@
       --accent:#ff7a18;
       --accent-2:#ff9b3b;
 
+      --muted:rgba(255,255,255,0.68);
+
       --glass:rgba(7,16,24,0.88);
 
       --card:rgba(255,255,255,0.02);
-
-      --muted:rgba(255,255,255,0.68);
 
       --max-w:1180px;
     }
@@ -37,9 +38,10 @@
 
     body{
       margin:0;
-      padding:48px 24px;
+      padding:24px;
 
       font-family:Inter,system-ui,Arial;
+
       color:#eaf0ff;
 
       background:
@@ -55,9 +57,8 @@
     }
 
     .wrap{
-      width:100%;
       max-width:var(--max-w);
-      margin:0 auto;
+      margin:32px auto;
     }
 
     /* =========================
@@ -70,15 +71,13 @@
       justify-content:space-between;
       gap:16px;
 
-      width:100%;
-
       padding:12px 18px;
 
       border-radius:30px;
 
       position:sticky;
       top:22px;
-      z-index:100;
+      z-index:40;
 
       background:var(--glass);
 
@@ -178,14 +177,16 @@
     ========================= */
 
     header{
-      margin-top:34px;
-      margin-bottom:22px;
+      max-width:var(--max-w);
+
+      margin:18px auto 6px auto;
+
+      padding:0 6px;
     }
 
     .badge{
       display:inline-flex;
       align-items:center;
-      gap:8px;
 
       padding:8px 12px;
 
@@ -193,7 +194,7 @@
 
       background:rgba(255,122,24,0.08);
 
-      border:1px solid rgba(255,122,24,0.12);
+      border:1px solid rgba(255,122,24,0.14);
 
       color:#ffb06c;
 
@@ -207,6 +208,7 @@
       margin:0;
 
       font-size:52px;
+
       line-height:1.05;
 
       font-weight:800;
@@ -215,7 +217,7 @@
     header p{
       margin-top:14px;
 
-      max-width:760px;
+      max-width:700px;
 
       color:rgba(255,255,255,0.72);
 
@@ -230,10 +232,12 @@
 
     .links-grid{
       display:grid;
+
       grid-template-columns:repeat(3,1fr);
+
       gap:18px;
 
-      margin-top:32px;
+      margin-top:28px;
     }
 
     .link-card{
@@ -264,7 +268,9 @@
 
     .glow{
       position:absolute;
-      inset:auto -40px -40px auto;
+
+      right:-40px;
+      bottom:-40px;
 
       width:120px;
       height:120px;
@@ -378,6 +384,7 @@
 
     .copy-btn:hover{
       border-color:rgba(255,255,255,0.16);
+
       color:#fff;
     }
 
@@ -401,10 +408,6 @@
       right:20px;
       bottom:20px;
 
-      padding:12px 16px;
-
-      border-radius:12px;
-
       background:linear-gradient(
         90deg,
         var(--accent),
@@ -412,6 +415,10 @@
       );
 
       color:#071018;
+
+      padding:12px 16px;
+
+      border-radius:12px;
 
       font-weight:800;
 
@@ -440,18 +447,15 @@
     @media(max-width:720px){
 
       body{
-        padding:28px 16px;
+        padding:18px;
       }
 
       nav.topbar{
         flex-direction:column;
         align-items:flex-start;
-        gap:14px;
       }
 
       .navlinks{
-        width:100%;
-
         flex-wrap:wrap;
       }
 
@@ -467,6 +471,7 @@
         font-size:15px;
       }
     }
+
   </style>
 </head>
 
@@ -477,19 +482,32 @@
     <nav class="topbar">
 
       <div class="brand">
+
         <img src="profile-0.png" alt="Logo KenzouTV">
-        <div class="title">KenzouTV</div>
+
+        <div class="title">
+          KenzouTV
+        </div>
+
       </div>
 
       <div class="navlinks">
 
-        <a href="index.html">Accueil</a>
+        <a href="index.html">
+          Accueil
+        </a>
 
-        <a href="links.html" class="active">Mes Réseaux</a>
+        <a href="links.html" class="active">
+          Mes Réseaux
+        </a>
 
-        <a href="boutique.html">Boutique</a>
+        <a href="boutique.html">
+          Boutique
+        </a>
 
-        <a href="blockframe.html">BlockFrame</a>
+        <a href="blockframe.html">
+          BlockFrame
+        </a>
 
         <button class="btn-discord" id="btnDiscord">
           Discord
@@ -506,12 +524,12 @@
       </div>
 
       <h1>
-        Retrouve-moi partout.
+        Tous mes réseaux.
       </h1>
 
       <p>
-        YouTube, Twitch, Discord, TikTok, Instagram...
-        Tous mes liens sont ici.
+        Retrouve mes vidéos, lives, annonces,
+        projets et coulisses sur toutes mes plateformes.
       </p>
 
     </header>
@@ -543,7 +561,7 @@
               </div>
 
               <div class="link-desc">
-                Vidéos, concepts et projets Minecraft.
+                Vidéos Minecraft, concepts et projets.
               </div>
 
             </div>
@@ -632,7 +650,7 @@
               </div>
 
               <div class="link-desc">
-                Communauté, tickets et annonces.
+                Serveur officiel et communauté.
               </div>
 
             </div>
@@ -658,7 +676,7 @@
     </main>
 
     <footer>
-      © 2026 KenzouTV — Tous droits réservés
+      © 2026 KenzouTV
     </footer>
 
   </div>
@@ -669,9 +687,10 @@
 
   <script>
 
-    // DISCORD BTN
+    // DISCORD BUTTON
 
-    document.getElementById('btnDiscord')
+    document
+    .getElementById('btnDiscord')
     .addEventListener('click', ()=>{
 
       window.open(
@@ -711,7 +730,8 @@
 
     // BUTTONS
 
-    document.querySelectorAll('.link-card')
+    document
+    .querySelectorAll('.link-card')
     .forEach(card=>{
 
       const url = card.getAttribute('data-url');
@@ -742,7 +762,7 @@
 
         }catch{
 
-          showToast('Impossible de copier');
+          showToast('Erreur');
 
         }
 
