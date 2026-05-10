@@ -1,14 +1,15 @@
 <!doctype html>
 <html lang="fr">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
 <title>Mes Réseaux — KenzouTV</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 
 <style>
+
 *{
   margin:0;
   padding:0;
@@ -16,18 +17,18 @@
 }
 
 :root{
-  --bg-1:#05070b;
-  --bg-2:#071018;
+  --bg:#05070b;
+  --bg2:#071018;
 
   --accent:#ff7a18;
-  --accent-2:#ff9b3b;
+  --accent2:#ff9b3b;
 
   --text:#f3f6ff;
-  --muted:rgba(255,255,255,0.65);
+  --muted:rgba(255,255,255,0.68);
 
   --glass:rgba(7,16,24,0.88);
 
-  --max-w:1180px;
+  --max-width:1180px;
 }
 
 html,body{
@@ -39,31 +40,27 @@ body{
   color:var(--text);
 
   background:
-    radial-gradient(900px 400px at 10% 80%, rgba(255,122,24,0.06), transparent 10%),
-    radial-gradient(900px 500px at 90% 20%, rgba(255,155,59,0.04), transparent 10%),
-    linear-gradient(180deg,var(--bg-1),var(--bg-2));
-
-  background-size:200% 200%;
+    radial-gradient(circle at top left, rgba(255,122,24,0.08), transparent 25%),
+    radial-gradient(circle at bottom right, rgba(255,155,59,0.06), transparent 25%),
+    linear-gradient(180deg,var(--bg),var(--bg2));
 
   -webkit-font-smoothing:antialiased;
 
-  padding:0 24px 48px;
+  padding:36px 24px 60px;
 }
+
+/* WRAP */
 
 .wrap{
   width:100%;
-  max-width:var(--max-w);
+  max-width:var(--max-width);
   margin:0 auto;
-  padding-top:28px;
 }
 
 /* NAVBAR */
 
 .topbar{
   width:100%;
-  max-width:var(--max-w);
-
-  margin:0 auto 26px auto;
 
   display:flex;
   align-items:center;
@@ -81,6 +78,8 @@ body{
   -webkit-backdrop-filter:blur(10px);
 
   box-shadow:0 10px 30px rgba(0,0,0,0.6);
+
+  margin-bottom:26px;
 }
 
 .brand{
@@ -97,9 +96,8 @@ body{
 }
 
 .brand .title{
-  font-size:1.15rem;
   font-weight:800;
-  color:white;
+  font-size:1.1rem;
 }
 
 .navlinks{
@@ -110,6 +108,7 @@ body{
 
 .navlinks a{
   text-decoration:none;
+
   color:rgba(255,255,255,0.72);
 
   font-weight:700;
@@ -118,7 +117,7 @@ body{
 
   border-radius:12px;
 
-  transition:0.2s;
+  transition:.2s;
 }
 
 .navlinks a:hover{
@@ -140,96 +139,126 @@ body{
 
   font-weight:800;
 
-  background:linear-gradient(180deg,var(--accent),var(--accent-2));
+  background:linear-gradient(180deg,var(--accent),var(--accent2));
 
   color:#071018;
 
-  box-shadow:0 6px 18px rgba(255,122,24,0.15);
+  box-shadow:0 6px 18px rgba(255,122,24,0.14);
 }
 
-/* HEADER */
+/* HERO */
 
-header{
-  margin-bottom:24px;
+.hero{
+  margin-top:8px;
+  margin-bottom:36px;
 }
 
-header h1{
-  font-size:3rem;
-  line-height:1;
-  margin-bottom:10px;
+.hero h1{
+  font-size:4rem;
+  line-height:0.95;
+
+  margin-bottom:16px;
 }
 
-header p{
-  color:var(--muted);
+.hero p{
   font-size:1.05rem;
+  color:var(--muted);
+
+  max-width:700px;
 }
 
 /* GRID */
 
 .links-grid{
   display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:20px;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:22px;
 }
 
-.link-card{
-  background:rgba(255,255,255,0.02);
+/* CARD */
+
+.card{
+  position:relative;
+
+  overflow:hidden;
+
+  padding:24px;
+
+  border-radius:24px;
+
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
 
   border:1px solid rgba(255,255,255,0.04);
 
-  border-radius:20px;
+  box-shadow:
+    0 25px 50px rgba(0,0,0,0.45);
 
-  padding:18px;
-
-  box-shadow:0 20px 50px rgba(0,0,0,0.45);
-
-  transition:0.2s;
+  transition:.25s;
 }
 
-.link-card:hover{
-  transform:translateY(-5px);
-  border-color:rgba(255,122,24,0.25);
+.card:hover{
+  transform:translateY(-8px);
+  border-color:rgba(255,122,24,0.28);
 }
 
-.link-head{
+.card::before{
+  content:"";
+
+  position:absolute;
+
+  inset:-1px;
+
+  background:
+    radial-gradient(circle at top left,
+    rgba(255,122,24,0.15),
+    transparent 35%);
+
+  pointer-events:none;
+}
+
+/* TOP */
+
+.card-top{
   display:flex;
   align-items:center;
-  gap:14px;
+  gap:16px;
 
-  margin-bottom:18px;
+  margin-bottom:24px;
 }
 
 .icon{
-  width:64px;
-  height:64px;
+  width:70px;
+  height:70px;
 
-  border-radius:16px;
+  border-radius:18px;
 
   display:flex;
   align-items:center;
   justify-content:center;
 
+  font-size:2rem;
+
   background:rgba(255,255,255,0.03);
 
   border:1px solid rgba(255,255,255,0.05);
-
-  font-size:1.7rem;
 }
 
-.link-title{
-  font-size:1.35rem;
-  font-weight:800;
+.card h2{
+  font-size:1.5rem;
   margin-bottom:4px;
 }
 
-.link-desc{
+.card p{
   color:var(--muted);
-  font-size:0.95rem;
+  line-height:1.5;
 }
 
-.link-actions{
+/* BUTTONS */
+
+.actions{
   display:flex;
-  gap:10px;
+  gap:12px;
 }
 
 .open-btn{
@@ -238,41 +267,50 @@ header p{
   text-decoration:none;
   text-align:center;
 
-  padding:12px;
+  padding:14px;
 
-  border-radius:12px;
+  border-radius:14px;
 
-  background:linear-gradient(180deg,var(--accent),var(--accent-2));
+  background:
+    linear-gradient(180deg,var(--accent),var(--accent2));
 
   color:#071018;
 
   font-weight:800;
+
+  transition:.2s;
+}
+
+.open-btn:hover{
+  transform:translateY(-2px);
 }
 
 .copy-btn{
   border:none;
 
-  background:transparent;
+  padding:14px 18px;
 
-  border:1px solid rgba(255,255,255,0.08);
+  border-radius:14px;
+
+  background:rgba(255,255,255,0.03);
+
+  border:1px solid rgba(255,255,255,0.06);
 
   color:white;
 
-  padding:12px 16px;
-
-  border-radius:12px;
+  font-weight:700;
 
   cursor:pointer;
-
-  font-weight:700;
 }
 
 /* FOOTER */
 
 footer{
-  margin-top:28px;
+  margin-top:50px;
+
   text-align:center;
-  color:rgba(255,255,255,0.18);
+
+  color:rgba(255,255,255,0.16);
 }
 
 /* TOAST */
@@ -283,27 +321,28 @@ footer{
   right:20px;
   bottom:20px;
 
-  background:linear-gradient(180deg,var(--accent),var(--accent-2));
+  background:
+    linear-gradient(180deg,var(--accent),var(--accent2));
 
   color:#071018;
 
-  padding:12px 16px;
+  padding:14px 18px;
 
-  border-radius:12px;
+  border-radius:14px;
 
   font-weight:800;
 
   display:none;
 
-  z-index:999;
+  z-index:9999;
 }
 
-/* RESPONSIVE */
+/* MOBILE */
 
-@media(max-width:980px){
+@media(max-width:900px){
 
-  .links-grid{
-    grid-template-columns:1fr 1fr;
+  .hero h1{
+    font-size:3rem;
   }
 
 }
@@ -311,7 +350,7 @@ footer{
 @media(max-width:720px){
 
   body{
-    padding:0 16px 40px;
+    padding:18px 16px 50px;
   }
 
   .topbar{
@@ -324,15 +363,12 @@ footer{
     justify-content:center;
   }
 
-  .links-grid{
-    grid-template-columns:1fr;
-  }
-
-  header h1{
-    font-size:2.2rem;
+  .hero h1{
+    font-size:2.3rem;
   }
 
 }
+
 </style>
 </head>
 
@@ -340,10 +376,12 @@ footer{
 
 <div class="wrap">
 
+  <!-- NAVBAR -->
+
   <nav class="topbar">
 
     <div class="brand">
-      <img src="profile-0.png" alt="logo">
+      <img src="profile-0.png" alt="KenzouTV">
       <div class="title">KenzouTV</div>
     </div>
 
@@ -353,69 +391,134 @@ footer{
       <a href="boutique.html">Boutique</a>
       <a href="blockframe.html">BlockFrame</a>
 
-      <button class="btn-discord" id="btnDiscord">
+      <button class="btn-discord" id="discordBtn">
         Discord
       </button>
     </div>
 
   </nav>
 
-  <header>
-    <h1>Mes liens officiels</h1>
-    <p>Retrouve toutes mes plateformes et projets.</p>
-  </header>
+  <!-- HERO -->
 
-  <main class="links-grid">
+  <section class="hero">
 
-    <article class="link-card" data-url="https://www.youtube.com/@Kenzou_TV">
-      <div class="link-head">
+    <h1>
+      MES<br>
+      RÉSEAUX.
+    </h1>
+
+    <p>
+      Retrouve toutes mes plateformes,
+      vidéos, projets et contenus.
+    </p>
+
+  </section>
+
+  <!-- CARDS -->
+
+  <section class="links-grid">
+
+    <!-- YOUTUBE -->
+
+    <article class="card" data-url="https://www.youtube.com/@Kenzou_TV">
+
+      <div class="card-top">
         <div class="icon">▶</div>
 
         <div>
-          <div class="link-title">YouTube</div>
-          <div class="link-desc">Chaîne principale & vidéos</div>
+          <h2>YouTube</h2>
+          <p>Vidéos Minecraft & projets</p>
         </div>
       </div>
 
-      <div class="link-actions">
-        <a href="#" class="open-btn" data-open>Ouvrir</a>
-        <button class="copy-btn" data-copy>Copier</button>
+      <div class="actions">
+        <a href="#" class="open-btn" data-open>
+          Ouvrir
+        </a>
+
+        <button class="copy-btn" data-copy>
+          Copier
+        </button>
       </div>
+
     </article>
 
-    <article class="link-card" data-url="https://discord.gg/KURpXHzRTE">
-      <div class="link-head">
+    <!-- DISCORD -->
+
+    <article class="card" data-url="https://discord.gg/KURpXHzRTE">
+
+      <div class="card-top">
         <div class="icon">🎮</div>
 
         <div>
-          <div class="link-title">Discord</div>
-          <div class="link-desc">Communauté & tickets</div>
+          <h2>Discord</h2>
+          <p>Communauté & événements</p>
         </div>
       </div>
 
-      <div class="link-actions">
-        <a href="#" class="open-btn" data-open>Ouvrir</a>
-        <button class="copy-btn" data-copy>Copier</button>
+      <div class="actions">
+        <a href="#" class="open-btn" data-open>
+          Ouvrir
+        </a>
+
+        <button class="copy-btn" data-copy>
+          Copier
+        </button>
       </div>
+
     </article>
 
-    <article class="link-card" data-url="https://www.instagram.com/kenzoutv/">
-      <div class="link-head">
+    <!-- INSTAGRAM -->
+
+    <article class="card" data-url="https://instagram.com/kenzoutv">
+
+      <div class="card-top">
         <div class="icon">📸</div>
 
         <div>
-          <div class="link-title">Instagram</div>
-          <div class="link-desc">Photos & coulisses</div>
+          <h2>Instagram</h2>
+          <p>Coulisses & photos</p>
         </div>
       </div>
 
-      <div class="link-actions">
-        <a href="#" class="open-btn" data-open>Ouvrir</a>
-        <button class="copy-btn" data-copy>Copier</button>
+      <div class="actions">
+        <a href="#" class="open-btn" data-open>
+          Ouvrir
+        </a>
+
+        <button class="copy-btn" data-copy>
+          Copier
+        </button>
       </div>
+
     </article>
 
-  </main>
+    <!-- TIKTOK -->
+
+    <article class="card" data-url="https://tiktok.com/@kenzou_tv">
+
+      <div class="card-top">
+        <div class="icon">🎵</div>
+
+        <div>
+          <h2>TikTok</h2>
+          <p>Clips & shorts</p>
+        </div>
+      </div>
+
+      <div class="actions">
+        <a href="#" class="open-btn" data-open>
+          Ouvrir
+        </a>
+
+        <button class="copy-btn" data-copy>
+          Copier
+        </button>
+      </div>
+
+    </article>
+
+  </section>
 
   <footer>
     © 2026 KenzouTV
@@ -439,11 +542,11 @@ function showToast(text){
 
   setTimeout(()=>{
     toast.style.display = 'none';
-  },1400);
+  },1500);
 
 }
 
-document.querySelectorAll('.link-card').forEach(card=>{
+document.querySelectorAll('.card').forEach(card=>{
 
   const url = card.dataset.url;
 
@@ -451,9 +554,11 @@ document.querySelectorAll('.link-card').forEach(card=>{
   const copyBtn = card.querySelector('[data-copy]');
 
   openBtn.addEventListener('click',(e)=>{
+
     e.preventDefault();
 
     window.open(url,'_blank','noopener');
+
   });
 
   copyBtn.addEventListener('click', async ()=>{
@@ -466,7 +571,7 @@ document.querySelectorAll('.link-card').forEach(card=>{
 
     }catch{
 
-      showToast('Impossible de copier');
+      showToast('Erreur');
 
     }
 
@@ -474,7 +579,7 @@ document.querySelectorAll('.link-card').forEach(card=>{
 
 });
 
-document.getElementById('btnDiscord')
+document.getElementById('discordBtn')
 .addEventListener('click',()=>{
 
   window.open(
