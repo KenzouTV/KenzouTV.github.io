@@ -4,74 +4,81 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 
-<title>Mes Liens — KenzouTV</title>
+<title>Mes Réseaux — KenzouTV</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-:root{
-  --bg-1:#06070a;
-  --accent:#ff7a18;
-  --accent-2:#ff9b3b;
-  --muted:rgba(255,255,255,0.68);
-  --glass:rgba(7,16,24,0.88);
-  --card:rgba(255,255,255,0.02);
-  --max-w:1180px;
-}
-
 *{
+  margin:0;
+  padding:0;
   box-sizing:border-box;
 }
 
+:root{
+  --bg-1:#05070b;
+  --bg-2:#071018;
+
+  --accent:#ff7a18;
+  --accent-2:#ff9b3b;
+
+  --text:#f3f6ff;
+  --muted:rgba(255,255,255,0.65);
+
+  --glass:rgba(7,16,24,0.88);
+
+  --max-w:1180px;
+}
+
 html,body{
-  height:100%;
+  min-height:100%;
 }
 
 body{
-  margin:0;
-  padding:12px 24px 48px;
   font-family:Inter,system-ui,Arial;
-  color:#eaf0ff;
+  color:var(--text);
 
   background:
-    radial-gradient(800px 400px at 10% 80%, rgba(255,122,24,0.06), transparent 8%),
-    radial-gradient(900px 450px at 90% 20%, rgba(255,155,59,0.04), transparent 8%),
-    linear-gradient(180deg,var(--bg-1), #071018 60%);
+    radial-gradient(900px 400px at 10% 80%, rgba(255,122,24,0.06), transparent 10%),
+    radial-gradient(900px 500px at 90% 20%, rgba(255,155,59,0.04), transparent 10%),
+    linear-gradient(180deg,var(--bg-1),var(--bg-2));
 
-  min-height:100vh;
+  background-size:200% 200%;
+
   -webkit-font-smoothing:antialiased;
+
+  padding:0 24px 48px;
 }
 
 .wrap{
   width:100%;
-  max-width:1180px;
+  max-width:var(--max-w);
   margin:0 auto;
+  padding-top:28px;
 }
 
-/* TOPBAR IDENTIQUE AUX AUTRES PAGES */
+/* NAVBAR */
 
-nav.topbar{
+.topbar{
+  width:100%;
+  max-width:var(--max-w);
+
+  margin:0 auto 26px auto;
+
   display:flex;
   align-items:center;
   justify-content:space-between;
-  gap:16px;
 
-  padding:12px 18px;
+  padding:14px 18px;
 
-  border-radius:30px;
-
-  width:100%;
-
-  position:sticky;
-  top:22px;
-  z-index:40;
+  border-radius:28px;
 
   background:var(--glass);
 
   border:1px solid rgba(255,255,255,0.03);
 
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
 
   box-shadow:0 10px 30px rgba(0,0,0,0.6);
 }
@@ -90,79 +97,71 @@ nav.topbar{
 }
 
 .brand .title{
-  font-weight:700;
-  letter-spacing:0.4px;
-  color:#eaf0ff;
+  font-size:1.15rem;
+  font-weight:800;
+  color:white;
 }
 
 .navlinks{
   display:flex;
-  gap:12px;
   align-items:center;
+  gap:10px;
 }
 
 .navlinks a{
-  padding:8px 14px;
-  border-radius:12px;
   text-decoration:none;
-  color:var(--muted);
-  font-weight:600;
+  color:rgba(255,255,255,0.72);
+
+  font-weight:700;
+
+  padding:10px 14px;
+
+  border-radius:12px;
+
   transition:0.2s;
 }
 
 .navlinks a:hover{
-  color:#fff;
+  color:white;
 }
 
 .navlinks a.active{
-  color:#fff;
-  background:linear-gradient(
-    180deg,
-    rgba(255,255,255,0.02),
-    rgba(255,255,255,0.01)
-  );
+  background:rgba(255,255,255,0.06);
+  color:white;
 }
 
 .btn-discord{
-  background:linear-gradient(
-    180deg,
-    var(--accent),
-    var(--accent-2)
-  );
-
-  padding:8px 16px;
-
-  border-radius:12px;
-
-  color:#071018;
-  font-weight:800;
-
   border:none;
   cursor:pointer;
 
-  box-shadow:0 6px 18px rgba(255,122,24,0.12);
+  padding:10px 18px;
 
-  transition:0.2s;
-}
+  border-radius:12px;
 
-.btn-discord:hover{
-  transform:translateY(-2px);
+  font-weight:800;
+
+  background:linear-gradient(180deg,var(--accent),var(--accent-2));
+
+  color:#071018;
+
+  box-shadow:0 6px 18px rgba(255,122,24,0.15);
 }
 
 /* HEADER */
 
 header{
-  margin-top:22px;
+  margin-bottom:24px;
 }
 
 header h1{
-  margin:0 0 6px 0;
-  font-size:30px;
+  font-size:3rem;
+  line-height:1;
+  margin-bottom:10px;
 }
 
 header p{
-  margin:0;
-  color:rgba(234,240,255,0.76);
+  color:var(--muted);
+  font-size:1.05rem;
 }
 
 /* GRID */
@@ -170,46 +169,41 @@ header p{
 .links-grid{
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:18px;
-  margin-top:24px;
+  gap:20px;
 }
 
-/* CARDS */
-
 .link-card{
-  background:var(--card);
+  background:rgba(255,255,255,0.02);
+
+  border:1px solid rgba(255,255,255,0.04);
+
+  border-radius:20px;
 
   padding:18px;
 
-  border-radius:16px;
+  box-shadow:0 20px 50px rgba(0,0,0,0.45);
 
-  border:1px solid rgba(255,255,255,0.02);
-
-  box-shadow:0 12px 30px rgba(0,0,0,0.45);
-
-  display:flex;
-  flex-direction:column;
-  gap:16px;
-
-  transition:0.25s ease;
+  transition:0.2s;
 }
 
 .link-card:hover{
   transform:translateY(-5px);
-  border-color:rgba(255,122,24,0.2);
+  border-color:rgba(255,122,24,0.25);
 }
 
 .link-head{
   display:flex;
   align-items:center;
   gap:14px;
+
+  margin-bottom:18px;
 }
 
 .icon{
-  width:60px;
-  height:60px;
+  width:64px;
+  height:64px;
 
-  border-radius:14px;
+  border-radius:16px;
 
   display:flex;
   align-items:center;
@@ -217,88 +211,68 @@ header p{
 
   background:rgba(255,255,255,0.03);
 
-  border:1px solid rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.05);
 
-  font-size:24px;
-
-  flex-shrink:0;
+  font-size:1.7rem;
 }
 
 .link-title{
-  font-size:18px;
+  font-size:1.35rem;
   font-weight:800;
+  margin-bottom:4px;
 }
 
 .link-desc{
   color:var(--muted);
-  font-size:14px;
-  margin-top:4px;
+  font-size:0.95rem;
 }
-
-/* BUTTONS */
 
 .link-actions{
   display:flex;
   gap:10px;
-  margin-top:auto;
 }
 
 .open-btn{
   flex:1;
 
-  background:linear-gradient(
-    90deg,
-    var(--accent),
-    var(--accent-2)
-  );
-
-  padding:10px 12px;
-
-  border-radius:12px;
-
-  color:#071018;
-  font-weight:800;
-
   text-decoration:none;
   text-align:center;
 
-  transition:0.2s;
-}
-
-.open-btn:hover{
-  transform:translateY(-2px);
-}
-
-.copy-btn{
-  background:transparent;
-
-  border:1px solid rgba(255,255,255,0.06);
-
-  color:var(--muted);
-
-  padding:10px 12px;
+  padding:12px;
 
   border-radius:12px;
 
-  font-weight:700;
+  background:linear-gradient(180deg,var(--accent),var(--accent-2));
+
+  color:#071018;
+
+  font-weight:800;
+}
+
+.copy-btn{
+  border:none;
+
+  background:transparent;
+
+  border:1px solid rgba(255,255,255,0.08);
+
+  color:white;
+
+  padding:12px 16px;
+
+  border-radius:12px;
 
   cursor:pointer;
 
-  transition:0.2s;
-}
-
-.copy-btn:hover{
-  border-color:rgba(255,255,255,0.12);
-  color:#fff;
+  font-weight:700;
 }
 
 /* FOOTER */
 
 footer{
-  margin-top:34px;
+  margin-top:28px;
   text-align:center;
-  color:rgba(255,255,255,0.14);
-  font-size:13px;
+  color:rgba(255,255,255,0.18);
 }
 
 /* TOAST */
@@ -309,15 +283,11 @@ footer{
   right:20px;
   bottom:20px;
 
-  background:linear-gradient(
-    90deg,
-    var(--accent),
-    var(--accent-2)
-  );
+  background:linear-gradient(180deg,var(--accent),var(--accent-2));
 
   color:#071018;
 
-  padding:10px 14px;
+  padding:12px 16px;
 
   border-radius:12px;
 
@@ -325,7 +295,7 @@ footer{
 
   display:none;
 
-  z-index:3000;
+  z-index:999;
 }
 
 /* RESPONSIVE */
@@ -333,23 +303,35 @@ footer{
 @media(max-width:980px){
 
   .links-grid{
-    grid-template-columns:repeat(2,1fr);
+    grid-template-columns:1fr 1fr;
   }
+
 }
 
 @media(max-width:720px){
+
+  body{
+    padding:0 16px 40px;
+  }
+
+  .topbar{
+    flex-direction:column;
+    gap:18px;
+  }
+
+  .navlinks{
+    flex-wrap:wrap;
+    justify-content:center;
+  }
 
   .links-grid{
     grid-template-columns:1fr;
   }
 
-  .navlinks{
-    display:none;
+  header h1{
+    font-size:2.2rem;
   }
 
-  header h1{
-    font-size:24px;
-  }
 }
 </style>
 </head>
@@ -358,194 +340,151 @@ footer{
 
 <div class="wrap">
 
-<nav class="topbar">
+  <nav class="topbar">
 
-<div class="brand">
-<img src="profile-0.png" alt="logo KenzouTV">
-<div class="title">KenzouTV</div>
-</div>
+    <div class="brand">
+      <img src="profile-0.png" alt="logo">
+      <div class="title">KenzouTV</div>
+    </div>
 
-<div class="navlinks">
-<a href="index.html">Accueil</a>
-<a href="links.html" class="active">Mes Réseaux</a>
-<a href="boutique.html">Boutique</a>
-<a href="blockframe.html">BlockFrame</a>
+    <div class="navlinks">
+      <a href="index.html">Accueil</a>
+      <a href="links.html" class="active">Mes Réseaux</a>
+      <a href="boutique.html">Boutique</a>
+      <a href="blockframe.html">BlockFrame</a>
 
-<button class="btn-discord" id="btnDiscord">
-Discord
-</button>
-</div>
+      <button class="btn-discord" id="btnDiscord">
+        Discord
+      </button>
+    </div>
 
-</nav>
+  </nav>
 
-<header>
-<h1>Mes liens officiels</h1>
-<p>Retrouve toutes mes plateformes et projets.</p>
-</header>
+  <header>
+    <h1>Mes liens officiels</h1>
+    <p>Retrouve toutes mes plateformes et projets.</p>
+  </header>
 
-<main>
+  <main class="links-grid">
 
-<section class="links-grid">
+    <article class="link-card" data-url="https://www.youtube.com/@Kenzou_TV">
+      <div class="link-head">
+        <div class="icon">▶</div>
 
-<div class="link-card">
+        <div>
+          <div class="link-title">YouTube</div>
+          <div class="link-desc">Chaîne principale & vidéos</div>
+        </div>
+      </div>
 
-<div class="link-head">
+      <div class="link-actions">
+        <a href="#" class="open-btn" data-open>Ouvrir</a>
+        <button class="copy-btn" data-copy>Copier</button>
+      </div>
+    </article>
 
-<div class="icon">
-▶
-</div>
+    <article class="link-card" data-url="https://discord.gg/KURpXHzRTE">
+      <div class="link-head">
+        <div class="icon">🎮</div>
 
-<div>
-<div class="link-title">YouTube</div>
-<div class="link-desc">
-Chaîne principale & vidéos
-</div>
-</div>
+        <div>
+          <div class="link-title">Discord</div>
+          <div class="link-desc">Communauté & tickets</div>
+        </div>
+      </div>
 
-</div>
+      <div class="link-actions">
+        <a href="#" class="open-btn" data-open>Ouvrir</a>
+        <button class="copy-btn" data-copy>Copier</button>
+      </div>
+    </article>
 
-<div class="link-actions">
-<a class="open-btn" href="https://www.youtube.com/@Kenzou_TV" target="_blank">
-Ouvrir
-</a>
+    <article class="link-card" data-url="https://www.instagram.com/kenzoutv/">
+      <div class="link-head">
+        <div class="icon">📸</div>
 
-<button class="copy-btn" data-copy="https://www.youtube.com/@Kenzou_TV">
-Copier
-</button>
-</div>
+        <div>
+          <div class="link-title">Instagram</div>
+          <div class="link-desc">Photos & coulisses</div>
+        </div>
+      </div>
 
-</div>
+      <div class="link-actions">
+        <a href="#" class="open-btn" data-open>Ouvrir</a>
+        <button class="copy-btn" data-copy>Copier</button>
+      </div>
+    </article>
 
-<div class="link-card">
+  </main>
 
-<div class="link-head">
-
-<div class="icon">
-🎮
-</div>
-
-<div>
-<div class="link-title">Discord</div>
-<div class="link-desc">
-Communauté & tickets
-</div>
-</div>
-
-</div>
-
-<div class="link-actions">
-<a class="open-btn" href="https://discord.gg/KURpXHzRTE" target="_blank">
-Ouvrir
-</a>
-
-<button class="copy-btn" data-copy="https://discord.gg/KURpXHzRTE">
-Copier
-</button>
-</div>
-
-</div>
-
-<div class="link-card">
-
-<div class="link-head">
-
-<div class="icon">
-📸
-</div>
-
-<div>
-<div class="link-title">Instagram</div>
-<div class="link-desc">
-Photos & coulisses
-</div>
-</div>
-
-</div>
-
-<div class="link-actions">
-<a class="open-btn" href="https://instagram.com/" target="_blank">
-Ouvrir
-</a>
-
-<button class="copy-btn" data-copy="https://instagram.com/">
-Copier
-</button>
-</div>
-
-</div>
-
-</section>
-
-</main>
-
-<footer>
-© 2026 KenzouTV
-</footer>
+  <footer>
+    © 2026 KenzouTV
+  </footer>
 
 </div>
 
 <div class="toast" id="toast">
-Lien copié !
+  Lien copié !
 </div>
 
 <script>
 
-document.getElementById('btnDiscord')
-.addEventListener('click', ()=>{
-
-window.open(
-'https://discord.gg/KURpXHzRTE',
-'_blank',
-'noopener'
-);
-
-});
-
 const toast = document.getElementById('toast');
 
-document.querySelectorAll('.copy-btn').forEach(btn=>{
+function showToast(text){
 
-btn.addEventListener('click', async ()=>{
+  toast.textContent = text;
 
-const text = btn.dataset.copy;
+  toast.style.display = 'block';
 
-try{
-
-await navigator.clipboard.writeText(text);
-
-}catch{
-
-const textarea = document.createElement('textarea');
-
-textarea.value = text;
-
-document.body.appendChild(textarea);
-
-textarea.select();
-
-document.execCommand('copy');
-
-textarea.remove();
+  setTimeout(()=>{
+    toast.style.display = 'none';
+  },1400);
 
 }
 
-toast.style.display = 'block';
+document.querySelectorAll('.link-card').forEach(card=>{
 
-toast.style.opacity = '1';
+  const url = card.dataset.url;
 
-setTimeout(()=>{
+  const openBtn = card.querySelector('[data-open]');
+  const copyBtn = card.querySelector('[data-copy]');
 
-toast.style.opacity = '0';
+  openBtn.addEventListener('click',(e)=>{
+    e.preventDefault();
 
-setTimeout(()=>{
-toast.style.display = 'none';
-},300);
+    window.open(url,'_blank','noopener');
+  });
 
-},1000);
+  copyBtn.addEventListener('click', async ()=>{
+
+    try{
+
+      await navigator.clipboard.writeText(url);
+
+      showToast('Lien copié !');
+
+    }catch{
+
+      showToast('Impossible de copier');
+
+    }
+
+  });
 
 });
 
+document.getElementById('btnDiscord')
+.addEventListener('click',()=>{
+
+  window.open(
+    'https://discord.gg/KURpXHzRTE',
+    '_blank',
+    'noopener'
+  );
+
 });
+
 </script>
 
 </body>
