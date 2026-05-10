@@ -29,7 +29,7 @@ html,body{
 
 body{
   margin:0;
-  padding:24px 24px 48px;
+  padding:12px 24px 48px;
   font-family:Inter,system-ui,Arial;
   color:#eaf0ff;
 
@@ -43,11 +43,12 @@ body{
 }
 
 .wrap{
-  max-width:var(--max-w);
+  width:100%;
+  max-width:1180px;
   margin:0 auto;
 }
 
-/* TOPBAR IDENTIQUE */
+/* TOPBAR IDENTIQUE AUX AUTRES PAGES */
 
 nav.topbar{
   display:flex;
@@ -59,8 +60,7 @@ nav.topbar{
 
   border-radius:30px;
 
-  max-width:var(--max-w);
-  margin:0 auto;
+  width:100%;
 
   position:sticky;
   top:22px;
@@ -131,6 +131,7 @@ nav.topbar{
   );
 
   padding:8px 16px;
+
   border-radius:12px;
 
   color:#071018;
@@ -140,19 +141,23 @@ nav.topbar{
   cursor:pointer;
 
   box-shadow:0 6px 18px rgba(255,122,24,0.12);
+
+  transition:0.2s;
+}
+
+.btn-discord:hover{
+  transform:translateY(-2px);
 }
 
 /* HEADER */
 
 header{
-  max-width:var(--max-w);
-  margin:18px auto 6px auto;
-  padding:0 6px;
+  margin-top:22px;
 }
 
 header h1{
   margin:0 0 6px 0;
-  font-size:28px;
+  font-size:30px;
 }
 
 header p{
@@ -169,7 +174,7 @@ header p{
   margin-top:24px;
 }
 
-/* CARD */
+/* CARDS */
 
 .link-card{
   background:var(--card);
@@ -214,12 +219,9 @@ header p{
 
   border:1px solid rgba(255,255,255,0.04);
 
-  flex-shrink:0;
-}
+  font-size:24px;
 
-.icon svg{
-  width:30px;
-  height:30px;
+  flex-shrink:0;
 }
 
 .link-title{
@@ -396,7 +398,7 @@ Discord
 <div>
 <div class="link-title">YouTube</div>
 <div class="link-desc">
-Vidéos principales & projets
+Chaîne principale & vidéos
 </div>
 </div>
 
@@ -454,7 +456,7 @@ Copier
 <div>
 <div class="link-title">Instagram</div>
 <div class="link-desc">
-Coulisses & contenus rapides
+Photos & coulisses
 </div>
 </div>
 
