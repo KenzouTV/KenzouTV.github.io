@@ -8,70 +8,71 @@
 
 <link rel="icon" type="image/png" href="Blockframe.png">
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
 <meta name="description" content="BlockFrame — Portfolio vidéo du studio">
 
 <style>
 
 :root{
-  --bg-1:#06070a;
-  --accent:#ff7a18;
-  --accent-2:#ff9b3b;
-  --muted:rgba(255,255,255,0.65);
-  --card-bg: linear-gradient(
-    180deg,
-    rgba(255,255,255,0.01),
-    rgba(255,255,255,0.00)
-  );
+  --bg-0:#07070a;
+  --bg-1:#0d0e13;
+  --bg-2:#14151c;
+
+  --accent:#ff5c1a;
+  --accent-2:#ffb238;
+
+  --ink:#f4f2ec;
+  --muted:rgba(244,242,236,0.58);
+  --hairline:rgba(244,242,236,0.10);
+
+  --card-bg: linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0.005));
+
   --max-w:1180px;
+
+  --font-display:'Anton', 'Arial Narrow', sans-serif;
+  --font-body:'Space Grotesk', system-ui, Arial, sans-serif;
+  --font-mono:'JetBrains Mono', ui-monospace, monospace;
 }
 
-*{
-  box-sizing:border-box;
-}
-
-html,body{
-  height:100%;
-}
+*{ box-sizing:border-box; }
+html,body{ height:100%; }
 
 body{
   margin:0;
   padding:48px 24px;
-
-  font-family:Inter,system-ui,Arial;
-
-  color:#eaf0ff;
-
+  font-family:var(--font-body);
+  color:var(--ink);
   -webkit-font-smoothing:antialiased;
 
   background:
-    radial-gradient(
-      800px 400px at 10% 80%,
-      rgba(255,122,24,0.06),
-      transparent 8%
-    ),
-
-    radial-gradient(
-      900px 450px at 90% 20%,
-      rgba(255,155,59,0.04),
-      transparent 8%
-    ),
-
-    linear-gradient(
-      180deg,
-      var(--bg-1),
-      #071018 60%
-    );
-
-  background-size:200% 200%;
+    radial-gradient(700px 380px at 8% 85%, rgba(255,92,26,0.10), transparent 60%),
+    radial-gradient(760px 420px at 92% 10%, rgba(255,178,56,0.06), transparent 60%),
+    linear-gradient(180deg, var(--bg-0), var(--bg-1) 55%, var(--bg-0));
 
   min-height:100vh;
+  position:relative;
+}
+
+/* subtle film-grain overlay for texture */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  opacity:0.05;
+  mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  z-index:1;
 }
 
 .wrap{
   max-width:var(--max-w);
   margin:32px auto;
+  position:relative;
+  z-index:2;
 }
 
 /* =========================
@@ -82,105 +83,132 @@ nav.topbar{
   display:flex;
   align-items:center;
   justify-content:space-between;
-
-  padding:12px 18px;
-
-  border-radius:30px;
-
-  background: rgba(7,16,24,0.88);
-
-  border:1px solid rgba(255,255,255,0.03);
-
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
-
-  box-shadow:0 10px 30px rgba(0,0,0,0.6);
-
+  padding:12px 16px 12px 12px;
+  border-radius:16px;
+  background: rgba(10,11,15,0.82);
+  border:1px solid var(--hairline);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  box-shadow:0 20px 40px rgba(0,0,0,0.55);
   position:sticky;
   top:22px;
   z-index:40;
-
   margin:0 auto;
-
   max-width:var(--max-w);
 }
 
-.brand{
-  display:flex;
-  gap:12px;
-  align-items:center;
-}
+.brand{ display:flex; gap:12px; align-items:center; cursor:default; }
 
-.brand img{
-  width:44px;
-  height:44px;
-  border-radius:10px;
-  object-fit:cover;
+.brand .frame-thumb{
+  width:44px; height:44px;
+  border-radius:6px;
+  overflow:hidden;
+  border:1px solid var(--hairline);
+  position:relative;
+  flex:none;
+  transition:border-color 0.25s ease, transform 0.25s ease;
 }
+.brand:hover .frame-thumb{
+  border-color:var(--accent);
+  transform:rotate(-4deg) scale(1.06);
+}
+.brand .frame-thumb img{
+  width:100%; height:100%; object-fit:cover; display:block;
+  transition:transform 0.4s ease;
+}
+.brand:hover .frame-thumb img{ transform:scale(1.12); }
 
+.brand .brand-text{ display:flex; flex-direction:column; line-height:1.1; }
 .brand .title{
-  font-weight:700;
-  color:#eaf0ff;
+  font-family:var(--font-display);
+  letter-spacing:0.5px;
+  font-size:18px;
+  color:var(--ink);
+}
+.brand .rec{
+  font-family:var(--font-mono);
+  font-size:10px;
+  letter-spacing:1.5px;
+  color:var(--accent-2);
+  display:flex;
+  align-items:center;
+  gap:5px;
+  margin-top:2px;
+}
+.brand .rec .dot{
+  width:6px; height:6px; border-radius:50%;
+  background:var(--accent);
+  animation:pulse 1.8s ease-in-out infinite;
 }
 
-.navlinks{
-  display:flex;
-  gap:12px;
-  align-items:center;
-}
+.navlinks{ display:flex; gap:6px; align-items:center; }
 
 .navlinks a{
-  padding:8px 14px;
-
-  border-radius:12px;
-
+  position:relative;
+  padding:9px 14px;
+  border-radius:8px;
   text-decoration:none;
-
   color:var(--muted);
-
+  font-family:var(--font-body);
   font-weight:600;
-
-  transition:0.2s;
+  font-size:14px;
+  transition:color 0.2s ease, background 0.2s ease, transform 0.2s ease;
 }
-
-.navlinks a:hover{
-  color:#fff;
+.navlinks a::after{
+  content:"";
+  position:absolute;
+  left:14px; right:14px; bottom:5px;
+  height:2px;
+  background:var(--accent-2);
+  transform:scaleX(0);
+  transform-origin:left;
+  transition:transform 0.25s ease;
 }
-
+.navlinks a:hover{ color:var(--ink); background:rgba(255,255,255,0.04); transform:translateY(-1px); }
+.navlinks a:hover::after{ transform:scaleX(1); }
 .navlinks a.active{
-  color:#fff;
-
-  background: linear-gradient(
-    180deg,
-    rgba(255,255,255,0.02),
-    rgba(255,255,255,0.01)
-  );
+  color:var(--bg-0);
+  background: linear-gradient(180deg, var(--accent-2), var(--accent));
 }
+.navlinks a.active::after{ display:none; }
+.navlinks a.active:hover{ transform:none; }
 
 .btn-discord{
-  background:linear-gradient(
-    180deg,
-    var(--accent),
-    var(--accent-2)
-  );
-
-  padding:8px 14px;
-
-  border-radius:12px;
-
-  color:#0b0a0b;
-
-  font-weight:800;
-
-  border:none;
-
+  position:relative;
+  background:transparent;
+  padding:9px 16px;
+  border-radius:8px;
+  color:var(--ink);
+  font-weight:700;
+  font-family:var(--font-body);
+  font-size:14px;
+  border:1px solid var(--hairline);
   cursor:pointer;
-
-  box-shadow:0 6px 18px rgba(255,122,24,0.12);
+  transition:border-color 0.2s ease, color 0.2s ease, background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  margin-left:6px;
+  overflow:hidden;
 }
+.btn-discord:hover{
+  border-color:var(--accent);
+  color:var(--accent-2);
+  background:rgba(255,92,26,0.1);
+  transform:translateY(-1px);
+  box-shadow:0 8px 18px rgba(255,92,26,0.18);
+}
+.btn-discord:active{ transform:translateY(0); }
 
 #burger{
   display:none;
+  background:none;
+  border:none;
+  color:var(--ink);
+  font-size:22px;
+  cursor:pointer;
+}
+
+@keyframes pulse{
+  0%,100%{ opacity:1; }
+  50%{ opacity:0.25; }
 }
 
 /* ========================= */
@@ -191,14 +219,47 @@ header{
   padding:0 6px;
 }
 
+header .eyebrow{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  font-family:var(--font-mono);
+  color:var(--accent-2);
+  font-weight:500;
+  letter-spacing:1px;
+  font-size:12px;
+  padding:6px 10px;
+  border:1px solid var(--hairline);
+  border-radius:20px;
+  margin-top:30px;
+  transition:border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+}
+header .eyebrow:hover{
+  border-color:rgba(255,92,26,0.5);
+  background:rgba(255,92,26,0.07);
+  transform:translateY(-1px);
+}
+header .eyebrow::before{
+  content:"";
+  width:6px; height:6px;
+  border-radius:50%;
+  background:var(--accent);
+}
+
 header h1{
-  margin:28px 0 6px 0;
-  font-size:28px;
+  margin:16px 0 6px 0;
+  font-family:var(--font-display);
+  font-size:38px;
+  line-height:1;
+  letter-spacing:0.3px;
+  text-transform:uppercase;
+  font-weight:400;
 }
 
 header p{
   margin:0;
-  color:rgba(234,240,255,0.76);
+  color:rgba(244,242,236,0.72);
+  font-size:15px;
 }
 
 .container{
@@ -209,27 +270,64 @@ header p{
 }
 
 .card{
+  position:relative;
   padding:16px;
-
   border-radius:16px;
-
   background:var(--card-bg);
-
-  border:1px solid rgba(255,255,255,0.02);
-
+  border:1px solid var(--hairline);
   box-shadow:0 20px 50px rgba(0,0,0,0.5);
+  transition:border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
 }
 
 .hero-video{
   border-radius:12px;
   overflow:hidden;
   background:#000;
+  padding:16px 16px 16px 34px;
+}
+
+/* filmstrip sprocket edge — signature element, echoes the homepage */
+.hero-video::before{
+  content:"";
+  position:absolute;
+  left:0; top:16px; bottom:16px;
+  width:18px;
+  background:
+    repeating-linear-gradient(
+      180deg,
+      transparent 0, transparent 12px,
+      rgba(244,242,236,0.14) 12px, rgba(244,242,236,0.14) 13px,
+      transparent 13px, transparent 25px
+    );
+  border-right:1px dashed var(--hairline);
+  border-radius:12px 0 0 12px;
+}
+.hero-video::after{
+  content:"";
+  position:absolute;
+  left:4px; top:26px; bottom:26px;
+  width:7px;
+  background-image: radial-gradient(circle, rgba(244,242,236,0.16) 2.2px, transparent 2.3px);
+  background-size:7px 20px;
+  background-repeat:repeat-y;
+  transition:background-image 0.3s ease;
+}
+.hero-video:hover::after{
+  background-image: radial-gradient(circle, rgba(255,178,56,0.5) 2.2px, transparent 2.3px);
 }
 
 .video-embed{
   position:relative;
   width:100%;
   padding-top:56.25%;
+  border-radius:10px;
+  overflow:hidden;
+  border:1px solid var(--hairline);
+  transition:border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.hero-video:hover .video-embed{
+  border-color:rgba(255,178,56,0.4);
+  box-shadow:0 0 24px rgba(255,92,26,0.18);
 }
 
 .video-embed iframe{
@@ -244,30 +342,43 @@ header p{
 
 .ui-block{
   margin-top:12px;
-
-  padding:12px;
-
+  padding:16px;
   border-radius:12px;
-
   background:rgba(255,255,255,0.02);
-
-  border:1px solid rgba(255,255,255,0.02);
+  border:1px solid var(--hairline);
+  transition:border-color 0.2s ease, background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+.ui-block:hover{
+  border-color:rgba(255,92,26,0.4);
+  background:rgba(255,92,26,0.05);
+  transform:translateY(-4px);
+  box-shadow:0 14px 28px rgba(0,0,0,0.35);
 }
 
 .ui-block h4{
   margin:0 0 6px 0;
-  font-size:13px;
+  font-family:var(--font-mono);
+  font-size:11px;
+  letter-spacing:1px;
+  color:var(--accent-2);
+  transition:letter-spacing 0.2s ease;
 }
+.ui-block:hover h4{ letter-spacing:1.6px; }
 
 .ui-block p{
   margin:0;
-  color:rgba(234,240,255,0.78);
+  color:rgba(244,242,236,0.75);
   font-size:14px;
+  line-height:1.4;
 }
 
 .side-title{
-  font-weight:800;
-  margin-bottom:8px;
+  font-family:var(--font-mono);
+  font-weight:600;
+  letter-spacing:1.2px;
+  font-size:11px;
+  text-transform:uppercase;
+  margin-bottom:10px;
   color:var(--muted);
 }
 
@@ -277,34 +388,79 @@ header p{
 }
 
 .thumb{
+  position:relative;
   display:flex;
   gap:12px;
   align-items:center;
-
   padding:8px;
-
   border-radius:12px;
-
   background:rgba(255,255,255,0.02);
-
-  border:1px solid rgba(255,255,255,0.01);
-
+  border:1px solid var(--hairline);
   cursor:pointer;
-
-  transition:0.2s;
+  transition:transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease, background 0.22s ease;
+  text-align:left;
+  width:100%;
+  font-family:var(--font-body);
+  color:var(--ink);
 }
 
 .thumb:hover{
   transform:translateY(-4px);
-
-  box-shadow:0 18px 40px rgba(255,122,24,0.06);
+  border-color:rgba(255,178,56,0.4);
+  background:rgba(255,92,26,0.05);
+  box-shadow:0 18px 40px rgba(255,122,24,0.14);
 }
 
+.thumb.is-active{
+  border-color:var(--accent);
+  background:rgba(255,92,26,0.08);
+}
+
+.thumb .thumb-img{
+  position:relative;
+  width:120px;
+  height:70px;
+  border-radius:8px;
+  overflow:hidden;
+  flex:none;
+}
 .thumb img{
   width:120px;
   height:70px;
   object-fit:cover;
   border-radius:8px;
+  display:block;
+  transition:transform 0.4s ease, filter 0.4s ease;
+}
+.thumb:hover img{
+  transform:scale(1.08);
+  filter:brightness(0.75) saturate(1.1);
+}
+.thumb .mini-play{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  opacity:0;
+  transition:opacity 0.25s ease;
+}
+.thumb:hover .mini-play{ opacity:1; }
+.thumb .mini-play span{
+  width:30px; height:30px;
+  border-radius:50%;
+  background:rgba(7,7,10,0.6);
+  border:1px solid rgba(255,178,56,0.6);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.thumb .mini-play span::before{
+  content:"";
+  border-style:solid;
+  border-width:5px 0 5px 8px;
+  border-color:transparent transparent transparent var(--ink);
+  margin-left:2px;
 }
 
 .thumb .meta{
@@ -314,11 +470,17 @@ header p{
 
 .thumb .meta strong{
   font-weight:700;
+  font-size:14px;
+  transition:color 0.2s ease;
 }
+.thumb:hover .meta strong{ color:var(--accent-2); }
 
 .thumb .meta small{
   margin-top:6px;
   color:var(--muted);
+  font-family:var(--font-mono);
+  font-size:11px;
+  letter-spacing:0.3px;
 }
 
 .collab-list{
@@ -332,14 +494,16 @@ header p{
   display:flex;
   gap:12px;
   align-items:center;
-
   background:rgba(255,255,255,0.02);
-
   padding:8px;
-
   border-radius:10px;
-
-  border:1px solid rgba(255,255,255,0.01);
+  border:1px solid var(--hairline);
+  transition:border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+}
+.collab:hover{
+  border-color:rgba(255,178,56,0.35);
+  background:rgba(255,92,26,0.05);
+  transform:translateX(3px);
 }
 
 .collab img{
@@ -347,19 +511,34 @@ header p{
   height:48px;
   border-radius:8px;
   object-fit:cover;
+  display:block;
+  transition:transform 0.3s ease;
 }
+.collab:hover img{ transform:scale(1.08) rotate(-2deg); }
 
 .collab a{
-  color:var(--muted);
+  color:var(--ink);
   font-weight:700;
   text-decoration:none;
+  font-size:14px;
+  transition:color 0.2s ease;
+}
+.collab a:hover{ color:var(--accent-2); }
+
+.collab .role{
+  font-size:12px;
+  color:var(--muted);
+  font-family:var(--font-mono);
+  margin-top:2px;
 }
 
 footer{
-  margin-top:46px;
+  margin-top:56px;
   text-align:center;
-  color:rgba(255,255,255,0.16);
-  font-size:13px;
+  color:rgba(244,242,236,0.22);
+  font-family:var(--font-mono);
+  font-size:12px;
+  letter-spacing:0.5px;
 }
 
 /* =========================
@@ -367,52 +546,39 @@ footer{
 ========================= */
 
 @media(max-width:980px){
-
-  .container{
-    grid-template-columns:1fr;
-  }
-
+  .container{ grid-template-columns:1fr; }
+  header h1{ font-size:30px; }
 }
 
 @media(max-width:720px){
 
-  #burger{
-    display:block;
-
-    background:none;
-
-    border:none;
-
-    color:white;
-
-    font-size:24px;
-
-    cursor:pointer;
-  }
+  #burger{ display:block; }
 
   .navlinks{
     display:none;
-
     position:absolute;
-
-    right:24px;
-    top:76px;
-
+    right:12px;
+    top:66px;
     flex-direction:column;
-
-    background:rgba(7,16,24,0.88);
-
+    align-items:stretch;
+    background:rgba(10,11,15,0.98);
     padding:10px;
-
     border-radius:12px;
-
-    border:1px solid rgba(255,255,255,0.03);
+    border:1px solid var(--hairline);
+    width:200px;
+    box-shadow:0 20px 40px rgba(0,0,0,0.6);
   }
 
-  .navlinks.open{
-    display:flex;
-  }
+  .navlinks.open{ display:flex; }
+  .btn-discord{ margin-left:0; margin-top:4px; }
+  .hero-video{ padding-left:26px; }
+  .hero-video::before{ width:14px; }
+}
 
+@media (prefers-reduced-motion: reduce){
+  *{ animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; }
+  .thumb:hover, .ui-block:hover, .collab:hover,
+  .brand:hover .frame-thumb, .thumb:hover img, .collab:hover img{ transform:none; }
 }
 
 </style>
@@ -425,8 +591,13 @@ footer{
 <nav class="topbar">
 
   <div class="brand">
-    <img src="Blockframe.png" alt="BlockFrame">
-    <div class="title">BlockFrame</div>
+    <div class="frame-thumb">
+      <img src="Blockframe.png" alt="BlockFrame">
+    </div>
+    <div class="brand-text">
+      <div class="title">BlockFrame</div>
+      <div class="rec"><span class="dot"></span>STUDIO</div>
+    </div>
   </div>
 
   <button
@@ -451,13 +622,14 @@ footer{
 
 <header>
 
+  <span class="eyebrow">FRAME 002 · PORTFOLIO</span>
+
   <h1>
-    Portfolio — Réalisations vidéo
+    Réalisations vidéo
   </h1>
 
   <p>
-    Présente tes meilleures animations
-    et projets.
+    Présente tes meilleures animations et projets.
   </p>
 
 </header>
@@ -485,7 +657,7 @@ footer{
     <div class="ui-block">
 
       <h4>
-        CRÉATION & ANIMATION
+        CRÉATION &amp; ANIMATION
       </h4>
 
       <p>
@@ -504,7 +676,7 @@ footer{
         Commandes personnalisées —
         <a
         href="boutique.html"
-        style="color:#ffd6b8;font-weight:700">
+        style="color:var(--accent-2);font-weight:700">
         Voir la boutique
         </a>
       </p>
@@ -524,23 +696,19 @@ footer{
       <div class="thumbs" id="thumbs">
 
         <button
-        class="thumb"
+        class="thumb is-active"
         data-video="Qqx-HJelLeo">
 
-          <img
-          src="https://i.ytimg.com/vi/Qqx-HJelLeo/hqdefault.jpg"
-          alt="Projet 1">
+          <div class="thumb-img">
+            <img
+            src="https://i.ytimg.com/vi/Qqx-HJelLeo/hqdefault.jpg"
+            alt="Projet 1">
+            <div class="mini-play"><span></span></div>
+          </div>
 
           <div class="meta">
-
-            <strong>
-              Projet 1
-            </strong>
-
-            <small>
-              Fonds Animé — 0:16
-            </small>
-
+            <strong>Projet 1</strong>
+            <small>Fonds Animé — 0:16</small>
           </div>
 
         </button>
@@ -549,27 +717,23 @@ footer{
         class="thumb"
         data-video="nMy8IujKg3o">
 
-          <img
-          src="https://i.ytimg.com/vi/nMy8IujKg3o/hqdefault.jpg"
-          alt="Projet 2">
+          <div class="thumb-img">
+            <img
+            src="https://i.ytimg.com/vi/nMy8IujKg3o/hqdefault.jpg"
+            alt="Projet 2">
+            <div class="mini-play"><span></span></div>
+          </div>
 
           <div class="meta">
-
-            <strong>
-              Projet 2
-            </strong>
-
-            <small>
-              Fonds Animé — 0:09
-            </small>
-
+            <strong>Projet 2</strong>
+            <small>Fonds Animé — 0:09</small>
           </div>
 
         </button>
 
       </div>
 
-      <div style="margin-top:12px">
+      <div style="margin-top:20px">
 
         <div class="side-title">
           Déjà travaillé pour
@@ -579,58 +743,26 @@ footer{
 
           <div class="collab">
 
-            <a
-            href="https://www.youtube.com/@Wamonixx"
-            target="_blank">
-
-              <img
-              src="Wamonixx.jpg"
-              alt="Wamonixx">
-
+            <a href="https://www.youtube.com/@Wamonixx" target="_blank">
+              <img src="Wamonixx.jpg" alt="Wamonixx">
             </a>
 
             <div>
-
-              <a
-              href="https://www.youtube.com/@Wamonixx"
-              target="_blank">
-              Wamonixx
-              </a>
-
-              <div
-              style="font-size:13px;color:rgba(255,255,255,0.6)">
-              Pour le kiff
-              </div>
-
+              <a href="https://www.youtube.com/@Wamonixx" target="_blank">Wamonixx</a>
+              <div class="role">Pour le kiff</div>
             </div>
 
           </div>
 
           <div class="collab">
 
-            <a
-            href="https://www.youtube.com/@xomino365"
-            target="_blank">
-
-              <img
-              src="Xomino.jpg"
-              alt="Xomino">
-
+            <a href="https://www.youtube.com/@xomino365" target="_blank">
+              <img src="Xomino.jpg" alt="Xomino">
             </a>
 
             <div>
-
-              <a
-              href="https://www.youtube.com/@xomino365"
-              target="_blank">
-              Xomino
-              </a>
-
-              <div
-              style="font-size:13px;color:rgba(255,255,255,0.6)">
-              Collaboration
-              </div>
-
+              <a href="https://www.youtube.com/@xomino365" target="_blank">Xomino</a>
+              <div class="role">Collaboration</div>
             </div>
 
           </div>
@@ -712,6 +844,9 @@ if(thumbs && hero){
     'https://www.youtube.com/embed/' +
     encodeURIComponent(id) +
     '?rel=0';
+
+    thumbs.querySelectorAll('.thumb').forEach(t => t.classList.remove('is-active'));
+    b.classList.add('is-active');
 
     window.scrollTo({
       top:0,
