@@ -97,7 +97,7 @@ nav.topbar{
   max-width:var(--max-w);
 }
 
-.brand{ display:flex; gap:12px; align-items:center; }
+.brand{ display:flex; gap:12px; align-items:center; cursor:default; }
 
 .brand .frame-thumb{
   width:44px; height:44px;
@@ -106,10 +106,17 @@ nav.topbar{
   border:1px solid var(--hairline);
   position:relative;
   flex:none;
+  transition:border-color 0.25s ease, transform 0.25s ease;
+}
+.brand:hover .frame-thumb{
+  border-color:var(--accent);
+  transform:rotate(-4deg) scale(1.06);
 }
 .brand .frame-thumb img{
   width:100%; height:100%; object-fit:cover; display:block;
+  transition:transform 0.4s ease;
 }
+.brand:hover .frame-thumb img{ transform:scale(1.12); }
 
 .brand .brand-text{ display:flex; flex-direction:column; line-height:1.1; }
 .brand .title{
@@ -137,6 +144,7 @@ nav.topbar{
 .navlinks{ display:flex; gap:6px; align-items:center; }
 
 .navlinks a{
+  position:relative;
   padding:9px 14px;
   border-radius:8px;
   text-decoration:none;
@@ -144,15 +152,29 @@ nav.topbar{
   font-family:var(--font-body);
   font-weight:600;
   font-size:14px;
-  transition:0.2s;
+  transition:color 0.2s ease, background 0.2s ease, transform 0.2s ease;
 }
-.navlinks a:hover{ color:var(--ink); background:rgba(255,255,255,0.04); }
+.navlinks a::after{
+  content:"";
+  position:absolute;
+  left:14px; right:14px; bottom:5px;
+  height:2px;
+  background:var(--accent-2);
+  transform:scaleX(0);
+  transform-origin:left;
+  transition:transform 0.25s ease;
+}
+.navlinks a:hover{ color:var(--ink); background:rgba(255,255,255,0.04); transform:translateY(-1px); }
+.navlinks a:hover::after{ transform:scaleX(1); }
 .navlinks a.active{
   color:var(--bg-0);
   background: linear-gradient(180deg, var(--accent-2), var(--accent));
 }
+.navlinks a.active::after{ display:none; }
+.navlinks a.active:hover{ transform:none; }
 
 .btn-discord{
+  position:relative;
   background:transparent;
   padding:9px 16px;
   border-radius:8px;
@@ -162,14 +184,18 @@ nav.topbar{
   font-size:14px;
   border:1px solid var(--hairline);
   cursor:pointer;
-  transition:0.2s;
+  transition:border-color 0.2s ease, color 0.2s ease, background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
   margin-left:6px;
+  overflow:hidden;
 }
 .btn-discord:hover{
   border-color:var(--accent);
   color:var(--accent-2);
-  background:rgba(255,92,26,0.08);
+  background:rgba(255,92,26,0.1);
+  transform:translateY(-1px);
+  box-shadow:0 8px 18px rgba(255,92,26,0.18);
 }
+.btn-discord:active{ transform:translateY(0); }
 
 #burger{
   display:none;
@@ -204,6 +230,12 @@ nav.topbar{
   box-shadow:0 30px 60px rgba(0,0,0,0.5);
   border:1px solid var(--hairline);
   overflow:hidden;
+  transition:border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+.card-left:hover{
+  border-color:rgba(255,92,26,0.28);
+  box-shadow:0 34px 70px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,92,26,0.06);
+  transform:translateY(-3px);
 }
 
 /* filmstrip sprocket edge — signature element */
@@ -220,6 +252,7 @@ nav.topbar{
       transparent 15px, transparent 29px
     );
   border-right:1px dashed var(--hairline);
+  transition:background 0.3s ease;
 }
 .card-left::after{
   content:"";
@@ -229,6 +262,10 @@ nav.topbar{
   background-image: radial-gradient(circle, rgba(244,242,236,0.16) 2.4px, transparent 2.5px);
   background-size:8px 24px;
   background-repeat:repeat-y;
+  transition:background-image 0.3s ease;
+}
+.card-left:hover::after{
+  background-image: radial-gradient(circle, rgba(255,178,56,0.5) 2.4px, transparent 2.5px);
 }
 
 .badge{
@@ -243,6 +280,12 @@ nav.topbar{
   padding:6px 10px;
   border:1px solid var(--hairline);
   border-radius:20px;
+  transition:border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+}
+.badge:hover{
+  border-color:rgba(255,92,26,0.5);
+  background:rgba(255,92,26,0.07);
+  transform:translateY(-1px);
 }
 .badge::before{
   content:"";
@@ -262,6 +305,12 @@ h1{
 }
 h1 .accent-word{
   color:var(--accent);
+  display:inline-block;
+  transition:text-shadow 0.3s ease, transform 0.3s ease;
+}
+h1 .accent-word:hover{
+  text-shadow:0 0 26px rgba(255,92,26,0.55);
+  transform:translateX(4px);
 }
 
 .lead{
@@ -284,11 +333,13 @@ h1 .accent-word{
   border-radius:12px;
   background:rgba(255,255,255,0.02);
   border:1px solid var(--hairline);
-  transition:0.2s;
+  transition:border-color 0.2s ease, background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 .ui-block:hover{
   border-color:rgba(255,92,26,0.4);
-  background:rgba(255,92,26,0.04);
+  background:rgba(255,92,26,0.05);
+  transform:translateY(-4px);
+  box-shadow:0 14px 28px rgba(0,0,0,0.35);
 }
 .ui-block h4{
   margin:0 0 6px 0;
@@ -296,7 +347,9 @@ h1 .accent-word{
   font-size:11px;
   letter-spacing:1px;
   color:var(--accent-2);
+  transition:letter-spacing 0.2s ease;
 }
+.ui-block:hover h4{ letter-spacing:1.6px; }
 .ui-block p{
   margin:0;
   color:rgba(244,242,236,0.75);
@@ -315,9 +368,15 @@ h1 .accent-word{
   color:var(--muted);
   font-family:var(--font-mono);
   font-size:12px;
+  transition:border-color 0.2s ease, color 0.2s ease;
+}
+.small-dashed:hover{
+  border-color:rgba(255,178,56,0.5);
+  color:var(--accent-2);
 }
 
 .cta{
+  position:relative;
   display:inline-flex;
   align-items:center;
   gap:8px;
@@ -333,12 +392,29 @@ h1 .accent-word{
   text-decoration:none;
   box-shadow:0 12px 26px rgba(255,92,26,0.22);
   transition:transform 0.18s ease, box-shadow 0.18s ease;
+  overflow:hidden;
+  isolation:isolate;
 }
+.cta::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(115deg, transparent 30%, rgba(255,255,255,0.55) 48%, transparent 62%);
+  transform:translateX(-120%);
+  transition:transform 0.55s ease;
+  z-index:1;
+}
+.cta:hover::before{ transform:translateX(120%); }
 .cta:hover{
   transform:translateY(-2px);
   box-shadow:0 16px 32px rgba(255,92,26,0.32);
 }
-.cta::after{ content:"→"; }
+.cta span, .cta::after{ position:relative; z-index:2; }
+.cta::after{
+  content:"→";
+  transition:transform 0.25s ease;
+}
+.cta:hover::after{ transform:translateX(4px); }
 
 /* =========================
    VIDEO CARD
@@ -350,6 +426,12 @@ h1 .accent-word{
   background:var(--card-bg);
   box-shadow:0 24px 50px rgba(0,0,0,0.5);
   border:1px solid var(--hairline);
+  transition:border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+.profile-square:hover{
+  border-color:rgba(255,92,26,0.28);
+  box-shadow:0 30px 60px rgba(0,0,0,0.55);
+  transform:translateY(-3px);
 }
 
 .big-ava{
@@ -358,11 +440,51 @@ h1 .accent-word{
   border-radius:12px;
   overflow:hidden;
   position:relative;
+  cursor:pointer;
 }
 .big-ava img{
   width:100%; height:100%; object-fit:cover; display:block;
   filter:saturate(1.05) contrast(1.03);
+  transition:transform 0.5s ease, filter 0.5s ease;
 }
+.big-ava:hover img{
+  transform:scale(1.08);
+  filter:saturate(1.2) contrast(1.05) brightness(0.75);
+}
+.big-ava .play-overlay{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  opacity:0;
+  transition:opacity 0.3s ease;
+  pointer-events:none;
+}
+.big-ava:hover .play-overlay{ opacity:1; }
+.big-ava .play-overlay .ring{
+  width:56px; height:56px;
+  border-radius:50%;
+  background:rgba(7,7,10,0.55);
+  border:1px solid rgba(244,242,236,0.4);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transform:scale(0.85);
+  transition:transform 0.3s ease, border-color 0.3s ease;
+}
+.big-ava:hover .play-overlay .ring{
+  transform:scale(1);
+  border-color:var(--accent-2);
+}
+.big-ava .play-overlay .ring::before{
+  content:"";
+  border-style:solid;
+  border-width:8px 0 8px 13px;
+  border-color:transparent transparent transparent var(--ink);
+  margin-left:3px;
+}
+
 /* viewfinder corner brackets — nod to video framing */
 .big-ava::before, .big-ava::after,
 .frame-marks span{
@@ -379,11 +501,16 @@ h1 .accent-word{
   border-color:rgba(244,242,236,0.65);
   border-style:solid;
   border-width:0;
+  transition:border-color 0.3s ease, width 0.3s ease, height 0.3s ease;
 }
 .frame-marks .tl{ top:0; left:0; border-top-width:2px; border-left-width:2px; }
 .frame-marks .tr{ top:0; right:0; border-top-width:2px; border-right-width:2px; }
 .frame-marks .bl{ bottom:0; left:0; border-bottom-width:2px; border-left-width:2px; }
 .frame-marks .br{ bottom:0; right:0; border-bottom-width:2px; border-right-width:2px; }
+.big-ava:hover .frame-marks span{
+  border-color:var(--accent-2);
+  width:20px; height:20px;
+}
 
 .label-box{
   text-align:center;
@@ -396,6 +523,11 @@ h1 .accent-word{
   letter-spacing:1.5px;
   color:var(--accent-2);
   margin-top:12px;
+  transition:background 0.2s ease, letter-spacing 0.2s ease;
+}
+.label-box:hover{
+  background:rgba(255,92,26,0.06);
+  letter-spacing:2px;
 }
 
 .featured-video{
@@ -404,6 +536,11 @@ h1 .accent-word{
   border:1px solid var(--hairline);
   box-shadow:0 20px 40px rgba(0,0,0,0.45);
   background:#000;
+  transition:border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.featured-video:hover{
+  border-color:rgba(255,178,56,0.4);
+  box-shadow:0 20px 40px rgba(0,0,0,0.45), 0 0 24px rgba(255,92,26,0.18);
 }
 
 .video-embed{ position:relative; width:100%; padding-top:56.25%; }
@@ -455,8 +592,9 @@ footer{
 }
 
 @media (prefers-reduced-motion: reduce){
-  .brand .rec .dot{ animation:none; }
-  .cta{ transition:none; }
+  *{ animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; }
+  .card-left:hover, .profile-square:hover, .ui-block:hover, .cta:hover,
+  .brand:hover .frame-thumb, .big-ava:hover img{ transform:none; }
 }
 
   </style>
@@ -542,6 +680,7 @@ footer{
           <span class="tl"></span><span class="tr"></span>
           <span class="bl"></span><span class="br"></span>
         </div>
+        <div class="play-overlay"><span class="ring"></span></div>
       </div>
 
       <div class="label-box">DERNIÈRE VIDÉO</div>
