@@ -8,207 +8,302 @@
 
 <link rel="icon" type="image/png" href="profile-0.png">
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
 <meta name="description" content="Boutique — KenzouTV"/>
 
 <style>
 
 :root{
-  --bg-1:#06070a;
-  --accent:#ff7a18;
-  --accent-2:#ff9b3b;
+  --bg-0:#07070a;
+  --bg-1:#0d0e13;
+  --bg-2:#14151c;
+
+  --accent:#ff5c1a;
+  --accent-2:#ffb238;
   --accent-blue:#2b8cff;
-  --muted:rgba(255,255,255,0.65);
-  --glass: rgba(7,16,24,0.88);
-  --card: rgba(255,255,255,0.02);
+  --accent-blue-2:#5aa4ff;
+
+  --ink:#f4f2ec;
+  --muted:rgba(244,242,236,0.58);
+  --hairline:rgba(244,242,236,0.10);
+
+  --card-bg: linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0.005));
+
   --max-w:1180px;
+
+  --font-display:'Anton', 'Arial Narrow', sans-serif;
+  --font-body:'Space Grotesk', system-ui, Arial, sans-serif;
+  --font-mono:'JetBrains Mono', ui-monospace, monospace;
 }
 
-*{
-  box-sizing:border-box;
-}
-
-html,body{
-  height:100%;
-}
+*{ box-sizing:border-box; }
+html,body{ height:100%; }
 
 body{
   margin:0;
   padding:48px 24px;
-  font-family:Inter,system-ui,Arial;
-  color:#eaf0ff;
-
+  font-family:var(--font-body);
+  color:var(--ink);
   -webkit-font-smoothing:antialiased;
 
   background:
-    radial-gradient(800px 400px at 10% 80%, rgba(255,122,24,0.06), transparent 8%),
-    radial-gradient(900px 450px at 90% 20%, rgba(255,155,59,0.04), transparent 8%),
-    linear-gradient(180deg,var(--bg-1), #071018 60%);
+    radial-gradient(700px 380px at 8% 85%, rgba(255,92,26,0.10), transparent 60%),
+    radial-gradient(760px 420px at 92% 10%, rgba(255,178,56,0.06), transparent 60%),
+    linear-gradient(180deg, var(--bg-0), var(--bg-1) 55%, var(--bg-0));
 
-  background-size:200% 200%;
   min-height:100vh;
+  position:relative;
+}
+
+/* subtle film-grain overlay for texture */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  opacity:0.05;
+  mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  z-index:1;
 }
 
 .wrap{
   max-width:var(--max-w);
   margin:32px auto;
+  position:relative;
+  z-index:2;
 }
 
 /* =========================
-   TOPBAR IDENTIQUE INDEX
+   TOPBAR IDENTIQUE AUX AUTRES PAGES
 ========================= */
 
 nav.topbar{
   display:flex;
   align-items:center;
   justify-content:space-between;
-
-  padding:12px 18px;
-
-  border-radius:30px;
-
-  background: rgba(7,16,24,0.88);
-
-  border:1px solid rgba(255,255,255,0.03);
-
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
-
-  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-
+  padding:12px 16px 12px 12px;
+  border-radius:16px;
+  background: rgba(10,11,15,0.82);
+  border:1px solid var(--hairline);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  box-shadow:0 20px 40px rgba(0,0,0,0.55);
   position:sticky;
   top:22px;
   z-index:40;
-
   margin:0 auto;
-
   max-width:var(--max-w);
 }
 
-.brand{
-  display:flex;
-  gap:12px;
-  align-items:center;
-}
+.brand{ display:flex; gap:12px; align-items:center; cursor:default; }
 
-.brand img{
-  width:44px;
-  height:44px;
-  border-radius:10px;
-  object-fit:cover;
+.brand .frame-thumb{
+  width:44px; height:44px;
+  border-radius:6px;
+  overflow:hidden;
+  border:1px solid var(--hairline);
+  position:relative;
+  flex:none;
+  transition:border-color 0.25s ease, transform 0.25s ease;
 }
+.brand:hover .frame-thumb{
+  border-color:var(--accent);
+  transform:rotate(-4deg) scale(1.06);
+}
+.brand .frame-thumb img{
+  width:100%; height:100%; object-fit:cover; display:block;
+  transition:transform 0.4s ease;
+}
+.brand:hover .frame-thumb img{ transform:scale(1.12); }
 
+.brand .brand-text{ display:flex; flex-direction:column; line-height:1.1; }
 .brand .title{
-  font-weight:700;
-  color:#eaf0ff;
+  font-family:var(--font-display);
+  letter-spacing:0.5px;
+  font-size:18px;
+  color:var(--ink);
+}
+.brand .rec{
+  font-family:var(--font-mono);
+  font-size:10px;
+  letter-spacing:1.5px;
+  color:var(--accent-2);
+  display:flex;
+  align-items:center;
+  gap:5px;
+  margin-top:2px;
+}
+.brand .rec .dot{
+  width:6px; height:6px; border-radius:50%;
+  background:var(--accent);
+  animation:pulse 1.8s ease-in-out infinite;
 }
 
-.navlinks{
-  display:flex;
-  gap:12px;
-  align-items:center;
-}
+.navlinks{ display:flex; gap:6px; align-items:center; }
 
 .navlinks a{
-  padding:8px 14px;
-  border-radius:12px;
+  position:relative;
+  padding:9px 14px;
+  border-radius:8px;
   text-decoration:none;
   color:var(--muted);
+  font-family:var(--font-body);
   font-weight:600;
-  transition:0.2s;
+  font-size:14px;
+  transition:color 0.2s ease, background 0.2s ease, transform 0.2s ease;
 }
-
-.navlinks a:hover{
-  color:#fff;
+.navlinks a::after{
+  content:"";
+  position:absolute;
+  left:14px; right:14px; bottom:5px;
+  height:2px;
+  background:var(--accent-2);
+  transform:scaleX(0);
+  transform-origin:left;
+  transition:transform 0.25s ease;
 }
-
+.navlinks a:hover{ color:var(--ink); background:rgba(255,255,255,0.04); transform:translateY(-1px); }
+.navlinks a:hover::after{ transform:scaleX(1); }
 .navlinks a.active{
-  color:#fff;
-
-  background: linear-gradient(
-    180deg,
-    rgba(255,255,255,0.02),
-    rgba(255,255,255,0.01)
-  );
+  color:var(--bg-0);
+  background: linear-gradient(180deg, var(--accent-2), var(--accent));
 }
+.navlinks a.active::after{ display:none; }
+.navlinks a.active:hover{ transform:none; }
 
 .btn-discord{
-  background:linear-gradient(
-    180deg,
-    var(--accent),
-    var(--accent-2)
-  );
-
-  padding:8px 14px;
-
-  border-radius:12px;
-
-  color:#0b0a0b;
-  font-weight:800;
-
-  border:none;
+  position:relative;
+  background:transparent;
+  padding:9px 16px;
+  border-radius:8px;
+  color:var(--ink);
+  font-weight:700;
+  font-family:var(--font-body);
+  font-size:14px;
+  border:1px solid var(--hairline);
   cursor:pointer;
-
-  box-shadow:0 6px 18px rgba(255,122,24,0.12);
+  transition:border-color 0.2s ease, color 0.2s ease, background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  margin-left:6px;
+  overflow:hidden;
 }
+.btn-discord:hover{
+  border-color:var(--accent);
+  color:var(--accent-2);
+  background:rgba(255,92,26,0.1);
+  transform:translateY(-1px);
+  box-shadow:0 8px 18px rgba(255,92,26,0.18);
+}
+.btn-discord:active{ transform:translateY(0); }
 
 #burger{
   display:none;
+  background:none;
+  border:none;
+  color:var(--ink);
+  font-size:22px;
+  cursor:pointer;
+}
+
+@keyframes pulse{
+  0%,100%{ opacity:1; }
+  50%{ opacity:0.25; }
 }
 
 /* ========================= */
 
 header{
   max-width:var(--max-w);
-  margin:18px auto 6px auto;
+  margin:30px auto 6px auto;
   padding:0 6px;
 }
 
-header h1{
-  margin:0 0 6px 0;
-  font-size:28px;
+header .eyebrow{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  font-family:var(--font-mono);
+  color:var(--accent-2);
+  font-weight:500;
+  letter-spacing:1px;
+  font-size:12px;
+  padding:6px 10px;
+  border:1px solid var(--hairline);
+  border-radius:20px;
+  transition:border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+}
+header .eyebrow:hover{
+  border-color:rgba(255,92,26,0.5);
+  background:rgba(255,92,26,0.07);
+  transform:translateY(-1px);
+}
+header .eyebrow::before{
+  content:"";
+  width:6px; height:6px;
+  border-radius:50%;
+  background:var(--accent);
 }
 
-header p{
+header h1{
+  margin:16px 0 6px 0;
+  font-family:var(--font-display);
+  font-size:38px;
+  line-height:1;
+  letter-spacing:0.3px;
+  text-transform:uppercase;
+  font-weight:400;
+}
+
+header .note{
   margin:0;
-  color:rgba(234,240,255,0.76);
+  color:var(--muted);
+  font-family:var(--font-mono);
+  font-size:13px;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+}
+header .note::before{
+  content:"●";
+  color:var(--accent);
+  font-size:9px;
 }
 
 .grid{
   display:grid;
   grid-template-columns:repeat(2,1fr);
   gap:18px;
-  margin-top:18px;
+  margin-top:24px;
 }
 
 .product{
-  background:var(--card);
-
+  position:relative;
+  background:var(--card-bg);
   padding:14px;
-
-  border-radius:12px;
-
-  border:1px solid rgba(255,255,255,0.02);
-
+  border-radius:14px;
+  border:1px solid var(--hairline);
   box-shadow:0 12px 30px rgba(0,0,0,0.45);
-
   display:flex;
   flex-direction:column;
-
   gap:10px;
-
   min-height:280px;
-
-  transition:0.25s ease;
+  transition:transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  overflow:hidden;
 }
 
 .product:hover{
-  transform:translateY(-4px);
+  transform:translateY(-5px);
+  border-color:rgba(255,122,24,0.3);
+  box-shadow:0 20px 44px rgba(0,0,0,0.55);
+}
 
-  border-color:rgba(255,122,24,0.25);
-
-  box-shadow:0 16px 40px rgba(0,0,0,0.55);
+.product .thumb-wrap{
+  position:relative;
+  border-radius:10px;
+  overflow:hidden;
 }
 
 .product img{
@@ -216,7 +311,30 @@ header p{
   height:200px;
   object-fit:cover;
   border-radius:10px;
+  display:block;
+  transition:transform 0.5s ease, filter 0.5s ease;
 }
+
+.product:hover img{
+  transform:scale(1.06);
+  filter:saturate(1.1) brightness(0.9);
+}
+
+.product .frame-marks span{
+  position:absolute;
+  width:14px; height:14px;
+  border-color:rgba(244,242,236,0.55);
+  border-style:solid;
+  border-width:0;
+  opacity:0;
+  transition:opacity 0.3s ease, border-color 0.3s ease;
+}
+.product:hover .frame-marks span{ opacity:1; border-color:var(--accent-2); }
+.product .frame-marks{ position:absolute; inset:8px; pointer-events:none; }
+.product .frame-marks .tl{ top:0; left:0; border-top-width:2px; border-left-width:2px; }
+.product .frame-marks .tr{ top:0; right:0; border-top-width:2px; border-right-width:2px; }
+.product .frame-marks .bl{ bottom:0; left:0; border-bottom-width:2px; border-left-width:2px; }
+.product .frame-marks .br{ bottom:0; right:0; border-bottom-width:2px; border-right-width:2px; }
 
 .meta{
   display:flex;
@@ -226,11 +344,24 @@ header p{
 
 .meta strong{
   font-weight:700;
+  font-size:15px;
 }
 
 .price{
-  color:var(--muted);
-  font-weight:700;
+  font-family:var(--font-mono);
+  font-weight:600;
+  font-size:13px;
+  color:var(--bg-0);
+  background:linear-gradient(180deg, var(--accent-2), var(--accent));
+  padding:4px 10px;
+  border-radius:20px;
+}
+
+.product p{
+  margin:0;
+  color:rgba(244,242,236,0.7);
+  font-size:14px;
+  line-height:1.4;
 }
 
 .actions{
@@ -240,54 +371,84 @@ header p{
 }
 
 .primary-btn{
-  background:linear-gradient(
-    90deg,
-    var(--accent),
-    var(--accent-2)
-  );
-
-  padding:10px 12px;
-
+  position:relative;
+  flex:1;
+  background:linear-gradient(90deg, var(--accent-2), var(--accent));
+  padding:11px 12px;
   border-radius:10px;
-
-  color:#071018;
-
-  font-weight:800;
-
+  color:#1a0e05;
+  font-weight:700;
+  font-family:var(--font-body);
+  font-size:14px;
   text-decoration:none;
-
+  text-align:center;
   border:none;
-
   cursor:pointer;
-
-  transition:0.2s;
+  transition:transform 0.2s ease, box-shadow 0.2s ease;
+  overflow:hidden;
+  isolation:isolate;
+  box-shadow:0 8px 18px rgba(255,92,26,0.18);
 }
-
+.primary-btn::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(115deg, transparent 30%, rgba(255,255,255,0.5) 48%, transparent 62%);
+  transform:translateX(-120%);
+  transition:transform 0.5s ease;
+  z-index:1;
+}
+.primary-btn:hover::before{ transform:translateX(120%); }
 .primary-btn:hover{
   transform:translateY(-2px);
+  box-shadow:0 12px 24px rgba(255,92,26,0.28);
 }
 
 .example-btn{
-  background:linear-gradient(
-    90deg,
-    var(--accent-blue),
-    #1a6ef0
-  );
-
-  padding:10px 12px;
-
+  background:linear-gradient(90deg, var(--accent-blue), var(--accent-blue-2));
+  padding:11px 12px;
   border-radius:10px;
-
   color:#fff;
-
-  font-weight:800;
-
+  font-weight:700;
+  font-family:var(--font-body);
+  font-size:14px;
   text-decoration:none;
-
+  text-align:center;
   border:none;
-
   cursor:pointer;
+  transition:transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow:0 8px 18px rgba(43,140,255,0.16);
 }
+.example-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 12px 24px rgba(43,140,255,0.28);
+}
+
+/* produits "bientôt disponible" */
+.product.soon .thumb-wrap::after{
+  content:"BIENTÔT DISPONIBLE";
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:0 16px;
+  background:rgba(7,7,10,0.62);
+  color:var(--accent-2);
+  font-family:var(--font-mono);
+  font-size:11px;
+  letter-spacing:1.5px;
+  font-weight:600;
+}
+.product.soon .primary-btn{
+  background:rgba(255,255,255,0.06);
+  color:var(--muted);
+  cursor:not-allowed;
+  box-shadow:none;
+}
+.product.soon .primary-btn::before{ display:none; }
+.product.soon .primary-btn:hover{ transform:none; box-shadow:none; }
 
 .note{
   margin-top:12px;
@@ -295,9 +456,12 @@ header p{
 }
 
 footer{
-  margin-top:28px;
-  color:rgba(255,255,255,0.16);
+  margin-top:48px;
   text-align:center;
+  color:rgba(244,242,236,0.22);
+  font-family:var(--font-mono);
+  font-size:12px;
+  letter-spacing:0.5px;
 }
 
 /* =========================
@@ -305,47 +469,38 @@ footer{
 ========================= */
 
 @media(max-width:980px){
-
-  .grid{
-    grid-template-columns:1fr;
-  }
-
+  .grid{ grid-template-columns:1fr; }
+  header h1{ font-size:30px; }
 }
 
 @media(max-width:720px){
 
-  #burger{
-    display:block;
-    background:none;
-    border:none;
-    color:white;
-    font-size:24px;
-    cursor:pointer;
-  }
+  #burger{ display:block; }
 
   .navlinks{
     display:none;
-
     position:absolute;
-
-    right:24px;
-    top:76px;
-
+    right:12px;
+    top:66px;
     flex-direction:column;
-
-    background:rgba(7,16,24,0.88);
-
+    align-items:stretch;
+    background:rgba(10,11,15,0.98);
     padding:10px;
-
     border-radius:12px;
-
-    border:1px solid rgba(255,255,255,0.03);
+    border:1px solid var(--hairline);
+    width:200px;
+    box-shadow:0 20px 40px rgba(0,0,0,0.6);
   }
 
-  .navlinks.open{
-    display:flex;
-  }
+  .navlinks.open{ display:flex; }
+  .btn-discord{ margin-left:0; margin-top:4px; }
+  .actions{ flex-direction:column; }
+}
 
+@media (prefers-reduced-motion: reduce){
+  *{ animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; }
+  .product:hover, .primary-btn:hover, .example-btn:hover,
+  .brand:hover .frame-thumb, .product:hover img{ transform:none; }
 }
 
 </style>
@@ -362,8 +517,13 @@ footer{
 <nav class="topbar" role="navigation" aria-label="Barre principale">
 
   <div class="brand">
-    <img src="profile-0.png" alt="logo KenzouTV">
-    <div class="title">KenzouTV</div>
+    <div class="frame-thumb">
+      <img src="profile-0.png" alt="logo KenzouTV">
+    </div>
+    <div class="brand-text">
+      <div class="title">KenzouTV</div>
+      <div class="rec"><span class="dot"></span>OUVERT</div>
+    </div>
   </div>
 
   <button
@@ -388,10 +548,12 @@ footer{
 
 <header>
 
-  <h1>Boutique — Animations & PP</h1>
+  <span class="eyebrow">FRAME 003 · BOUTIQUE</span>
+
+  <h1>Boutique — Animations &amp; PP</h1>
 
   <p class="note">
-    Encore en cours de création mais vous pouvez déja commandez !
+    Encore en cours de création mais vous pouvez déjà commander !
   </p>
 
 </header>
@@ -400,7 +562,13 @@ footer{
 
   <article class="product">
 
-    <img src="Produit-1.jpg" alt="Animation courte">
+    <div class="thumb-wrap">
+      <img src="Produit-1.jpg" alt="Animation courte">
+      <div class="frame-marks">
+        <span class="tl"></span><span class="tr"></span>
+        <span class="bl"></span><span class="br"></span>
+      </div>
+    </div>
 
     <div class="meta">
       <strong>Animation courte</strong>
@@ -408,7 +576,7 @@ footer{
     </div>
 
     <p>
-      Une petite animation ! Cela peu être une intro, outro et bien plus ! &lt;1min.
+      Une petite animation ! Cela peut être une intro, outro et bien plus ! &lt;1min.
       MP4 4K.
     </p>
 
@@ -429,7 +597,13 @@ footer{
 
   <article class="product">
 
-    <img src="Produit-2.jpg" alt="Pack 3 animations">
+    <div class="thumb-wrap">
+      <img src="Produit-2.jpg" alt="Pack 3 animations">
+      <div class="frame-marks">
+        <span class="tl"></span><span class="tr"></span>
+        <span class="bl"></span><span class="br"></span>
+      </div>
+    </div>
 
     <div class="meta">
       <strong>Pack 3 animations</strong>
@@ -457,9 +631,15 @@ footer{
 
   </article>
 
-  <article class="product">
+  <article class="product soon">
 
-    <img src="Bientot.jpg" alt="PP simple">
+    <div class="thumb-wrap">
+      <img src="Bientot.jpg" alt="PP simple">
+      <div class="frame-marks">
+        <span class="tl"></span><span class="tr"></span>
+        <span class="bl"></span><span class="br"></span>
+      </div>
+    </div>
 
     <div class="meta">
       <strong>PP simple</strong>
@@ -480,9 +660,15 @@ footer{
 
   </article>
 
-  <article class="product">
+  <article class="product soon">
 
-    <img src="Bientot.jpg" alt="Pack 5 PP">
+    <div class="thumb-wrap">
+      <img src="Bientot.jpg" alt="Pack 5 PP">
+      <div class="frame-marks">
+        <span class="tl"></span><span class="tr"></span>
+        <span class="bl"></span><span class="br"></span>
+      </div>
+    </div>
 
     <div class="meta">
       <strong>Pack 5 PP</strong>
