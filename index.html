@@ -1838,7 +1838,7 @@ async function ensureUserProfile(user, fallbackName){
 
 async function sendNotification(uid, { title, message }){
   await addDoc(collection(db, 'users', uid, 'notifications'), {
-    from: 'KenzouTV',
+    from: "L'équipe BlockFrame",
     fromEmail: 'kenzoutv@outlook.fr',
     title,
     message,
@@ -1872,9 +1872,9 @@ function renderNotifications(docs){
     const when = n.createdAt ? timeAgo(n.createdAt.toDate()) : '';
     return `
       <div class="notif-item ${n.read ? '' : 'unread'}" data-id="${d.id}">
-        <div class="notif-avatar">K</div>
+        <div class="notif-avatar">B</div>
         <div class="notif-body">
-          <div class="n-from">${n.from || 'KenzouTV'} · ${n.fromEmail || 'kenzoutv@outlook.fr'}</div>
+          <div class="n-from">${n.from || "L'équipe BlockFrame"} · ${n.fromEmail || 'kenzoutv@outlook.fr'}</div>
           <div class="n-title">${n.title || ''}</div>
           <div class="n-msg">${n.message || ''}</div>
           <div class="n-time">${when}</div>
