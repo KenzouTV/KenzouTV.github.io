@@ -279,6 +279,7 @@ nav.topbar.glass:hover::before{ opacity:0; }
   font-size:12px;
   flex:none;
 }
+.btn-account .avatar:empty{ display:none; }
 
 .account-menu{
   position:absolute;
@@ -292,7 +293,13 @@ nav.topbar.glass:hover::before{ opacity:0; }
   transform:translateY(-8px);
   pointer-events:none;
   transition:opacity 0.2s ease, transform 0.2s ease;
+  background:linear-gradient(160deg, #1a1230, #120c22);
+  border:1px solid var(--glass-line);
+  box-shadow:0 24px 60px rgba(0,0,0,0.6);
+  -webkit-backdrop-filter:none;
+  backdrop-filter:none;
 }
+.account-menu::before{ display:none; }
 .account-menu.open{ opacity:1; transform:translateY(0); pointer-events:auto; }
 .account-menu .who{
   padding:10px 12px 12px;
@@ -425,6 +432,40 @@ nav.topbar.glass:hover::before{ opacity:0; }
   background:rgba(255,255,255,0.06);
 }
 .field input::placeholder{ color:rgba(243,240,255,0.32); }
+
+.pw-wrap{ position:relative; }
+.pw-wrap input{ padding-right:44px; }
+.pw-eye{
+  position:absolute;
+  top:50%;
+  right:6px;
+  transform:translateY(-50%);
+  width:32px; height:32px;
+  border-radius:8px;
+  border:none;
+  background:none;
+  color:var(--muted);
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:color 0.2s ease, background 0.2s ease;
+}
+.pw-eye:hover{ color:var(--cyan); background:rgba(255,255,255,0.06); }
+.pw-eye svg{ width:17px; height:17px; }
+.pw-eye .eye-off{ display:none; }
+.pw-eye.showing .eye-on{ display:none; }
+.pw-eye.showing .eye-off{ display:block; }
+
+.pw-hint{
+  font-family:var(--font-mono);
+  font-size:11px;
+  margin-top:6px;
+  color:var(--muted);
+  transition:color 0.2s ease;
+}
+.pw-hint.match{ color:#7dffc4; }
+.pw-hint.mismatch{ color:var(--pink); }
 
 .auth-submit{
   width:100%;
@@ -952,11 +993,11 @@ footer.site-footer{ margin-top:96px; padding-top:36px; border-top:1px solid var(
 
     <div style="position:relative">
       <button class="btn-account" id="btnAccount">
-        <span class="avatar" id="accountAvatar">?</span>
+        <span class="avatar" id="accountAvatar"></span>
         <span id="accountLabel">Se connecter</span>
       </button>
 
-      <div class="account-menu glass" id="accountMenu">
+      <div class="account-menu" id="accountMenu">
         <div class="who">
           <strong id="accountName">—</strong>
           <span id="accountEmail">—</span>
@@ -1276,7 +1317,13 @@ footer.site-footer{ margin-top:96px; padding-top:36px; border-top:1px solid var(
         </div>
         <div class="field">
           <label>Mot de passe</label>
-          <input type="password" id="loginPassword" placeholder="••••••••" required autocomplete="current-password">
+          <div class="pw-wrap">
+            <input type="password" id="loginPassword" placeholder="••••••••" required autocomplete="current-password">
+            <button type="button" class="pw-eye" data-target="loginPassword" aria-label="Afficher le mot de passe">
+              <svg class="eye-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+              <svg class="eye-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3l18 18"/><path d="M10.6 5.2A10.6 10.6 0 0 1 12 5c6.5 0 10 7 10 7a15.6 15.6 0 0 1-3.4 4.3M6.7 6.7C4 8.5 2 12 2 12s3.5 7 10 7c1.3 0 2.5-.2 3.6-.6"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg>
+            </button>
+          </div>
         </div>
         <button type="submit" class="auth-submit" id="loginSubmit">SE CONNECTER</button>
       </form>
@@ -1305,7 +1352,24 @@ footer.site-footer{ margin-top:96px; padding-top:36px; border-top:1px solid var(
         </div>
         <div class="field">
           <label>Mot de passe (6 caractères min.)</label>
-          <input type="password" id="signupPassword" placeholder="••••••••" required minlength="6" autocomplete="new-password">
+          <div class="pw-wrap">
+            <input type="password" id="signupPassword" placeholder="••••••••" required minlength="6" autocomplete="new-password">
+            <button type="button" class="pw-eye" data-target="signupPassword" aria-label="Afficher le mot de passe">
+              <svg class="eye-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+              <svg class="eye-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3l18 18"/><path d="M10.6 5.2A10.6 10.6 0 0 1 12 5c6.5 0 10 7 10 7a15.6 15.6 0 0 1-3.4 4.3M6.7 6.7C4 8.5 2 12 2 12s3.5 7 10 7c1.3 0 2.5-.2 3.6-.6"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="field">
+          <label>Confirme ton mot de passe</label>
+          <div class="pw-wrap">
+            <input type="password" id="signupPasswordConfirm" placeholder="••••••••" required minlength="6" autocomplete="new-password">
+            <button type="button" class="pw-eye" data-target="signupPasswordConfirm" aria-label="Afficher le mot de passe">
+              <svg class="eye-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+              <svg class="eye-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3l18 18"/><path d="M10.6 5.2A10.6 10.6 0 0 1 12 5c6.5 0 10 7 10 7a15.6 15.6 0 0 1-3.4 4.3M6.7 6.7C4 8.5 2 12 2 12s3.5 7 10 7c1.3 0 2.5-.2 3.6-.6"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg>
+            </button>
+          </div>
+          <div class="pw-hint" id="pwHint">Retape le même mot de passe.</div>
         </div>
         <button type="submit" class="auth-submit" id="signupSubmit">CRÉER MON COMPTE</button>
       </form>
@@ -1414,7 +1478,7 @@ const firebaseConfig = {
   projectId: "web-kenzoutv",
   storageBucket: "web-kenzoutv.firebasestorage.app",
   messagingSenderId: "52067585435",
-  appId: "1:52067585435:web:6906384c6c69a6ffa7a53e"
+  appId: "1:52067585435:web:6906384c6c69a6ffa7a53e",
 };
 
 const app = initializeApp(firebaseConfig);
@@ -1506,6 +1570,39 @@ function showError(msg){
   authError.classList.add('show');
 }
 
+/* ---------- Afficher / masquer les mots de passe ---------- */
+
+document.querySelectorAll('.pw-eye').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    const input = document.getElementById(btn.dataset.target);
+    const showing = input.type === 'text';
+    input.type = showing ? 'password' : 'text';
+    btn.classList.toggle('showing', !showing);
+    btn.setAttribute('aria-label', showing ? 'Afficher le mot de passe' : 'Masquer le mot de passe');
+  });
+});
+
+/* ---------- Vérification en direct de la confirmation ---------- */
+
+const signupPassword = document.getElementById('signupPassword');
+const signupPasswordConfirm = document.getElementById('signupPasswordConfirm');
+const pwHint = document.getElementById('pwHint');
+
+function checkPasswordsMatch(){
+  if(!signupPasswordConfirm.value){
+    pwHint.textContent = 'Retape le même mot de passe.';
+    pwHint.classList.remove('match', 'mismatch');
+    return null;
+  }
+  const match = signupPassword.value === signupPasswordConfirm.value;
+  pwHint.textContent = match ? '✓ Les mots de passe correspondent.' : '✗ Les mots de passe ne correspondent pas.';
+  pwHint.classList.toggle('match', match);
+  pwHint.classList.toggle('mismatch', !match);
+  return match;
+}
+signupPassword.addEventListener('input', checkPasswordsMatch);
+signupPasswordConfirm.addEventListener('input', checkPasswordsMatch);
+
 /* ---------- Profil Firestore ---------- */
 
 async function ensureUserProfile(user, fallbackName){
@@ -1552,8 +1649,14 @@ formSignup.addEventListener('submit', async (e)=>{
   const email = document.getElementById('signupEmail').value.trim();
   const password = document.getElementById('signupPassword').value;
 
-  submitBtn.disabled = true;
   authError.classList.remove('show');
+
+  if(!checkPasswordsMatch()){
+    showError("Les deux mots de passe ne correspondent pas.");
+    return;
+  }
+
+  submitBtn.disabled = true;
 
   try{
     const cred = await createUserWithEmailAndPassword(auth, email, password);
@@ -1561,6 +1664,8 @@ formSignup.addEventListener('submit', async (e)=>{
     await ensureUserProfile(cred.user, name);
     closeAuth();
     formSignup.reset();
+    pwHint.textContent = 'Retape le même mot de passe.';
+    pwHint.classList.remove('match', 'mismatch');
   }catch(err){
     showError(friendlyError(err.code || err.message.toLowerCase()));
   }finally{
@@ -1611,7 +1716,7 @@ onAuthStateChanged(auth, async (user)=>{
     }
   } else {
     accountLabel.textContent = 'Se connecter';
-    accountAvatar.textContent = '?';
+    accountAvatar.textContent = '';
     accountName.textContent = '—';
     accountEmail.textContent = '—';
     accountMenu.classList.remove('open');
