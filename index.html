@@ -1675,7 +1675,8 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-const db = getFirestore(app);
+// ⚠️ Ta base Firestore s'appelle "webkenzoutv" (pas "(default)"), donc on la cible explicitement
+const db = getFirestore(app, "webkenzoutv");
 const googleProvider = new GoogleAuthProvider();
 
 /* ---------- Éléments du DOM ---------- */
