@@ -104,7 +104,7 @@ a{ color:inherit; }
 }
 
 /* =========================
-   GLASS CARD BASE + GRADIENT BORDER ON HOVER 
+   GLASS CARD BASE + GRADIENT BORDER ON HOVER
 ========================= */
 
 .glass{
@@ -322,6 +322,151 @@ nav.topbar.glass:hover::before{ opacity:0; }
   transition:background 0.2s ease, color 0.2s ease;
 }
 .account-menu button:hover{ background:rgba(255,62,196,0.1); color:var(--pink); }
+
+/* =========================
+   NOTIFICATIONS
+========================= */
+
+.btn-bell{
+  position:relative;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  width:38px; height:38px;
+  border-radius:50%;
+  background:rgba(255,255,255,0.05);
+  border:1px solid var(--glass-line);
+  color:var(--ink);
+  cursor:pointer;
+  transition:border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  margin-left:6px;
+}
+.btn-bell.visible{ display:flex; }
+.btn-bell:hover{
+  border-color:var(--violet);
+  transform:translateY(-1px);
+  box-shadow:0 8px 20px rgba(123,92,255,0.25);
+}
+.btn-bell svg{ width:18px; height:18px; }
+.btn-bell.ring svg{ animation:bell-ring 0.6s ease; }
+@keyframes bell-ring{
+  0%,100%{ transform:rotate(0); }
+  20%{ transform:rotate(14deg); }
+  40%{ transform:rotate(-12deg); }
+  60%{ transform:rotate(8deg); }
+  80%{ transform:rotate(-6deg); }
+}
+
+.bell-badge{
+  position:absolute;
+  top:-3px; right:-3px;
+  min-width:17px; height:17px;
+  padding:0 4px;
+  border-radius:999px;
+  background:linear-gradient(120deg, var(--pink), var(--violet));
+  color:#fff;
+  font-family:var(--font-mono);
+  font-size:10px;
+  font-weight:700;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  border:2px solid var(--bg-0);
+}
+.bell-badge.show{ display:flex; }
+
+.notif-menu{
+  position:absolute;
+  top:calc(100% + 10px);
+  right:0;
+  width:340px;
+  max-width:88vw;
+  max-height:420px;
+  overflow-y:auto;
+  padding:8px;
+  border-radius:16px;
+  z-index:60;
+  opacity:0;
+  transform:translateY(-8px);
+  pointer-events:none;
+  transition:opacity 0.2s ease, transform 0.2s ease;
+  background:linear-gradient(160deg, #1a1230, #120c22);
+  border:1px solid var(--glass-line);
+  box-shadow:0 24px 60px rgba(0,0,0,0.6);
+}
+.notif-menu.open{ opacity:1; transform:translateY(0); pointer-events:auto; }
+
+.notif-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:10px 10px 12px;
+  border-bottom:1px solid var(--glass-line);
+  margin-bottom:6px;
+}
+.notif-head strong{ font-size:13.5px; }
+.notif-head button{
+  background:none; border:none; cursor:pointer;
+  color:var(--cyan);
+  font-family:var(--font-mono);
+  font-size:11px;
+  padding:4px 6px;
+  border-radius:6px;
+  transition:color 0.2s ease, background 0.2s ease;
+}
+.notif-head button:hover{ color:var(--pink); background:rgba(255,255,255,0.05); }
+
+.notif-empty{
+  padding:32px 16px;
+  text-align:center;
+  color:var(--muted);
+  font-size:13px;
+}
+
+.notif-item{
+  display:flex;
+  gap:10px;
+  padding:11px 10px;
+  border-radius:12px;
+  cursor:pointer;
+  transition:background 0.2s ease;
+  position:relative;
+}
+.notif-item:hover{ background:rgba(255,255,255,0.04); }
+.notif-item.unread{ background:rgba(123,92,255,0.08); }
+.notif-item.unread::before{
+  content:"";
+  position:absolute;
+  left:3px; top:50%;
+  width:6px; height:6px;
+  border-radius:50%;
+  background:var(--cyan);
+  transform:translateY(-50%);
+  box-shadow:0 0 6px var(--cyan);
+}
+
+.notif-avatar{
+  flex:none;
+  width:34px; height:34px;
+  border-radius:50%;
+  background:linear-gradient(120deg, var(--cyan), var(--violet));
+  color:#0a0714;
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--font-display);
+  font-weight:700;
+  font-size:14px;
+}
+
+.notif-body{ flex:1; min-width:0; }
+.notif-body .n-from{
+  font-family:var(--font-mono);
+  font-size:10px;
+  color:var(--muted);
+  margin-bottom:2px;
+}
+.notif-body .n-title{ font-weight:700; font-size:13.5px; margin-bottom:2px; }
+.notif-body .n-msg{ font-size:12.5px; color:var(--muted); line-height:1.4; }
+.notif-body .n-time{ font-family:var(--font-mono); font-size:10px; color:rgba(243,240,255,0.35); margin-top:4px; }
 
 /* =========================
    AUTH : modale
@@ -962,6 +1107,8 @@ footer.site-footer{ margin-top:96px; padding-top:36px; border-top:1px solid var(
   .btn-discord{ margin-left:0; margin-top:4px; }
   .btn-account{ margin-left:0; margin-top:4px; justify-content:center; }
   .account-menu{ right:0; left:0; }
+  .btn-bell{ margin-left:0; margin-top:4px; align-self:center; }
+  .notif-menu{ right:0; left:0; width:auto; }
   .b-quick{ grid-template-columns:1fr; }
   .services-grid{ grid-template-columns:1fr; }
   .social-grid{ grid-template-columns:1fr; }
@@ -1007,6 +1154,23 @@ footer.site-footer{ margin-top:96px; padding-top:36px; border-top:1px solid var(
     <a href="boutique.html">Boutique</a>
     <a href="blockframe.html">BlockFrame</a>
     <button class="btn-discord" id="btnDiscord">Discord</button>
+
+    <div style="position:relative">
+      <button class="btn-bell" id="btnBell" aria-label="Notifications">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 8a6 6 0 0 1 12 0c0 4 1.5 6 2 6.5H4C4.5 14 6 12 6 8z"/><path d="M10 19a2 2 0 0 0 4 0"/></svg>
+        <span class="bell-badge" id="bellBadge">0</span>
+      </button>
+
+      <div class="notif-menu" id="notifMenu">
+        <div class="notif-head">
+          <strong>Notifications</strong>
+          <button id="btnMarkAllRead">Tout marquer comme lu</button>
+        </div>
+        <div id="notifList">
+          <div class="notif-empty">Aucune notification pour le moment.</div>
+        </div>
+      </div>
+    </div>
 
     <div style="position:relative">
       <button class="btn-account" id="btnAccount">
@@ -1489,7 +1653,14 @@ import {
   doc,
   getDoc,
   setDoc,
-  serverTimestamp
+  serverTimestamp,
+  collection,
+  addDoc,
+  query,
+  orderBy,
+  limit,
+  onSnapshot,
+  updateDoc
 } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
 
 // ⚠️ VALEURS D'EXEMPLE — remplace-les par la config de ton propre projet Firebase
@@ -1516,6 +1687,12 @@ const accountAvatar= document.getElementById('accountAvatar');
 const accountName  = document.getElementById('accountName');
 const accountEmail = document.getElementById('accountEmail');
 const btnLogout    = document.getElementById('btnLogout');
+
+const btnBell   = document.getElementById('btnBell');
+const bellBadge = document.getElementById('bellBadge');
+const notifMenu = document.getElementById('notifMenu');
+const notifList = document.getElementById('notifList');
+const btnMarkAllRead = document.getElementById('btnMarkAllRead');
 
 const authOverlay = document.getElementById('authOverlay');
 const authClose   = document.getElementById('authClose');
@@ -1572,6 +1749,7 @@ document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeAuth(); 
 btnAccount.addEventListener('click', ()=>{
   if(auth.currentUser){
     accountMenu.classList.toggle('open');
+    notifMenu.classList.remove('open');
   } else {
     openAuth('login');
   }
@@ -1648,9 +1826,117 @@ async function ensureUserProfile(user, fallbackName){
       email: user.email,
       createdAt: serverTimestamp()
     });
+    await sendNotification(user.uid, {
+      title: 'Bienvenue sur KenzouTV !',
+      message: `Merci de t'être inscrit(e) ${user.displayName || fallbackName || ''} 👋 Tu recevras ici une notification à chaque nouvelle commande ou mise à jour importante.`
+    });
   }
   return (await getDoc(ref)).data();
 }
+
+/* ---------- Notifications ---------- */
+
+async function sendNotification(uid, { title, message }){
+  await addDoc(collection(db, 'users', uid, 'notifications'), {
+    from: 'KenzouTV',
+    fromEmail: 'kenzoutv@outlook.fr',
+    title,
+    message,
+    read: false,
+    createdAt: serverTimestamp()
+  });
+}
+
+let unsubscribeNotifs = null;
+
+function timeAgo(date){
+  const s = Math.floor((Date.now() - date.getTime()) / 1000);
+  if(s < 60) return "à l'instant";
+  if(s < 3600) return `il y a ${Math.floor(s/60)} min`;
+  if(s < 86400) return `il y a ${Math.floor(s/3600)} h`;
+  if(s < 604800) return `il y a ${Math.floor(s/86400)} j`;
+  return date.toLocaleDateString('fr-FR');
+}
+
+function renderNotifications(docs){
+  if(docs.length === 0){
+    notifList.innerHTML = '<div class="notif-empty">Aucune notification pour le moment.</div>';
+    updateBellBadge(0);
+    return;
+  }
+
+  let unread = 0;
+  notifList.innerHTML = docs.map(d=>{
+    const n = d.data();
+    if(!n.read) unread++;
+    const when = n.createdAt ? timeAgo(n.createdAt.toDate()) : '';
+    return `
+      <div class="notif-item ${n.read ? '' : 'unread'}" data-id="${d.id}">
+        <div class="notif-avatar">K</div>
+        <div class="notif-body">
+          <div class="n-from">${n.from || 'KenzouTV'} · ${n.fromEmail || 'kenzoutv@outlook.fr'}</div>
+          <div class="n-title">${n.title || ''}</div>
+          <div class="n-msg">${n.message || ''}</div>
+          <div class="n-time">${when}</div>
+        </div>
+      </div>`;
+  }).join('');
+
+  updateBellBadge(unread);
+
+  notifList.querySelectorAll('.notif-item').forEach(item=>{
+    item.addEventListener('click', async ()=>{
+      if(!item.classList.contains('unread')) return;
+      const user = auth.currentUser;
+      if(!user) return;
+      await updateDoc(doc(db, 'users', user.uid, 'notifications', item.dataset.id), { read: true });
+    });
+  });
+}
+
+function updateBellBadge(count){
+  if(count > 0){
+    bellBadge.textContent = count > 9 ? '9+' : String(count);
+    bellBadge.classList.add('show');
+  } else {
+    bellBadge.classList.remove('show');
+  }
+}
+
+function startNotifListener(uid){
+  const q = query(collection(db, 'users', uid, 'notifications'), orderBy('createdAt', 'desc'), limit(30));
+  unsubscribeNotifs = onSnapshot(q, (snap)=>{
+    renderNotifications(snap.docs);
+  }, ()=>{
+    /* Règles Firestore non déployées ou souci réseau : on laisse le panneau vide silencieusement */
+  });
+}
+
+function stopNotifListener(){
+  if(unsubscribeNotifs){ unsubscribeNotifs(); unsubscribeNotifs = null; }
+  notifList.innerHTML = '<div class="notif-empty">Aucune notification pour le moment.</div>';
+  updateBellBadge(0);
+}
+
+btnBell.addEventListener('click', ()=>{
+  notifMenu.classList.toggle('open');
+  accountMenu.classList.remove('open');
+});
+
+btnMarkAllRead.addEventListener('click', async ()=>{
+  const user = auth.currentUser;
+  if(!user) return;
+  const items = notifList.querySelectorAll('.notif-item.unread');
+  await Promise.all(Array.from(items).map(item =>
+    updateDoc(doc(db, 'users', user.uid, 'notifications', item.dataset.id), { read: true })
+  ));
+});
+
+document.addEventListener('click', (e)=>{
+  if(!e.target.closest('.btn-bell') && !e.target.closest('.notif-menu')){
+    notifMenu.classList.remove('open');
+  }
+});
 
 /* ---------- Connexion email / mot de passe ---------- */
 
@@ -1739,6 +2025,8 @@ onAuthStateChanged(auth, async (user)=>{
     accountAvatar.textContent = name.charAt(0).toUpperCase();
     accountName.textContent = name;
     accountEmail.textContent = user.email || '';
+    btnBell.classList.add('visible');
+    startNotifListener(user.uid);
 
     try{
       const profile = await ensureUserProfile(user);
@@ -1755,6 +2043,9 @@ onAuthStateChanged(auth, async (user)=>{
     accountName.textContent = '—';
     accountEmail.textContent = '—';
     accountMenu.classList.remove('open');
+    btnBell.classList.remove('visible');
+    notifMenu.classList.remove('open');
+    stopNotifListener();
   }
 });
 
