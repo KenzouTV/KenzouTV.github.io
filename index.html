@@ -533,6 +533,23 @@ nav.topbar.glass:hover::before{ opacity:0; }
 }
 .auth-error.show{ display:block; }
 
+.auth-success{
+  display:none;
+  align-items:center;
+  gap:10px;
+  padding:10px 12px;
+  border-radius:10px;
+  background:rgba(0,230,216,0.1);
+  border:1px solid rgba(0,230,216,0.4);
+  color:#8ffff2;
+  font-size:12.5px;
+  font-weight:700;
+  margin-bottom:14px;
+  line-height:1.4;
+}
+.auth-success.show{ display:flex; }
+.auth-success svg{ width:16px; height:16px; flex:none; }
+
 .auth-note{
   margin-top:16px;
   color:var(--muted);
@@ -1303,6 +1320,10 @@ footer.site-footer{ margin-top:96px; padding-top:36px; border-top:1px solid var(
       <button class="auth-tab" data-tab="signup">Inscription</button>
     </div>
 
+    <div id="authSuccess" class="auth-success">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+      <span id="authSuccessText"></span>
+    </div>
     <div id="authError" class="auth-error"></div>
 
     <!-- CONNEXION -->
@@ -1478,7 +1499,7 @@ const firebaseConfig = {
   projectId: "web-kenzoutv",
   storageBucket: "web-kenzoutv.firebasestorage.app",
   messagingSenderId: "52067585435",
-  appId: "1:52067585435:web:6906384c6c69a6ffa7a53e",
+  appId: "1:52067585435:web:6906384c6c69a6ffa7a53e"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -1499,6 +1520,8 @@ const btnLogout    = document.getElementById('btnLogout');
 const authOverlay = document.getElementById('authOverlay');
 const authClose   = document.getElementById('authClose');
 const authError   = document.getElementById('authError');
+const authSuccess = document.getElementById('authSuccess');
+const authSuccessText = document.getElementById('authSuccessText');
 
 const tabs      = document.querySelectorAll('.auth-tab');
 const tabLogin  = document.getElementById('tab-login');
@@ -1515,10 +1538,21 @@ const googleSignup = document.getElementById('googleSignup');
 function openAuth(tab = 'login'){
   authError.classList.remove('show');
   authError.textContent = '';
+  authSuccess.classList.remove('show');
   setTab(tab);
   authOverlay.classList.add('open');
 }
-function closeAuth(){ authOverlay.classList.remove('open'); }
+function closeAuth(){
+  authOverlay.classList.remove('open');
+  authSuccess.classList.remove('show');
+}
+
+function showSuccessThenClose(message, delay = 1400){
+  authError.classList.remove('show');
+  authSuccessText.textContent = message;
+  authSuccess.classList.add('show');
+  setTimeout(closeAuth, delay);
+}
 
 function setTab(tab){
   tabs.forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
@@ -1631,8 +1665,8 @@ formLogin.addEventListener('submit', async (e)=>{
 
   try{
     await signInWithEmailAndPassword(auth, email, password);
-    closeAuth();
     formLogin.reset();
+    showSuccessThenClose('Connecté avec succès !');
   }catch(err){
     showError(friendlyError(err.code || err.message.toLowerCase()));
   }finally{
@@ -1662,10 +1696,10 @@ formSignup.addEventListener('submit', async (e)=>{
     const cred = await createUserWithEmailAndPassword(auth, email, password);
     await updateProfile(cred.user, { displayName: name });
     await ensureUserProfile(cred.user, name);
-    closeAuth();
     formSignup.reset();
     pwHint.textContent = 'Retape le même mot de passe.';
     pwHint.classList.remove('match', 'mismatch');
+    showSuccessThenClose('Compte créé avec succès !');
   }catch(err){
     showError(friendlyError(err.code || err.message.toLowerCase()));
   }finally{
@@ -1679,8 +1713,9 @@ async function withGoogle(){
   authError.classList.remove('show');
   try{
     const cred = await signInWithPopup(auth, googleProvider);
+    const isNewUser = cred._tokenResponse ? cred._tokenResponse.isNewUser : false;
     await ensureUserProfile(cred.user);
-    closeAuth();
+    showSuccessThenClose(isNewUser ? 'Compte créé avec succès !' : 'Connecté avec succès !');
   }catch(err){
     showError(friendlyError(err.code || err.message.toLowerCase()));
   }
