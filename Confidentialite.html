@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+
+<title>Politique de confidentialité — KenzouTV</title>
+
+<link rel="icon" type="image/png" href="profile-0.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Manrope:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<meta name="description" content="Politique de confidentialité — KenzouTV">
+
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+
+<style>
+
+:root{
+  --bg-0:#0a0714;
+  --bg-1:#120c22;
+
+  --violet:#7b5cff;
+  --cyan:#00e6d8;
+  --pink:#ff3ec4;
+
+  --ink:#f3f0ff;
+  --muted:rgba(243,240,255,0.6);
+  --glass-line:rgba(255,255,255,0.10);
+  --glass-bg: linear-gradient(160deg, rgba(255,255,255,0.06), rgba(255,255,255,0.015));
+
+  --max-w:880px;
+  --nav-max-w:1220px;
+
+  --font-display:'Syne', sans-serif;
+  --font-body:'Manrope', system-ui, Arial, sans-serif;
+  --font-mono:'Space Mono', ui-monospace, monospace;
+}
+
+*{ box-sizing:border-box; }
+html,body{ height:100%; }
+
+body{
+  margin:0;
+  padding:44px 22px;
+  font-family:var(--font-body);
+  color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+  background:var(--bg-0);
+  min-height:100vh;
+  position:relative;
+  overflow-x:hidden;
+}
+
+a{ color:inherit; }
+
+/* ambience */
+.ambience{ position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
+.blob{ position:absolute; border-radius:50%; filter:blur(90px); opacity:0.28; }
+.blob-1{ width:460px; height:460px; background:var(--violet); top:-160px; left:-120px; }
+.blob-2{ width:400px; height:400px; background:var(--pink); bottom:-140px; right:-100px; opacity:0.2; }
+
+.wrap-nav{ max-width:var(--nav-max-w); margin:0 auto; position:relative; z-index:2; }
+.wrap{ max-width:var(--max-w); margin:28px auto; position:relative; z-index:2; }
+
+.glass{
+  position:relative;
+  background:var(--glass-bg);
+  border:1px solid var(--glass-line);
+  border-radius:22px;
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+  box-shadow:0 24px 60px rgba(0,0,0,0.45);
+}
+
+/* NAVBAR */
+nav.topbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:10px 10px 10px 14px;
+  border-radius:999px;
+  position:sticky;
+  top:20px;
+  z-index:40;
+}
+
+.brand{ display:flex; gap:11px; align-items:center; }
+.brand .logo-ring{
+  width:40px; height:40px;
+  border-radius:50%;
+  padding:2px;
+  background:conic-gradient(from 120deg, var(--violet), var(--pink), var(--cyan));
+  flex:none;
+}
+.brand .logo-ring img{
+  width:100%; height:100%; border-radius:50%; object-fit:cover; display:block;
+  border:2px solid var(--bg-0);
+}
+.brand .title{ font-family:var(--font-display); font-weight:700; font-size:16px; letter-spacing:-0.2px; }
+
+.navlinks{ display:flex; gap:4px; align-items:center; }
+.navlinks a{
+  padding:9px 15px; border-radius:999px; text-decoration:none;
+  color:var(--muted); font-weight:600; font-size:13.5px; transition:0.2s;
+}
+.navlinks a:hover{ color:var(--ink); background:rgba(255,255,255,0.06); }
+
+#burger{ display:none; background:none; border:none; color:var(--ink); font-size:22px; cursor:pointer; }
+
+/* HEADER */
+.tag{
+  display:inline-flex; align-items:center; gap:8px;
+  font-family:var(--font-mono); color:var(--cyan);
+  letter-spacing:1px; font-size:12px;
+  padding:6px 12px; border:1px solid var(--glass-line); border-radius:999px;
+}
+.tag::before{ content:"◆"; font-size:9px; color:var(--pink); }
+
+h1{
+  font-family:var(--font-display);
+  font-weight:700;
+  font-size:32px;
+  letter-spacing:-0.4px;
+  margin:16px 0 6px;
+}
+
+.updated{
+  color:var(--muted);
+  font-family:var(--font-mono);
+  font-size:12px;
+  margin-bottom:28px;
+}
+
+.legal-card{ padding:36px; }
+
+.legal-card h2{
+  font-family:var(--font-body);
+  font-weight:800;
+  font-size:16.5px;
+  color:var(--cyan);
+  margin:30px 0 10px;
+}
+.legal-card h2:first-child{ margin-top:0; }
+
+.legal-card h3{
+  font-family:var(--font-mono);
+  font-size:12px;
+  letter-spacing:0.5px;
+  color:var(--pink);
+  margin:18px 0 6px;
+  text-transform:uppercase;
+}
+
+.legal-card p, .legal-card li{
+  color:rgba(243,240,255,0.78);
+  font-size:14.5px;
+  line-height:1.7;
+}
+.legal-card ul{ margin:8px 0; padding-left:20px; }
+.legal-card a{ color:var(--cyan); text-decoration:underline; text-underline-offset:2px; }
+
+.table-wrap{ overflow-x:auto; margin:14px 0; }
+table{ width:100%; border-collapse:collapse; font-size:13.5px; }
+th, td{ text-align:left; padding:10px 12px; border-bottom:1px solid var(--glass-line); color:rgba(243,240,255,0.78); }
+th{ font-family:var(--font-mono); font-size:11px; letter-spacing:0.5px; color:var(--muted); text-transform:uppercase; }
+
+.notice{
+  margin-top:26px;
+  padding:14px 16px;
+  border-radius:12px;
+  border:1px dashed var(--glass-line);
+  color:var(--muted);
+  font-family:var(--font-mono);
+  font-size:12px;
+  line-height:1.6;
+}
+
+.contact-box{
+  margin-top:22px;
+  padding:18px 20px;
+  border-radius:14px;
+  background:rgba(255,255,255,0.03);
+  border:1px solid var(--glass-line);
+}
+.contact-box p{ margin:0; }
+
+footer{
+  margin-top:44px;
+  text-align:center;
+  color:rgba(243,240,255,0.3);
+  font-family:var(--font-mono);
+  font-size:12px;
+}
+
+@media(max-width:720px){
+  #burger{ display:block; }
+  .navlinks{
+    display:none; position:absolute; right:12px; top:66px;
+    flex-direction:column; align-items:stretch;
+    background:rgba(14,9,26,0.98);
+    padding:10px; border-radius:16px; border:1px solid var(--glass-line);
+    width:200px; box-shadow:0 20px 40px rgba(0,0,0,0.6);
+  }
+  .navlinks.open{ display:flex; }
+  .legal-card{ padding:24px; }
+  h1{ font-size:26px; }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="ambience">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+</div>
+
+<div class="wrap-nav">
+<nav class="topbar glass">
+
+  <div class="brand">
+    <div class="logo-ring"><img src="profile-0.png" alt="logo KenzouTV"></div>
+    <div class="title">KenzouTV</div>
+  </div>
+
+  <button id="burger" aria-expanded="false" aria-controls="main-nav" aria-label="Ouvrir le menu">☰</button>
+
+  <div class="navlinks" id="main-nav">
+    <a href="index.html">Accueil</a>
+    <a href="links.html">Mes Réseaux</a>
+    <a href="boutique.html">Boutique</a>
+    <a href="blockframe.html">BlockFrame</a>
+  </div>
+
+</nav>
+</div>
+
+<div class="wrap">
+
+  <span class="tag">DOCUMENT LÉGAL</span>
+  <h1>Politique de confidentialité</h1>
+  <div class="updated">Dernière mise à jour : 13 juillet 2026</div>
+
+  <div class="legal-card glass">
+
+    <h2>1. Qui gère ce site ?</h2>
+    <p>Ce site est édité par KenzouTV, créateur de contenu vidéo et d'animation, dans le cadre de son activité (studio BlockFrame et boutique en ligne). Pour toute question relative à cette politique ou à tes données, le contact principal est l'adresse <a href="mailto:kenzoutv@outlook.fr">kenzoutv@outlook.fr</a> ou le serveur Discord accessible depuis le site.</p>
+
+    <h2>2. Création de compte et données collectées</h2>
+    <p>Le site propose la création d'un compte, via deux méthodes :</p>
+    <ul>
+      <li><strong>Email et mot de passe</strong>, gérés par Firebase Authentication (service de Google).</li>
+      <li><strong>Connexion Google</strong>, via laquelle Google transmet au site ton adresse email et le nom associé à ton compte Google.</li>
+    </ul>
+    <p>Lors de la création d'un compte, les informations suivantes sont enregistrées et conservées :</p>
+
+    <div class="table-wrap">
+      <table>
+        <tr><th>Donnée</th><th>Origine</th><th>Finalité</th></tr>
+        <tr><td>Adresse email</td><td>Formulaire ou compte Google</td><td>Identification, connexion au compte</td></tr>
+        <tr><td>Pseudo / nom affiché</td><td>Formulaire ou compte Google</td><td>Personnalisation de l'affichage sur le site</td></tr>
+        <tr><td>Mot de passe</td><td>Formulaire (si inscription par email)</td><td>Authentification — jamais stocké en clair, géré entièrement par Firebase</td></tr>
+        <tr><td>Date de création du compte</td><td>Générée automatiquement</td><td>Affichage "membre depuis le..."</td></tr>
+      </table>
+    </div>
+
+    <p>Ces informations sont stockées dans <strong>Cloud Firestore</strong>, une base de données fournie par Google/Firebase, hébergée sur des serveurs situés dans l'Union européenne (région Europe).</p>
+
+    <h2>3. Notifications de compte</h2>
+    <p>Chaque compte dispose d'un espace de notifications personnel et privé (visible uniquement par son propriétaire). Un message de bienvenue y est déposé automatiquement lors de l'inscription, envoyé par "L'équipe BlockFrame". D'autres notifications pourront y être ajoutées à l'avenir, notamment liées au suivi de commandes passées sur la Boutique.</p>
+
+    <h2>4. Paiements</h2>
+    <p>Les commandes passées sur la Boutique sont payées via <strong>PayPal</strong>. Les informations de paiement (numéro de carte, coordonnées bancaires) sont traitées exclusivement par PayPal — ce site n'y a jamais accès et ne les stocke à aucun moment.</p>
+
+    <h2>5. Contenus et connexions de tiers</h2>
+    <p>Le site fait appel à plusieurs services externes, chacun avec sa propre politique de confidentialité :</p>
+
+    <h3>Firebase / Google</h3>
+    <p>Utilisé pour l'authentification (comptes) et le stockage des données de profil (Firestore). Voir la <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">politique de confidentialité de Google</a>.</p>
+
+    <h3>YouTube</h3>
+    <p>Certaines vidéos sont lues directement sur le site via une intégration (iframe). YouTube (Google) peut déposer ses propres cookies ou collecter des données techniques lors de l'affichage ou de la lecture de ces vidéos, indépendamment de ce site.</p>
+
+    <h3>Discord</h3>
+    <p>Le bouton "Discord" redirige vers un serveur Discord externe. Toute interaction là-bas est régie par la <a href="https://discord.com/privacy" target="_blank" rel="noopener">politique de confidentialité de Discord</a>.</p>
+
+    <h3>PayPal</h3>
+    <p>Les paiements redirigent vers PayPal, régis par sa propre politique de confidentialité.</p>
+
+    <h2>6. Cookies et stockage local</h2>
+    <p>Ce site n'utilise pas de cookies publicitaires ou de mesure d'audience pour son propre compte. En revanche :</p>
+    <ul>
+      <li>Firebase Authentication utilise le stockage local du navigateur (<em>local storage</em>) pour te garder connecté(e) entre deux visites.</li>
+      <li>Les vidéos YouTube intégrées peuvent déposer leurs propres cookies, comme indiqué ci-dessus.</li>
+    </ul>
+
+    <h2>7. Durée de conservation</h2>
+    <p>Les données de compte (email, pseudo, date de création) sont conservées tant que le compte existe. Les notifications sont conservées jusqu'à leur suppression éventuelle. Tu peux demander la suppression complète de ton compte et de tes données à tout moment (voir section 8).</p>
+
+    <h2>8. Tes droits</h2>
+    <p>Conformément au RGPD, tu disposes d'un droit d'accès, de rectification et de suppression de tes données. Le site ne proposant pas encore de suppression de compte en libre-service, toute demande peut être adressée directement :</p>
+    <div class="contact-box">
+      <p>📧 Par email : <a href="mailto:kenzoutv@outlook.fr">kenzoutv@outlook.fr</a><br>
+      💬 Ou via le <a href="index.html#reseaux">serveur Discord officiel</a></p>
+    </div>
+    <p>La demande sera traitée dans un délai raisonnable, et confirmation te sera donnée une fois les données supprimées de Firebase Authentication et Firestore.</p>
+
+    <h2>9. Sécurité</h2>
+    <p>L'accès aux données est protégé par des règles de sécurité Firestore : chaque utilisateur ne peut lire ou modifier que ses propres données, jamais celles d'un autre compte. Les mots de passe ne sont jamais stockés en clair — ils sont gérés et chiffrés directement par Firebase Authentication.</p>
+
+    <h2>10. Mineurs</h2>
+    <p>Ce site ne s'adresse pas spécifiquement à un jeune public et ne demande aucune information permettant de vérifier l'âge des visiteurs. La création d'un compte suppose l'accord d'un parent ou tuteur pour toute personne mineure, conformément à la réglementation applicable.</p>
+
+    <h2>11. Modifications de cette politique</h2>
+    <p>Cette politique peut évoluer, notamment à mesure que de nouvelles fonctionnalités sont ajoutées au site (suivi de commandes, nouvelles méthodes de connexion, etc.). La date en haut de page reflète la dernière mise à jour.</p>
+
+  </div>
+
+  <div class="notice">
+    ⚠ Ceci est un modèle rédigé à titre indicatif et ne constitue pas un conseil juridique. Il est recommandé de le faire relire/adapter par un professionnel selon ta situation réelle (statut, pays, évolutions futures du site) avant publication définitive, notamment concernant tes obligations RGPD en tant que responsable de traitement.
+  </div>
+
+</div>
+
+<footer>
+© 2026 KenzouTV — TOUS DROITS RÉSERVÉS
+</footer>
+
+<script>
+const burger = document.getElementById('burger');
+const navlinks = document.getElementById('main-nav');
+burger.addEventListener('click', ()=>{
+  navlinks.classList.toggle('open');
+  burger.setAttribute('aria-expanded', navlinks.classList.contains('open'));
+});
+</script>
+
+</body>
+</html>
