@@ -33,7 +33,7 @@
   --glass-line:rgba(255,255,255,0.10);
   --glass-bg: linear-gradient(160deg, rgba(255,255,255,0.06), rgba(255,255,255,0.015));
 
-  --max-w:880px;
+  --max-w:1020px;
   --nav-max-w:1220px;
 
   --font-display:'Syne', sans-serif;
@@ -42,6 +42,7 @@
 }
 
 *{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
 html,body{ height:100%; }
 
 body{
@@ -109,6 +110,25 @@ nav.topbar{
   color:var(--muted); font-weight:600; font-size:13.5px; transition:0.2s;
 }
 .navlinks a:hover{ color:var(--ink); background:rgba(255,255,255,0.06); }
+
+.btn-discord{
+  position:relative;
+  background:rgba(255,255,255,0.05);
+  padding:9px 16px;
+  border-radius:999px;
+  color:var(--ink);
+  font-weight:700;
+  font-size:13.5px;
+  border:1px solid var(--glass-line);
+  cursor:pointer;
+  transition:border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  margin-left:6px;
+}
+.btn-discord:hover{
+  border-color:var(--pink);
+  transform:translateY(-1px);
+  box-shadow:0 8px 20px rgba(255,62,196,0.25);
+}
 
 #burger{ display:none; background:none; border:none; color:var(--ink); font-size:22px; cursor:pointer; }
 
@@ -557,6 +577,72 @@ h1{
 
 .legal-card{ padding:36px; }
 
+.legal-layout{
+  display:grid;
+  grid-template-columns:230px 1fr;
+  gap:26px;
+  align-items:start;
+}
+
+.toc{
+  position:sticky;
+  top:100px;
+  padding:20px 16px;
+}
+.toc-title{
+  font-family:var(--font-mono);
+  font-size:11px;
+  letter-spacing:1px;
+  color:var(--muted);
+  text-transform:uppercase;
+  margin-bottom:12px;
+}
+.toc a{
+  display:block;
+  padding:8px 10px;
+  border-radius:10px;
+  color:var(--muted);
+  text-decoration:none;
+  font-size:13px;
+  line-height:1.4;
+  transition:background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  margin-bottom:2px;
+}
+.toc a:hover{ color:var(--ink); background:rgba(255,255,255,0.05); transform:translateX(2px); }
+.toc a.active{
+  color:var(--cyan);
+  background:rgba(0,230,216,0.08);
+  font-weight:700;
+}
+
+.legal-card h2{
+  scroll-margin-top:100px;
+}
+
+.back-to-top{
+  position:fixed;
+  right:24px;
+  bottom:24px;
+  width:46px; height:46px;
+  border-radius:50%;
+  background:linear-gradient(120deg, var(--cyan), var(--violet));
+  color:#0a0714;
+  border:none;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 14px 30px rgba(123,92,255,0.35);
+  opacity:0;
+  transform:translateY(12px) scale(0.9);
+  pointer-events:none;
+  transition:opacity 0.25s ease, transform 0.25s ease;
+  z-index:50;
+}
+.back-to-top.visible{ opacity:1; transform:translateY(0) scale(1); pointer-events:auto; }
+.back-to-top:hover{ transform:translateY(-3px) scale(1.05); }
+.back-to-top svg{ width:18px; height:18px; }
+
 .legal-card h2{
   font-family:var(--font-body);
   font-weight:800;
@@ -626,10 +712,22 @@ footer{
     width:200px; box-shadow:0 20px 40px rgba(0,0,0,0.6);
   }
   .navlinks.open{ display:flex; }
+  .btn-discord{ margin-left:0; margin-top:4px; }
   .btn-account{ margin-left:0; margin-top:4px; justify-content:center; }
   .account-menu{ right:0; left:0; }
   .btn-bell{ margin-left:0; margin-top:4px; align-self:center; }
   .notif-menu{ right:0; left:0; width:auto; }
+  .legal-layout{ grid-template-columns:1fr; }
+  .toc{
+    position:static;
+    padding:14px 10px;
+    display:flex;
+    gap:6px;
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+  }
+  .toc-title{ display:none; }
+  .toc a{ white-space:nowrap; margin-bottom:0; }
   .legal-card{ padding:24px; }
   h1{ font-size:26px; }
 }
@@ -659,6 +757,7 @@ footer{
     <a href="links.html">Mes Réseaux</a>
     <a href="boutique.html">Boutique</a>
     <a href="blockframe.html">BlockFrame</a>
+    <button class="btn-discord" id="btnDiscord">Discord</button>
 
     <div style="position:relative">
       <button class="btn-bell" id="btnBell" aria-label="Notifications">
@@ -702,12 +801,29 @@ footer{
   <h1>Politique de confidentialité</h1>
   <div class="updated">Dernière mise à jour : 13 juillet 2026</div>
 
-  <div class="legal-card glass">
+  <div class="legal-layout">
 
-    <h2>1. Qui gère ce site ?</h2>
+    <nav class="toc glass">
+      <div class="toc-title">Sommaire</div>
+      <a href="#s1">1. Qui gère ce site</a>
+      <a href="#s2">2. Données collectées</a>
+      <a href="#s3">3. Notifications</a>
+      <a href="#s4">4. Paiements</a>
+      <a href="#s5">5. Services tiers</a>
+      <a href="#s6">6. Cookies</a>
+      <a href="#s7">7. Conservation</a>
+      <a href="#s8">8. Tes droits</a>
+      <a href="#s9">9. Sécurité</a>
+      <a href="#s10">10. Mineurs</a>
+      <a href="#s11">11. Modifications</a>
+    </nav>
+
+    <div class="legal-card glass">
+
+    <h2 id="s1">1. Qui gère ce site ?</h2>
     <p>Ce site est édité par KenzouTV, créateur de contenu vidéo et d'animation, dans le cadre de son activité (studio BlockFrame et boutique en ligne). Pour toute question relative à cette politique ou à tes données, le contact principal est l'adresse <a href="mailto:kenzoutv@outlook.fr">kenzoutv@outlook.fr</a> ou le serveur Discord accessible depuis le site.</p>
 
-    <h2>2. Création de compte et données collectées</h2>
+    <h2 id="s2">2. Création de compte et données collectées</h2>
     <p>Le site propose la création d'un compte, via deux méthodes :</p>
     <ul>
       <li><strong>Email et mot de passe</strong>, gérés par Firebase Authentication (service de Google).</li>
@@ -727,13 +843,13 @@ footer{
 
     <p>Ces informations sont stockées dans <strong>Cloud Firestore</strong>, une base de données fournie par Google/Firebase, hébergée sur des serveurs situés dans l'Union européenne (région Europe).</p>
 
-    <h2>3. Notifications de compte</h2>
+    <h2 id="s3">3. Notifications de compte</h2>
     <p>Chaque compte dispose d'un espace de notifications personnel et privé (visible uniquement par son propriétaire). Un message de bienvenue y est déposé automatiquement lors de l'inscription, envoyé par "L'équipe BlockFrame". D'autres notifications pourront y être ajoutées à l'avenir, notamment liées au suivi de commandes passées sur la Boutique.</p>
 
-    <h2>4. Paiements</h2>
+    <h2 id="s4">4. Paiements</h2>
     <p>Les commandes passées sur la Boutique sont payées via <strong>PayPal</strong>. Les informations de paiement (numéro de carte, coordonnées bancaires) sont traitées exclusivement par PayPal — ce site n'y a jamais accès et ne les stocke à aucun moment.</p>
 
-    <h2>5. Contenus et connexions de tiers</h2>
+    <h2 id="s5">5. Contenus et connexions de tiers</h2>
     <p>Le site fait appel à plusieurs services externes, chacun avec sa propre politique de confidentialité :</p>
 
     <h3>Firebase / Google</h3>
@@ -748,17 +864,17 @@ footer{
     <h3>PayPal</h3>
     <p>Les paiements redirigent vers PayPal, régis par sa propre politique de confidentialité.</p>
 
-    <h2>6. Cookies et stockage local</h2>
+    <h2 id="s6">6. Cookies et stockage local</h2>
     <p>Ce site n'utilise pas de cookies publicitaires ou de mesure d'audience pour son propre compte. En revanche :</p>
     <ul>
       <li>Firebase Authentication utilise le stockage local du navigateur (<em>local storage</em>) pour te garder connecté(e) entre deux visites.</li>
       <li>Les vidéos YouTube intégrées peuvent déposer leurs propres cookies, comme indiqué ci-dessus.</li>
     </ul>
 
-    <h2>7. Durée de conservation</h2>
+    <h2 id="s7">7. Durée de conservation</h2>
     <p>Les données de compte (email, pseudo, date de création) sont conservées tant que le compte existe. Les notifications sont conservées jusqu'à leur suppression éventuelle. Tu peux demander la suppression complète de ton compte et de tes données à tout moment (voir section 8).</p>
 
-    <h2>8. Tes droits</h2>
+    <h2 id="s8">8. Tes droits</h2>
     <p>Conformément au RGPD, tu disposes d'un droit d'accès, de rectification et de suppression de tes données. Le site ne proposant pas encore de suppression de compte en libre-service, toute demande peut être adressée directement :</p>
     <div class="contact-box">
       <p>📧 Par email : <a href="mailto:kenzoutv@outlook.fr">kenzoutv@outlook.fr</a><br>
@@ -766,15 +882,16 @@ footer{
     </div>
     <p>La demande sera traitée dans un délai raisonnable, et confirmation te sera donnée une fois les données supprimées de Firebase Authentication et Firestore.</p>
 
-    <h2>9. Sécurité</h2>
+    <h2 id="s9">9. Sécurité</h2>
     <p>L'accès aux données est protégé par des règles de sécurité Firestore : chaque utilisateur ne peut lire ou modifier que ses propres données, jamais celles d'un autre compte. Les mots de passe ne sont jamais stockés en clair — ils sont gérés et chiffrés directement par Firebase Authentication.</p>
 
-    <h2>10. Mineurs</h2>
+    <h2 id="s10">10. Mineurs</h2>
     <p>Ce site ne s'adresse pas spécifiquement à un jeune public et ne demande aucune information permettant de vérifier l'âge des visiteurs. La création d'un compte suppose l'accord d'un parent ou tuteur pour toute personne mineure, conformément à la réglementation applicable.</p>
 
-    <h2>11. Modifications de cette politique</h2>
+    <h2 id="s11">11. Modifications de cette politique</h2>
     <p>Cette politique peut évoluer, notamment à mesure que de nouvelles fonctionnalités sont ajoutées au site (suivi de commandes, nouvelles méthodes de connexion, etc.). La date en haut de page reflète la dernière mise à jour.</p>
 
+    </div>
   </div>
 
   <div class="notice">
@@ -786,6 +903,10 @@ footer{
 <footer>
 © 2026 KenzouTV — TOUS DROITS RÉSERVÉS
 </footer>
+
+<button class="back-to-top" id="backToTop" aria-label="Retour en haut">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
 
 <!-- =========================
      MODALE CONNEXION / INSCRIPTION
@@ -894,12 +1015,39 @@ footer{
 </div>
 
 <script>
+document.getElementById('btnDiscord').addEventListener('click', ()=>{
+  window.open('https://discord.gg/KURpXHzRTE', '_blank', 'noopener');
+});
+
 const burger = document.getElementById('burger');
 const navlinks = document.getElementById('main-nav');
 burger.addEventListener('click', ()=>{
   navlinks.classList.toggle('open');
   burger.setAttribute('aria-expanded', navlinks.classList.contains('open'));
 });
+
+/* RETOUR EN HAUT */
+const backToTop = document.getElementById('backToTop');
+window.addEventListener('scroll', ()=>{
+  backToTop.classList.toggle('visible', window.scrollY > 500);
+});
+backToTop.addEventListener('click', ()=>{ window.scrollTo({ top:0, behavior:'smooth' }); });
+
+/* SOMMAIRE ACTIF SELON LA SECTION VISIBLE */
+const tocLinks = document.querySelectorAll('.toc a');
+const sections = Array.from(tocLinks).map(a => document.querySelector(a.getAttribute('href')));
+
+function updateActiveToc(){
+  let current = sections[0];
+  for(const sec of sections){
+    if(sec && sec.getBoundingClientRect().top - 120 <= 0){ current = sec; }
+  }
+  tocLinks.forEach(a=>{
+    a.classList.toggle('active', current && a.getAttribute('href') === '#' + current.id);
+  });
+}
+window.addEventListener('scroll', updateActiveToc);
+updateActiveToc();
 </script>
 
 <!-- =========================
