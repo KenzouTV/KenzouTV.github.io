@@ -915,7 +915,7 @@ footer{
       </div>
 
       <div class="admin-field" style="margin-bottom:12px">
-        <input type="text" id="userSearch" placeholder="Rechercher par email ou pseudo...">
+        <input type="text" id="userSearch" placeholder="Rechercher par email ou pseudo..." autocomplete="off" value="">
       </div>
 
       <div class="user-list" id="userList">
@@ -1471,10 +1471,13 @@ async function loadUsers(){
   if(usersLoaded) return;
   try{
     const snap = await getDocs(collection(db, 'users'));
+    console.log('[admin] Documents users trouvés :', snap.size, snap.docs.map(d => d.id));
     allUsers = snap.docs.map(d => ({ uid: d.id, ...d.data() }));
+    console.log('[admin] allUsers :', allUsers);
     usersLoaded = true;
     renderUserList();
   }catch(e){
+    console.error('[admin] Erreur de chargement des membres :', e);
     userList.innerHTML = '<div class="user-empty">Impossible de charger les membres (vérifie les règles Firestore).</div>';
   }
 }
@@ -1485,9 +1488,10 @@ function renderUserList(){
     (u.email || '').toLowerCase().includes(term) ||
     (u.displayName || '').toLowerCase().includes(term)
   );
+  console.log('[admin] rendu :', { totalCharge: allUsers.length, terme: term, filtres: filtered.length });
 
   if(filtered.length === 0){
-    userList.innerHTML = '<div class="user-empty">Aucun membre trouvé.</div>';
+    userList.innerHTML = `<div class="user-empty">Aucun membre trouvé. (${allUsers.length} chargé(s) au total${term ? `, recherche : "${term}"` : ''})</div>`;
   } else {
     userList.innerHTML = filtered.map(u => {
       const initial = (u.displayName || u.email || '?').charAt(0).toUpperCase();
