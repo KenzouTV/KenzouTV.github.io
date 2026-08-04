@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZouPlay — Rejoindre le serveur</title>
+<meta name="description" content="Statut en temps réel du serveur Minecraft ZouPlay, adresses Java & Bedrock, joueurs connectés.">
+<link rel="icon" href="assets/block-java.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0A0C11;
+    --bg-alt:#10131A;
+    --card:#161A23;
+    --card-hi:#1C212C;
+    --line:#262C39;
+    --blue:#3B82F6;
+    --blue-bright:#63A0FF;
+    --green:#22C55E;
+    --green-bright:#4ADE80;
+    --red:#F0555B;
+    --discord:#5865F2;
+    --text:#F2F4F8;
+    --text-dim:#9BA3B4;
+    --text-faint:#5A6273;
+    --radius:16px;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter', sans-serif;
+    line-height:1.5;
+  }
+  a{ color:inherit; text-decoration:none; }
+  .mono{ font-family:'JetBrains Mono', monospace; }
+
+  .display{
+    font-family:'Anton', sans-serif;
+    font-weight:400;
+    text-transform:uppercase;
+    letter-spacing:0.01em;
+  }
+
+  /* ================= NAV ================= */
+  header.nav{
+    position:sticky; top:0; z-index:40;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 28px;
+    background:rgba(10,12,17,0.72);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid rgba(255,255,255,0.06);
+  }
+  .brand{
+    display:flex; align-items:center; gap:10px;
+    font-family:'Anton',sans-serif;
+    font-size:1.15rem;
+    letter-spacing:0.02em;
+  }
+  .brand-mark{
+    width:32px; height:32px; border-radius:8px;
+    image-rendering:pixelated;
+    display:block;
+  }
+  .brand-name{ color:#fff; }
+
+  .nav-links{
+    display:flex; align-items:center; gap:4px;
+  }
+  .nav-links a{
+    display:flex; align-items:center; gap:7px;
+    padding:9px 14px;
+    border-radius:999px;
+    font-size:0.88rem;
+    font-weight:600;
+    color:var(--text-dim);
+    transition:background .15s ease, color .15s ease;
+  }
+  .nav-links a:hover{ background:var(--card); color:var(--text); }
+  .nav-links svg{ width:16px; height:16px; flex-shrink:0; }
+
+  .nav-right{ display:flex; align-items:center; gap:10px; }
+
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:10px 20px;
+    border-radius:999px;
+    font-weight:700;
+    font-size:0.9rem;
+    cursor:pointer;
+    border:1px solid transparent;
+    transition:transform .15s ease, filter .15s ease, background .15s ease;
+  }
+  .btn:hover{ transform:translateY(-2px); }
+  .btn:active{ transform:translateY(0); }
+  .btn svg{ width:16px; height:16px; }
+
+  .btn-primary{ background:var(--blue); color:#fff; }
+  .btn-primary:hover{ background:var(--blue-bright); }
+  .btn-light{ background:#EDEFF3; color:#111; }
+  .btn-light:hover{ filter:brightness(0.94); }
+  .btn-outline{ background:transparent; border-color:var(--line); color:var(--text); }
+  .btn-outline:hover{ border-color:var(--blue); }
+  .btn-discord{ background:var(--discord); color:#fff; }
+  .btn-discord:hover{ filter:brightness(1.1); }
+
+  /* ================= HERO ================= */
+  .hero{
+    position:relative;
+    min-height:92vh;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center;
+    padding:60px 20px 80px;
+    overflow:hidden;
+    isolation:isolate;
+  }
+
+  .hero-bg{ position:absolute; inset:0; z-index:-2; }
+  .hero-bg .sky{
+    position:absolute; inset:0;
+    background:linear-gradient(180deg, #1a2c4a 0%, #2a3f63 30%, #4a5a7a 55%, #7c6a5c 75%, #a67f5c 100%);
+  }
+  .hero-bg .sun{
+    position:absolute; top:16%; left:65%;
+    width:150px; height:150px; border-radius:50%;
+    background:radial-gradient(circle, #ffe9b0, #ffb347 55%, rgba(255,179,71,0) 75%);
+    filter:blur(2px);
+  }
+  .hero-bg .range{
+    position:absolute; left:0; right:0; bottom:0;
+    filter:blur(3px);
+  }
+  .hero-bg .range.r1{
+    height:46%;
+    background:#243248;
+    clip-path:polygon(0% 100%,0% 55%,8% 40%,16% 58%,26% 30%,36% 52%,46% 20%,56% 48%,66% 26%,76% 50%,86% 34%,96% 55%,100% 42%,100% 100%);
+    opacity:0.85;
+  }
+  .hero-bg .range.r2{
+    height:34%;
+    background:#171F30;
+    clip-path:polygon(0% 100%,0% 60%,10% 78%,20% 48%,32% 70%,44% 42%,54% 68%,66% 46%,78% 72%,90% 50%,100% 66%,100% 100%);
+  }
+  .hero-bg .fade{
+    position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(10,12,17,0.25) 0%, rgba(10,12,17,0.55) 55%, var(--bg) 100%);
+  }
+  .hero-bg .grain{
+    position:absolute; inset:0;
+    background-image:radial-gradient(rgba(255,255,255,0.5) 1px, transparent 1px);
+    background-size:3px 3px;
+    opacity:0.03;
+  }
+
+  .spark{
+    position:absolute;
+    width:6px; height:6px;
+    background:var(--green-bright);
+    border-radius:1px;
+    opacity:0.7;
+    animation:drift 9s linear infinite;
+  }
+  @keyframes drift{
+    0%{ transform:translateY(0) rotate(0deg); opacity:0; }
+    10%{ opacity:0.7; }
+    90%{ opacity:0.5; }
+    100%{ transform:translateY(-420px) rotate(90deg); opacity:0; }
+  }
+
+  .live-pill{
+    display:inline-flex; align-items:center; gap:9px;
+    background:rgba(22,26,35,0.75);
+    border:1px solid var(--line);
+    backdrop-filter:blur(6px);
+    padding:9px 18px;
+    border-radius:999px;
+    font-size:0.88rem;
+    font-weight:600;
+    color:var(--text-dim);
+    margin-bottom:26px;
+  }
+  .dot{ width:9px; height:9px; border-radius:50%; background:var(--text-faint); flex-shrink:0; }
+  .dot.online{ background:var(--green-bright); box-shadow:0 0 10px var(--green-bright); animation:blink 2s ease-in-out infinite; }
+  .dot.offline{ background:var(--red); box-shadow:0 0 10px var(--red); }
+  @keyframes blink{ 0%,100%{opacity:1;} 50%{opacity:.4;} }
+
+  .hero-logo{
+    width:min(720px, 88vw);
+    height:auto;
+    image-rendering:pixelated;
+    filter:drop-shadow(0 18px 40px rgba(0,0,0,0.55));
+  }
+
+  .hero-sub{
+    margin:18px 0 32px;
+    color:var(--text-dim);
+    font-size:1.05rem;
+    max-width:460px;
+  }
+
+  .hero-ctas{
+    display:flex; gap:14px; flex-wrap:wrap; justify-content:center;
+  }
+  .hero-ctas .btn{ padding:14px 26px; font-size:0.95rem; }
+
+  /* ================= SECTIONS ================= */
+  .wrap{ max-width:1080px; margin:0 auto; padding:0 24px 100px; }
+  section{ margin-top:76px; }
+  .section-head{ text-align:center; margin-bottom:32px; }
+  .eyebrow{
+    font-size:0.78rem; font-weight:700;
+    letter-spacing:0.08em; text-transform:uppercase;
+    color:var(--blue-bright);
+    margin-bottom:8px;
+  }
+  .section-head h2{
+    font-family:'Anton',sans-serif;
+    font-size:2rem;
+    letter-spacing:0.01em;
+    color:#fff;
+    margin:0;
+  }
+
+  .addr-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+  }
+  .addr-card{
+    background:linear-gradient(180deg, var(--card-hi), var(--card));
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:32px 26px;
+    text-align:center;
+    transition:transform .2s ease, border-color .2s ease;
+  }
+  .addr-card:hover{ transform:translateY(-4px); border-color:rgba(59,130,246,0.5); }
+
+  .block-icon{
+    width:76px; height:76px; margin:0 auto 18px;
+    image-rendering:pixelated;
+    filter:drop-shadow(0 10px 18px rgba(0,0,0,0.45));
+    transition:transform .25s ease;
+  }
+  .addr-card:hover .block-icon{ transform:translateY(-4px) scale(1.04); }
+
+  .addr-card h3{
+    font-family:'Anton',sans-serif;
+    font-size:1.35rem;
+    font-weight:400;
+    color:#fff;
+    margin:0 0 6px;
+    letter-spacing:0.01em;
+  }
+  .addr-card p.desc{
+    color:var(--text-dim);
+    font-size:0.9rem;
+    margin:0 0 20px;
+  }
+  .addr-value{
+    display:flex; align-items:center; gap:8px;
+    background:rgba(0,0,0,0.3);
+    border:1px solid var(--line);
+    border-radius:11px;
+    padding:11px 14px;
+    margin-bottom:16px;
+  }
+  .addr-value span{
+    flex:1; color:var(--blue-bright); font-size:0.92rem; word-break:break-all;
+  }
+  .icon-btn{
+    background:var(--line);
+    border:none; color:var(--text);
+    width:32px; height:32px; border-radius:7px;
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer; flex-shrink:0;
+    transition:background .15s ease;
+  }
+  .icon-btn:hover{ background:var(--blue); }
+  .icon-btn.copied{ background:var(--green); }
+  .icon-btn svg{ width:14px; height:14px; }
+
+  .addr-card .btn{ width:100%; justify-content:center; }
+
+  /* Players */
+  .players-card{
+    background:linear-gradient(180deg, var(--card-hi), var(--card));
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:26px;
+  }
+  .players-grid{ display:flex; flex-wrap:wrap; gap:10px; margin-bottom:4px; }
+  .player-chip{
+    display:flex; align-items:center; gap:8px;
+    background:rgba(0,0,0,0.25);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:6px 13px 6px 6px;
+    font-size:0.87rem;
+  }
+  .player-chip img{ width:26px; height:26px; border-radius:5px; image-rendering:pixelated; background:var(--line); }
+  .empty-note{ color:var(--text-faint); font-size:0.88rem; line-height:1.7; text-align:center; }
+
+  /* Steps */
+  .steps-grid{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:20px;
+  }
+  .step-card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:24px;
+  }
+  .step-num{
+    font-family:'Anton',sans-serif;
+    font-size:0.95rem;
+    color:var(--blue-bright);
+    margin-bottom:10px;
+  }
+  .step-card h4{
+    font-family:'Anton',sans-serif; font-weight:400;
+    font-size:1.1rem; color:#fff; margin:0 0 8px;
+  }
+  .step-card p{ color:var(--text-dim); font-size:0.88rem; margin:0; }
+  .step-card code{
+    display:inline-block; margin-top:8px;
+    background:rgba(0,0,0,0.35); border:1px solid var(--line);
+    border-radius:7px; padding:4px 9px; font-size:0.82rem; color:var(--green-bright);
+  }
+
+  /* Discord banner */
+  .discord-banner{
+    margin-top:80px;
+    background:linear-gradient(120deg, rgba(88,101,242,0.16), rgba(59,130,246,0.08));
+    border:1px solid rgba(88,101,242,0.35);
+    border-radius:20px;
+    padding:40px 34px;
+    display:flex; align-items:center; justify-content:space-between;
+    gap:20px; flex-wrap:wrap;
+  }
+  .discord-banner h3{
+    font-family:'Anton',sans-serif; font-weight:400;
+    font-size:1.5rem; color:#fff; margin:0 0 6px;
+  }
+  .discord-banner p{ color:var(--text-dim); margin:0; font-size:0.92rem; max-width:420px; }
+
+  footer{
+    margin-top:50px; text-align:center;
+    color:var(--text-faint); font-size:0.82rem;
+  }
+  footer a{ color:var(--text-dim); text-decoration:underline; text-underline-offset:3px; }
+
+  .toast{
+    position:fixed; bottom:26px; left:50%; transform:translateX(-50%) translateY(20px);
+    background:var(--card-hi); border:1px solid var(--blue);
+    color:var(--text); padding:11px 20px; border-radius:10px;
+    font-size:0.85rem; opacity:0; pointer-events:none;
+    transition:opacity .25s ease, transform .25s ease; z-index:50;
+  }
+  .toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+
+  @media (max-width:760px){
+    .addr-grid{ grid-template-columns:1fr; }
+    .steps-grid{ grid-template-columns:1fr; }
+    .nav-links{ display:none; }
+    .discord-banner{ flex-direction:column; text-align:center; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="brand"><img class="brand-mark" src="assets/block-java.png" alt=""><span class="brand-name">ZouPlay</span></div>
+  <nav class="nav-links">
+    <a href="index.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 10 9-7 9 7"/><path d="M5 9v10a1 1 0 0 0 1 1h3v-6h6v6h3a1 1 0 0 0 1-1V9"/></svg>
+      Accueil
+    </a>
+    <a href="#addresses">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/></svg>
+      Adresses
+    </a>
+    <a href="#players-section">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      Joueurs
+    </a>
+  </nav>
+  <div class="nav-right">
+    <a class="btn btn-discord" href="#" id="discordBtnTop" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.3 4.4A19.7 19.7 0 0 0 15.6 3c-.2.4-.5.9-.6 1.3a18 18 0 0 0-6 0A8 8 0 0 0 8.4 3a19.6 19.6 0 0 0-4.7 1.5C1 8.9.3 13.3.6 17.6a19.9 19.9 0 0 0 6 3c.5-.7.9-1.4 1.3-2.2a12.7 12.7 0 0 1-2-1c.2-.1.3-.2.5-.4a14 14 0 0 0 12 0l.5.4a12.7 12.7 0 0 1-2 1c.4.8.8 1.5 1.3 2.2a19.8 19.8 0 0 0 6-3c.4-5-.9-9.3-3.9-13.2ZM9 14.6c-1 0-1.8-.9-1.8-2.1S8 10.5 9 10.5s1.9.9 1.8 2.1c0 1.1-.8 2-1.8 2ZM15 14.6c-1 0-1.8-.9-1.8-2.1s.8-2.1 1.8-2.1 1.9.9 1.8 2.1c0 1.1-.8 2-1.8 2Z"/></svg>
+      Discord
+    </a>
+    <a class="btn btn-primary" href="#addresses">
+      Rejoindre
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+    </a>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <div class="hero-bg">
+    <div class="sky"></div>
+    <div class="sun"></div>
+    <div class="range r1"></div>
+    <div class="range r2"></div>
+    <div class="fade"></div>
+    <div class="grain"></div>
+    <div id="sparks"></div>
+  </div>
+
+  <div class="live-pill">
+    <span class="dot" id="navDot"></span>
+    <span id="heroPlayerText">Vérification du serveur…</span>
+  </div>
+
+  <img class="hero-logo" src="assets/zouplay-logo.png" alt="ZouPlay">
+  <p class="hero-sub">La survie Minecraft ouverte à tous, sur Java comme sur Bedrock.</p>
+
+  <div class="hero-ctas">
+    <button class="btn btn-light" data-copy="91.197.6.19:21019" id="heroCopyBtn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+      Copier l'IP Java
+    </button>
+    <a class="btn btn-primary" href="#" id="discordBtnHero" target="_blank" rel="noopener">
+      Rejoindre le Discord
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+    </a>
+  </div>
+</section>
+
+<div class="wrap">
+
+  <section id="addresses">
+    <div class="section-head">
+      <div class="eyebrow">Connexion</div>
+      <h2>Rejoindre le serveur</h2>
+    </div>
+    <div class="addr-grid">
+      <div class="addr-card">
+        <img class="block-icon" src="assets/block-java.png" alt="Bloc d'herbe">
+        <h3>Minecraft Java</h3>
+        <p class="desc">Rejoignez le serveur avec la version classique PC.</p>
+        <div class="addr-value">
+          <span class="mono" id="javaAddrText">91.197.6.19:21019</span>
+          <button class="icon-btn" data-copy="91.197.6.19:21019" aria-label="Copier l'adresse Java">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          </button>
+        </div>
+        <button class="btn btn-outline" data-copy="91.197.6.19:21019">Copier l'adresse</button>
+      </div>
+
+      <div class="addr-card">
+        <img class="block-icon" src="assets/block-bedrock.png" alt="Bloc de pierre">
+        <h3>Minecraft Bedrock</h3>
+        <p class="desc">Rejoignez le serveur sur mobile, console ou Windows.</p>
+        <div class="addr-value">
+          <span class="mono" id="bedrockAddrText">91.197.6.19 · 21019</span>
+          <button class="icon-btn" data-copy="91.197.6.19" aria-label="Copier l'IP Bedrock">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          </button>
+        </div>
+        <button class="btn btn-outline" data-copy="91.197.6.19">Copier l'IP</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="steps">
+    <div class="section-head">
+      <div class="eyebrow">Guide rapide</div>
+      <h2>Comment se connecter</h2>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num display">01</div>
+        <h4>Lancez Minecraft</h4>
+        <p>Ouvrez Minecraft: Java ou Bedrock Edition selon votre plateforme.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num display">02</div>
+        <h4>Ajoutez le serveur</h4>
+        <p>Section Multijoueur → Ajouter un serveur, puis entrez l'adresse.</p>
+        <code>91.197.6.19:21019</code>
+      </div>
+      <div class="step-card">
+        <div class="step-num display">03</div>
+        <h4>Rejoignez la partie</h4>
+        <p>Validez et connectez-vous — vous êtes prêt à jouer sur ZouPlay.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="players-section">
+    <div class="section-head">
+      <div class="eyebrow">En ce moment</div>
+      <h2>Joueurs connectés</h2>
+    </div>
+    <div class="players-card">
+      <div class="players-grid" id="playersGrid"></div>
+      <p class="empty-note" id="playersEmptyNote">Vérification en cours…</p>
+    </div>
+  </section>
+
+  <div class="discord-banner">
+    <div>
+      <h3>Rejoins la communauté</h3>
+      <p>Annonces, entraide, événements du serveur : tout se passe aussi sur Discord.</p>
+    </div>
+    <a class="btn btn-discord" href="#" id="discordBtnBottom" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.3 4.4A19.7 19.7 0 0 0 15.6 3c-.2.4-.5.9-.6 1.3a18 18 0 0 0-6 0A8 8 0 0 0 8.4 3a19.6 19.6 0 0 0-4.7 1.5C1 8.9.3 13.3.6 17.6a19.9 19.9 0 0 0 6 3c.5-.7.9-1.4 1.3-2.2a12.7 12.7 0 0 1-2-1c.2-.1.3-.2.5-.4a14 14 0 0 0 12 0l.5.4a12.7 12.7 0 0 1-2 1c.4.8.8 1.5 1.3 2.2a19.8 19.8 0 0 0 6-3c.4-5-.9-9.3-3.9-13.2ZM9 14.6c-1 0-1.8-.9-1.8-2.1S8 10.5 9 10.5s1.9.9 1.8 2.1c0 1.1-.8 2-1.8 2ZM15 14.6c-1 0-1.8-.9-1.8-2.1s.8-2.1 1.8-2.1 1.9.9 1.8 2.1c0 1.1-.8 2-1.8 2Z"/></svg>
+      Rejoindre le Discord
+    </a>
+  </div>
+
+  <footer>
+    ZouPlay · Serveur Minecraft Java &amp; Bedrock · <a href="index.html">Retour à l'accueil</a>
+  </footer>
+
+</div>
+
+<div class="toast" id="toast">Copié !</div>
+
+<script>
+(function(){
+  "use strict";
+
+  const CONFIG = {
+    javaIp: "91.197.6.19",
+    javaPort: 21019,
+    bedrockIp: "91.197.6.19",
+    bedrockPort: 21019,
+    discordInvite: "https://discord.gg/VOTRE-CODE-ICI", // TODO: remplace par ton vrai lien d'invitation
+    refreshIntervalMs: 30000
+  };
+
+  const javaTarget = CONFIG.javaIp + ":" + CONFIG.javaPort;
+  const bedrockTarget = CONFIG.bedrockIp + ":" + CONFIG.bedrockPort;
+
+  ["discordBtnTop","discordBtnHero","discordBtnBottom"].forEach(id=>{
+    const el = document.getElementById(id);
+    if(el) el.href = CONFIG.discordInvite;
+  });
+
+  /* Sparks ambiance */
+  const sparksHost = document.getElementById("sparks");
+  for(let i=0;i<14;i++){
+    const s = document.createElement("div");
+    s.className = "spark";
+    s.style.left = (Math.random()*100) + "%";
+    s.style.bottom = (Math.random()*30) + "%";
+    s.style.animationDelay = (Math.random()*9) + "s";
+    s.style.animationDuration = (7 + Math.random()*6) + "s";
+    sparksHost.appendChild(s);
+  }
+
+  /* Copy buttons */
+  const toast = document.getElementById("toast");
+  let toastTimer = null;
+  function showToast(msg){
+    toast.textContent = msg;
+    toast.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(()=> toast.classList.remove("show"), 1800);
+  }
+
+  document.querySelectorAll("[data-copy]").forEach(btn=>{
+    btn.addEventListener("click", async ()=>{
+      const text = btn.getAttribute("data-copy");
+      try{
+        await navigator.clipboard.writeText(text);
+      }catch(e){
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        ta.style.position = "fixed";
+        ta.style.opacity = "0";
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        document.body.removeChild(ta);
+      }
+      btn.classList.add("copied");
+      showToast("Adresse copiée : " + text);
+      setTimeout(()=> btn.classList.remove("copied"), 1200);
+    });
+  });
+
+  /* Server status via mcsrvstat.us — aucun plugin requis */
+  const navDot = document.getElementById("navDot");
+  const heroPlayerText = document.getElementById("heroPlayerText");
+  const playersGrid = document.getElementById("playersGrid");
+  const playersEmptyNote = document.getElementById("playersEmptyNote");
+
+  async function fetchJSON(url){
+    const res = await fetch(url, { cache: "no-store" });
+    if(!res.ok) throw new Error("HTTP " + res.status);
+    return res.json();
+  }
+
+  function renderPlayerList(list){
+    playersGrid.innerHTML = "";
+    if(!list || list.length === 0){
+      playersEmptyNote.style.display = "block";
+      return;
+    }
+    playersEmptyNote.style.display = "none";
+    list.forEach(p=>{
+      const name = typeof p === "string" ? p : (p.name || "Joueur");
+      const chip = document.createElement("div");
+      chip.className = "player-chip";
+      chip.innerHTML =
+        '<img src="https://mc-heads.net/avatar/' + encodeURIComponent(name) + '/32" alt="" loading="lazy">' +
+        '<span>' + name.replace(/[<>&]/g, "") + '</span>';
+      playersGrid.appendChild(chip);
+    });
+  }
+
+  async function refreshStatus(){
+    try{
+      const [java, bedrock] = await Promise.allSettled([
+        fetchJSON("https://api.mcsrvstat.us/3/" + encodeURIComponent(javaTarget)),
+        fetchJSON("https://api.mcsrvstat.us/bedrock/3/" + encodeURIComponent(bedrockTarget))
+      ]);
+
+      const javaData = java.status === "fulfilled" ? java.value : null;
+      const bedrockData = bedrock.status === "fulfilled" ? bedrock.value : null;
+
+      const javaOnline = !!(javaData && javaData.online);
+      const bedrockOnline = !!(bedrockData && bedrockData.online);
+      const anyOnline = javaOnline || bedrockOnline;
+
+      navDot.classList.toggle("online", anyOnline);
+      navDot.classList.toggle("offline", !anyOnline);
+
+      const javaCount = javaOnline && javaData.players ? (javaData.players.online || 0) : 0;
+      const bedrockCount = bedrockOnline && bedrockData.players ? (bedrockData.players.online || 0) : 0;
+      const total = javaCount + bedrockCount;
+
+      heroPlayerText.textContent = anyOnline
+        ? (total > 0 ? total + " joueur" + (total > 1 ? "s" : "") + " en ligne" : "Serveur en ligne — soyez le premier !")
+        : "Serveur hors ligne pour le moment";
+
+      if(javaOnline && javaData.players && javaData.players.list && javaData.players.list.length){
+        renderPlayerList(javaData.players.list);
+      }else if(javaOnline){
+        playersGrid.innerHTML = "";
+        playersEmptyNote.style.display = "block";
+        playersEmptyNote.textContent = javaCount > 0
+          ? "Des joueurs sont connectés, mais la liste détaillée n'est pas publiée par le serveur (active enable-query dans server.properties pour l'afficher ici)."
+          : "Aucun joueur connecté pour le moment.";
+      }else{
+        playersGrid.innerHTML = "";
+        playersEmptyNote.style.display = "block";
+        playersEmptyNote.textContent = "Le serveur est hors ligne — pas de joueurs à afficher.";
+      }
+
+    }catch(err){
+      navDot.classList.remove("online");
+      navDot.classList.add("offline");
+      heroPlayerText.textContent = "Statut indisponible pour le moment";
+      playersGrid.innerHTML = "";
+      playersEmptyNote.style.display = "block";
+      playersEmptyNote.textContent = "Statut indisponible.";
+    }
+  }
+
+  refreshStatus();
+  setInterval(refreshStatus, CONFIG.refreshIntervalMs);
+
+})();
+</script>
+</body>
+</html>
