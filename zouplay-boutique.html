@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boutique ZouPlay — Bientôt disponible</title>
+<meta name="description" content="Rangs, kits et cosmétiques pour le serveur ZouPlay — boutique bientôt disponible.">
+<link rel="icon" href="assets/block-java.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0A0C11; --bg-alt:#10131A; --card:#161A23; --card-hi:#1C212C; --line:#262C39;
+    --blue:#3B82F6; --blue-bright:#63A0FF; --green:#22C55E; --green-bright:#4ADE80;
+    --gold:#FBBF24; --discord:#5865F2;
+    --text:#F2F4F8; --text-dim:#9BA3B4; --text-faint:#5A6273;
+    --radius:16px;
+  }
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{ margin:0; background:var(--bg); color:var(--text); font-family:'Inter', sans-serif; line-height:1.5; }
+  a{ color:inherit; text-decoration:none; }
+  .mono{ font-family:'JetBrains Mono', monospace; }
+  .display{ font-family:'Anton', sans-serif; font-weight:400; text-transform:uppercase; letter-spacing:0.01em; }
+
+  header.nav{
+    position:sticky; top:0; z-index:40;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 28px;
+    background:rgba(10,12,17,0.72);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid rgba(255,255,255,0.06);
+  }
+  .brand{ display:flex; align-items:center; gap:10px; font-family:'Anton',sans-serif; font-size:1.15rem; letter-spacing:0.02em; }
+  .brand-mark{ width:32px; height:32px; border-radius:8px; image-rendering:pixelated; display:block; }
+  .brand-name{ color:#fff; }
+  .nav-links{ display:flex; align-items:center; gap:4px; }
+  .nav-links a{
+    display:flex; align-items:center; gap:7px; padding:9px 14px; border-radius:999px;
+    font-size:0.88rem; font-weight:600; color:var(--text-dim);
+    transition:background .15s ease, color .15s ease;
+  }
+  .nav-links a:hover{ background:var(--card); color:var(--text); }
+  .nav-links a.active{ color:#fff; background:var(--card-hi); }
+  .nav-links svg{ width:16px; height:16px; flex-shrink:0; }
+
+  .btn{
+    display:inline-flex; align-items:center; gap:8px; padding:10px 20px; border-radius:999px;
+    font-weight:700; font-size:0.9rem; cursor:pointer; border:1px solid transparent;
+    transition:transform .15s ease, filter .15s ease, background .15s ease;
+  }
+  .btn:hover{ transform:translateY(-2px); }
+  .btn svg{ width:16px; height:16px; }
+  .btn-primary{ background:var(--blue); color:#fff; }
+  .btn-primary:hover{ background:var(--blue-bright); }
+  .btn-discord{ background:var(--discord); color:#fff; }
+  .btn-discord:hover{ filter:brightness(1.1); }
+  .btn-outline{ background:transparent; border-color:var(--line); color:var(--text); }
+  .btn-outline:hover{ border-color:var(--blue); }
+
+  .wrap{ max-width:1080px; margin:0 auto; padding:0 24px 100px; }
+
+  .hero{ text-align:center; padding:64px 20px 40px; }
+  .hero .eyebrow{
+    font-size:0.78rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase;
+    color:var(--gold); margin-bottom:12px;
+  }
+  .hero h1{ font-size:clamp(2.4rem, 7vw, 4rem); color:#fff; margin:0 0 16px; }
+  .hero p{ color:var(--text-dim); max-width:480px; margin:0 auto; font-size:1.02rem; }
+
+  .soon-badge{
+    display:inline-flex; align-items:center; gap:7px;
+    background:rgba(251,191,36,0.12); border:1px solid rgba(251,191,36,0.4);
+    color:var(--gold); font-size:0.72rem; font-weight:700; letter-spacing:0.04em;
+    padding:5px 11px; border-radius:999px; text-transform:uppercase;
+  }
+  .soon-badge::before{ content:"●"; font-size:0.5rem; }
+
+  .products-grid{
+    display:grid; grid-template-columns:repeat(3, 1fr); gap:20px; margin-top:36px;
+  }
+  .product-card{
+    background:linear-gradient(180deg, var(--card-hi), var(--card));
+    border:1px solid var(--line); border-radius:var(--radius);
+    padding:28px 22px; text-align:center; position:relative;
+    filter:grayscale(0.15);
+  }
+  .product-icon{
+    width:56px; height:56px; margin:0 auto 16px;
+    border-radius:14px; display:flex; align-items:center; justify-content:center;
+    font-size:1.6rem;
+  }
+  .product-card h3{ font-family:'Anton',sans-serif; font-weight:400; font-size:1.2rem; color:#fff; margin:0 0 8px; }
+  .product-card p.desc{ color:var(--text-dim); font-size:0.86rem; margin:0 0 16px; min-height:40px; }
+  .product-price{ font-family:'JetBrains Mono',monospace; color:var(--text-faint); font-size:0.85rem; margin-bottom:14px; text-decoration:line-through; }
+  .product-card .btn{ width:100%; justify-content:center; opacity:0.5; cursor:not-allowed; pointer-events:none; }
+
+  .notify-banner{
+    margin-top:70px;
+    background:linear-gradient(120deg, rgba(88,101,242,0.16), rgba(59,130,246,0.08));
+    border:1px solid rgba(88,101,242,0.35);
+    border-radius:20px; padding:40px 34px;
+    display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap;
+  }
+  .notify-banner h3{ font-family:'Anton',sans-serif; font-weight:400; font-size:1.5rem; color:#fff; margin:0 0 6px; }
+  .notify-banner p{ color:var(--text-dim); margin:0; font-size:0.92rem; max-width:420px; }
+
+  footer{ margin-top:50px; text-align:center; color:var(--text-faint); font-size:0.82rem; }
+  footer a{ color:var(--text-dim); text-decoration:underline; text-underline-offset:3px; }
+
+  @media (max-width:760px){
+    .products-grid{ grid-template-columns:1fr; }
+    .nav-links{ display:none; }
+    .notify-banner{ flex-direction:column; text-align:center; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:0.001ms !important; transition-duration:0.001ms !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="brand"><img class="brand-mark" src="assets/block-java.png" alt=""><span class="brand-name">ZouPlay</span></div>
+  <nav class="nav-links">
+    <a href="index.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 10 9-7 9 7"/><path d="M5 9v10a1 1 0 0 0 1 1h3v-6h6v6h3a1 1 0 0 0 1-1V9"/></svg>
+      Accueil
+    </a>
+    <a href="zouplay.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/></svg>
+      Serveur
+    </a>
+    <a href="zouplay-boutique.html" class="active">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+      Boutique
+    </a>
+  </nav>
+  <a class="btn btn-discord" href="https://discord.gg/VOTRE-CODE-ICI" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.3 4.4A19.7 19.7 0 0 0 15.6 3c-.2.4-.5.9-.6 1.3a18 18 0 0 0-6 0A8 8 0 0 0 8.4 3a19.6 19.6 0 0 0-4.7 1.5C1 8.9.3 13.3.6 17.6a19.9 19.9 0 0 0 6 3c.5-.7.9-1.4 1.3-2.2a12.7 12.7 0 0 1-2-1c.2-.1.3-.2.5-.4a14 14 0 0 0 12 0l.5.4a12.7 12.7 0 0 1-2 1c.4.8.8 1.5 1.3 2.2a19.8 19.8 0 0 0 6-3c.4-5-.9-9.3-3.9-13.2ZM9 14.6c-1 0-1.8-.9-1.8-2.1S8 10.5 9 10.5s1.9.9 1.8 2.1c0 1.1-.8 2-1.8 2ZM15 14.6c-1 0-1.8-.9-1.8-2.1s.8-2.1 1.8-2.1 1.9.9 1.8 2.1c0 1.1-.8 2-1.8 2Z"/></svg>
+    Discord
+  </a>
+</header>
+
+<section class="hero">
+  <div class="soon-badge">Bientôt disponible</div>
+  <h1 class="display">La boutique arrive</h1>
+  <p>Rangs, kits et cosmétiques pour soutenir le serveur et te démarquer en jeu. Rien n'est en vente pour l'instant — voici un aperçu de ce qui se prépare.</p>
+</section>
+
+<div class="wrap">
+
+  <div class="products-grid">
+
+    <div class="product-card">
+      <div class="product-icon" style="background:rgba(251,191,36,0.14);">👑</div>
+      <h3>Rang VIP</h3>
+      <p class="desc">Préfixe coloré dans le chat, accès à des commandes cosmétiques et un kit exclusif.</p>
+      <div class="product-price">4,99 €</div>
+      <button class="btn btn-primary">Bientôt disponible</button>
+    </div>
+
+    <div class="product-card">
+      <div class="product-icon" style="background:rgba(59,130,246,0.14);">🎒</div>
+      <h3>Kit Starter+</h3>
+      <p class="desc">De quoi démarrer plus vite : outils, provisions et un peu de matériel de construction.</p>
+      <div class="product-price">2,99 €</div>
+      <button class="btn btn-primary">Bientôt disponible</button>
+    </div>
+
+    <div class="product-card">
+      <div class="product-icon" style="background:rgba(34,197,94,0.14);">✨</div>
+      <h3>Effets de particules</h3>
+      <p class="desc">Une traînée de particules qui te suit en jeu — plusieurs styles au choix.</p>
+      <div class="product-price">3,49 €</div>
+      <button class="btn btn-primary">Bientôt disponible</button>
+    </div>
+
+    <div class="product-card">
+      <div class="product-icon" style="background:rgba(255,62,196,0.14);">🧢</div>
+      <h3>Capes cosmétiques</h3>
+      <p class="desc">Des capes exclusives à débloquer, visibles par tous les joueurs du serveur.</p>
+      <div class="product-price">2,49 €</div>
+      <button class="btn btn-primary">Bientôt disponible</button>
+    </div>
+
+    <div class="product-card">
+      <div class="product-icon" style="background:rgba(99,160,255,0.14);">🐾</div>
+      <h3>Animaux de compagnie</h3>
+      <p class="desc">Un compagnon qui te suit partout sur le serveur, purement cosmétique.</p>
+      <div class="product-price">3,99 €</div>
+      <button class="btn btn-primary">Bientôt disponible</button>
+    </div>
+
+    <div class="product-card">
+      <div class="product-icon" style="background:rgba(74,222,128,0.14);">💎</div>
+      <h3>Pack de crédits</h3>
+      <p class="desc">Monnaie du serveur à utiliser dans les futures boutiques en jeu.</p>
+      <div class="product-price">1,99 €</div>
+      <button class="btn btn-primary">Bientôt disponible</button>
+    </div>
+
+  </div>
+
+  <div class="notify-banner">
+    <div>
+      <h3>Sois prévenu au lancement</h3>
+      <p>Rejoins le Discord pour être informé dès que la boutique ouvre — et donner ton avis sur ce que tu aimerais y voir.</p>
+    </div>
+    <a class="btn btn-discord" href="https://discord.gg/VOTRE-CODE-ICI" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.3 4.4A19.7 19.7 0 0 0 15.6 3c-.2.4-.5.9-.6 1.3a18 18 0 0 0-6 0A8 8 0 0 0 8.4 3a19.6 19.6 0 0 0-4.7 1.5C1 8.9.3 13.3.6 17.6a19.9 19.9 0 0 0 6 3c.5-.7.9-1.4 1.3-2.2a12.7 12.7 0 0 1-2-1c.2-.1.3-.2.5-.4a14 14 0 0 0 12 0l.5.4a12.7 12.7 0 0 1-2 1c.4.8.8 1.5 1.3 2.2a19.8 19.8 0 0 0 6-3c.4-5-.9-9.3-3.9-13.2ZM9 14.6c-1 0-1.8-.9-1.8-2.1S8 10.5 9 10.5s1.9.9 1.8 2.1c0 1.1-.8 2-1.8 2ZM15 14.6c-1 0-1.8-.9-1.8-2.1s.8-2.1 1.8-2.1 1.9.9 1.8 2.1c0 1.1-.8 2-1.8 2Z"/></svg>
+      Rejoindre le Discord
+    </a>
+  </div>
+
+  <footer>
+    ZouPlay · Serveur Minecraft Java &amp; Bedrock · <a href="zouplay.html">Retour au serveur</a>
+  </footer>
+
+</div>
+
+</body>
+</html>
