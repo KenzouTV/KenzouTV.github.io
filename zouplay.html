@@ -109,9 +109,9 @@
   .btn-discord{ background:var(--discord); color:#fff; }
   .btn-discord:hover{ filter:brightness(1.1); }
 
-  /* ================= ADMIN BAR ================= */
+  /* ================= SERVER CONTROL BAR ================= */
   .admin-bar{
-    display:none;
+    display:flex;
     align-items:center; justify-content:space-between; flex-wrap:wrap;
     gap:14px;
     max-width:1080px; margin:18px auto 0; padding:14px 20px;
@@ -119,7 +119,6 @@
     border:1px solid rgba(34,197,94,0.35);
     border-radius:14px;
   }
-  .admin-bar.visible{ display:flex; }
   .admin-left{ display:flex; align-items:center; gap:10px; font-size:0.86rem; color:var(--text-dim); }
   .admin-left .admin-tag{
     font-family:'JetBrains Mono',monospace; font-size:0.72rem;
@@ -431,7 +430,7 @@
 
 <div class="admin-bar" id="adminBar">
   <div class="admin-left">
-    <span class="admin-tag">ADMIN</span>
+    <span class="admin-tag">SERVEUR</span>
     <span>En ligne depuis <span class="uptime-value" id="uptimeValue">—</span></span>
   </div>
   <div class="admin-right">
@@ -577,8 +576,7 @@
     refreshIntervalMs: 30000,
     // Laisse vide tant que le backend de contrôle du serveur n'existe pas (voir explications fournies).
     // Exemple une fois prêt : "https://ton-backend.exemple.com"
-    backendBaseUrl: "https://zouplay-backend.onrender.com",
-    adminEmail: "kenzo0025@outlook.fr"
+    backendBaseUrl: "https://zouplay-backend.onrender.com"
   };
 
   const javaTarget = CONFIG.javaIp + ":" + CONFIG.javaPort;
@@ -714,127 +712,108 @@
   refreshStatus();
   setInterval(refreshStatus, CONFIG.refreshIntervalMs);
 
-  // Exposé pour le script Firebase (module séparé, ne partage pas cette portée)
+  // Exposé pour le script de contrôle serveur (bloc séparé, ne partage pas cette portée)
   window.__zouplay = { CONFIG: CONFIG, showToast: showToast };
 
 })();
 </script>
 
 <!-- =========================
-     ADMIN : démarrage du serveur + uptime (Firebase Auth)
-     Réutilise la session déjà ouverte depuis index.html (même domaine).
-     ⚠ Fonctionne uniquement si CONFIG.backendBaseUrl est renseigné (voir explications).
+     CONTRÔLE DU SERVEUR : démarrage + uptime
+     Ouvert à tout le monde — pas de vérification d'identité.
+     ⚠ Fonctionne uniquement si CONFIG.backendBaseUrl est renseigné.
 ========================= -->
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
+<script>
+(function(){
+  "use strict";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyC5FU_phbokWP6EEfc_PnDM_2emahZ6mp4",
-  authDomain: "web-kenzoutv.firebaseapp.com",
-  projectId: "web-kenzoutv",
-  storageBucket: "web-kenzoutv.firebasestorage.app",
-  messagingSenderId: "52067585435",
-  appId: "1:52067585435:web:6906384c6c69a6ffa7a53e"
-};
+  const { CONFIG, showToast } = window.__zouplay;
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+  const uptimeValue = document.getElementById("uptimeValue");
+  const btnStartServer = document.getElementById("btnStartServer");
 
-const { CONFIG, showToast } = window.__zouplay;
+  let uptimeTickTimer = null;
+  let onlineSinceMs = null;
 
-const adminBar = document.getElementById("adminBar");
-const uptimeValue = document.getElementById("uptimeValue");
-const btnStartServer = document.getElementById("btnStartServer");
-
-let uptimeTickTimer = null;
-let onlineSinceMs = null;
-
-function formatElapsed(ms){
-  const totalSec = Math.max(0, Math.floor(ms / 1000));
-  const days = Math.floor(totalSec / 86400);
-  const hours = Math.floor((totalSec % 86400) / 3600);
-  const mins = Math.floor((totalSec % 3600) / 60);
-  const secs = totalSec % 60;
-  if(days > 0) return `${days} j ${hours} h ${mins} min`;
-  if(hours > 0) return `${hours} h ${mins} min ${secs} s`;
-  if(mins > 0) return `${mins} min ${secs} s`;
-  return `${secs} s`;
-}
-
-function tickUptime(){
-  if(onlineSinceMs == null){
-    uptimeValue.textContent = "—";
-    return;
+  function formatElapsed(ms){
+    const totalSec = Math.max(0, Math.floor(ms / 1000));
+    const days = Math.floor(totalSec / 86400);
+    const hours = Math.floor((totalSec % 86400) / 3600);
+    const mins = Math.floor((totalSec % 3600) / 60);
+    const secs = totalSec % 60;
+    if(days > 0) return `${days} j ${hours} h ${mins} min`;
+    if(hours > 0) return `${hours} h ${mins} min ${secs} s`;
+    if(mins > 0) return `${mins} min ${secs} s`;
+    return `${secs} s`;
   }
-  uptimeValue.textContent = formatElapsed(Date.now() - onlineSinceMs);
-}
 
-async function refreshUptimeAndButtonState(){
-  if(!CONFIG.backendBaseUrl){
-    uptimeValue.textContent = "backend requis";
-    btnStartServer.disabled = true;
-    btnStartServer.title = "Backend de contrôle non configuré";
-    return;
-  }
-  try{
-    const res = await fetch(CONFIG.backendBaseUrl.replace(/\/$/, "") + "/uptime", { cache: "no-store" });
-    const data = await res.json();
-    if(data && data.onlineSince){
-      onlineSinceMs = new Date(data.onlineSince).getTime();
-      tickUptime();
-      btnStartServer.disabled = true;
-      btnStartServer.title = "Le serveur est déjà en ligne";
-    }else{
-      onlineSinceMs = null;
-      uptimeValue.textContent = "serveur hors ligne";
-      btnStartServer.disabled = false;
-      btnStartServer.title = "";
+  function tickUptime(){
+    if(onlineSinceMs == null){
+      uptimeValue.textContent = "—";
+      return;
     }
-  }catch(e){
-    uptimeValue.textContent = "indisponible";
+    uptimeValue.textContent = formatElapsed(Date.now() - onlineSinceMs);
   }
-}
 
-btnStartServer.addEventListener("click", async ()=>{
-  const user = auth.currentUser;
-  if(!user || !CONFIG.backendBaseUrl) return;
-
-  btnStartServer.disabled = true;
-  const originalHtml = btnStartServer.innerHTML;
-  btnStartServer.innerHTML = '<svg class="spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"/></svg> Démarrage…';
-
-  try{
-    const token = await user.getIdToken();
-    const res = await fetch(CONFIG.backendBaseUrl.replace(/\/$/, "") + "/start", {
-      method: "POST",
-      headers: { "Authorization": "Bearer " + token }
-    });
-    if(!res.ok) throw new Error("HTTP " + res.status);
-    showToast("Démarrage du serveur lancé…");
-    setTimeout(refreshUptimeAndButtonState, 4000);
-  }catch(e){
-    showToast("Impossible de démarrer le serveur.");
-    btnStartServer.disabled = false;
-  }finally{
-    btnStartServer.innerHTML = originalHtml;
+  async function refreshUptimeAndButtonState(){
+    if(!CONFIG.backendBaseUrl){
+      uptimeValue.textContent = "backend requis";
+      btnStartServer.disabled = true;
+      btnStartServer.title = "Backend de contrôle non configuré";
+      return;
+    }
+    try{
+      const res = await fetch(CONFIG.backendBaseUrl.replace(/\/$/, "") + "/uptime", { cache: "no-store" });
+      const data = await res.json();
+      if(data && data.onlineSince){
+        onlineSinceMs = new Date(data.onlineSince).getTime();
+        tickUptime();
+        btnStartServer.disabled = true;
+        btnStartServer.title = "Le serveur est déjà en ligne";
+      }else{
+        onlineSinceMs = null;
+        uptimeValue.textContent = "serveur hors ligne";
+        btnStartServer.disabled = false;
+        btnStartServer.title = "";
+      }
+    }catch(e){
+      uptimeValue.textContent = "indisponible";
+    }
   }
-});
 
-onAuthStateChanged(auth, (user)=>{
-  const isAdmin = !!(user && user.email === CONFIG.adminEmail);
-  adminBar.classList.toggle("visible", isAdmin);
+  btnStartServer.addEventListener("click", async ()=>{
+    if(!CONFIG.backendBaseUrl) return;
 
-  if(uptimeTickTimer){ clearInterval(uptimeTickTimer); uptimeTickTimer = null; }
+    btnStartServer.disabled = true;
+    const originalHtml = btnStartServer.innerHTML;
+    btnStartServer.innerHTML = '<svg class="spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"/></svg> Démarrage…';
 
-  if(isAdmin){
-    refreshUptimeAndButtonState();
-    uptimeTickTimer = setInterval(()=>{
-      tickUptime();
-    }, 1000);
-    setInterval(refreshUptimeAndButtonState, CONFIG.refreshIntervalMs);
-  }
-});
+    try{
+      const res = await fetch(CONFIG.backendBaseUrl.replace(/\/$/, "") + "/start", { method: "POST" });
+      if(!res.ok){
+        const data = await res.json().catch(()=>({}));
+        if(res.status === 429){
+          showToast("Le serveur vient déjà d'être démarré, patiente un peu.");
+        }else{
+          throw new Error(data.error || ("HTTP " + res.status));
+        }
+      }else{
+        showToast("Démarrage du serveur lancé…");
+      }
+      setTimeout(refreshUptimeAndButtonState, 4000);
+    }catch(e){
+      showToast("Impossible de démarrer le serveur.");
+      btnStartServer.disabled = false;
+    }finally{
+      btnStartServer.innerHTML = originalHtml;
+    }
+  });
+
+  refreshUptimeAndButtonState();
+  uptimeTickTimer = setInterval(tickUptime, 1000);
+  setInterval(refreshUptimeAndButtonState, CONFIG.refreshIntervalMs);
+
+})();
 </script>
 </body>
 </html>
