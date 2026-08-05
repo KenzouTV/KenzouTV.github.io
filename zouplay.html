@@ -126,10 +126,6 @@
     padding:3px 8px; border-radius:6px; letter-spacing:0.04em;
   }
   .uptime-value{ font-family:'JetBrains Mono',monospace; color:#fff; font-weight:600; }
-  .admin-right{ display:flex; align-items:center; gap:10px; }
-  #btnStartServer:disabled{ opacity:0.5; cursor:not-allowed; transform:none; }
-  #btnStartServer svg.spin{ animation:spin 0.8s linear infinite; }
-  @keyframes spin{ to{ transform:rotate(360deg); } }
 
   /* ================= HERO ================= */
   .hero{
@@ -309,24 +305,41 @@
 
   .addr-card .btn{ width:100%; justify-content:center; }
 
-  /* Players */
+  /* Players / skins showcase */
   .players-card{
     background:linear-gradient(180deg, var(--card-hi), var(--card));
     border:1px solid var(--line);
     border-radius:var(--radius);
     padding:26px;
   }
-  .players-grid{ display:flex; flex-wrap:wrap; gap:10px; margin-bottom:4px; }
-  .player-chip{
-    display:flex; align-items:center; gap:8px;
+  .skins-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(110px, 1fr));
+    gap:14px;
+    margin-bottom:4px;
+  }
+  .skin-card{
     background:rgba(0,0,0,0.25);
     border:1px solid var(--line);
-    border-radius:10px;
-    padding:6px 13px 6px 6px;
-    font-size:0.87rem;
+    border-radius:12px;
+    padding:14px 10px 12px;
+    text-align:center;
+    transition:transform .2s ease, border-color .2s ease;
   }
-  .player-chip img{ width:26px; height:26px; border-radius:5px; image-rendering:pixelated; background:var(--line); }
+  .skin-card:hover{ transform:translateY(-4px); border-color:rgba(59,130,246,0.5); }
+  .skin-card img{
+    width:64px; height:auto; margin:0 auto 8px;
+    image-rendering:pixelated;
+    filter:drop-shadow(0 6px 10px rgba(0,0,0,0.4));
+  }
+  .skin-card .skin-name{
+    font-family:'JetBrains Mono', monospace;
+    font-size:0.78rem;
+    color:var(--text);
+    overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+  }
   .empty-note{ color:var(--text-faint); font-size:0.88rem; line-height:1.7; text-align:center; }
+  .empty-note strong{ color:var(--text-dim); }
 
   /* Steps */
   .steps-grid{
@@ -356,7 +369,7 @@
   }
 
   /* Discord banner */
-  .discord-banner{
+  .cta-banner{
     margin-top:80px;
     background:linear-gradient(120deg, rgba(88,101,242,0.16), rgba(59,130,246,0.08));
     border:1px solid rgba(88,101,242,0.35);
@@ -365,11 +378,15 @@
     display:flex; align-items:center; justify-content:space-between;
     gap:20px; flex-wrap:wrap;
   }
-  .discord-banner h3{
+  .cta-banner.shop{
+    background:linear-gradient(120deg, rgba(34,197,94,0.14), rgba(59,130,246,0.08));
+    border-color:rgba(34,197,94,0.35);
+  }
+  .cta-banner h3{
     font-family:'Anton',sans-serif; font-weight:400;
     font-size:1.5rem; color:#fff; margin:0 0 6px;
   }
-  .discord-banner p{ color:var(--text-dim); margin:0; font-size:0.92rem; max-width:420px; }
+  .cta-banner p{ color:var(--text-dim); margin:0; font-size:0.92rem; max-width:420px; }
 
   footer{
     margin-top:50px; text-align:center;
@@ -390,7 +407,7 @@
     .addr-grid{ grid-template-columns:1fr; }
     .steps-grid{ grid-template-columns:1fr; }
     .nav-links{ display:none; }
-    .discord-banner{ flex-direction:column; text-align:center; }
+    .cta-banner{ flex-direction:column; text-align:center; }
   }
 
   @media (prefers-reduced-motion: reduce){
@@ -415,6 +432,10 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
       Joueurs
     </a>
+    <a href="zouplay-boutique.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+      Boutique
+    </a>
   </nav>
   <div class="nav-right">
     <a class="btn btn-discord" href="#" id="discordBtnTop" target="_blank" rel="noopener">
@@ -432,12 +453,6 @@
   <div class="admin-left">
     <span class="admin-tag">SERVEUR</span>
     <span>En ligne depuis <span class="uptime-value" id="uptimeValue">—</span></span>
-  </div>
-  <div class="admin-right">
-    <button class="btn btn-primary" id="btnStartServer" disabled>
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 4l14 8-14 8V4z"/></svg>
-      Démarrer le serveur
-    </button>
   </div>
 </div>
 
@@ -536,15 +551,26 @@
   <section id="players-section">
     <div class="section-head">
       <div class="eyebrow">En ce moment</div>
-      <h2>Joueurs connectés</h2>
+      <h2>Qui est en ligne</h2>
     </div>
     <div class="players-card">
-      <div class="players-grid" id="playersGrid"></div>
+      <div class="skins-grid" id="playersGrid"></div>
       <p class="empty-note" id="playersEmptyNote">Vérification en cours…</p>
     </div>
   </section>
 
-  <div class="discord-banner">
+  <div class="cta-banner shop" style="margin-top:60px;">
+    <div>
+      <h3>Boutique ZouPlay</h3>
+      <p>Rangs, kits et cosmétiques arrivent bientôt — jette un œil à ce qui se prépare.</p>
+    </div>
+    <a class="btn btn-primary" href="zouplay-boutique.html">
+      Voir la boutique
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+    </a>
+  </div>
+
+  <div class="cta-banner">
     <div>
       <h3>Rejoins la communauté</h3>
       <p>Annonces, entraide, événements du serveur : tout se passe aussi sur Discord.</p>
@@ -576,7 +602,7 @@
     refreshIntervalMs: 30000,
     // Laisse vide tant que le backend de contrôle du serveur n'existe pas (voir explications fournies).
     // Exemple une fois prêt : "https://ton-backend.exemple.com"
-    backendBaseUrl: "https://zouplay-backend.onrender.com"
+    backendBaseUrl: ""
   };
 
   const javaTarget = CONFIG.javaIp + ":" + CONFIG.javaPort;
@@ -651,12 +677,13 @@
     playersEmptyNote.style.display = "none";
     list.forEach(p=>{
       const name = typeof p === "string" ? p : (p.name || "Joueur");
-      const chip = document.createElement("div");
-      chip.className = "player-chip";
-      chip.innerHTML =
-        '<img src="https://mc-heads.net/avatar/' + encodeURIComponent(name) + '/32" alt="" loading="lazy">' +
-        '<span>' + name.replace(/[<>&]/g, "") + '</span>';
-      playersGrid.appendChild(chip);
+      const safeName = name.replace(/[<>&"]/g, "");
+      const card = document.createElement("div");
+      card.className = "skin-card";
+      card.innerHTML =
+        '<img src="https://mc-heads.net/player/' + encodeURIComponent(name) + '/100" alt="" loading="lazy">' +
+        '<div class="skin-name">' + safeName + '</div>';
+      playersGrid.appendChild(card);
     });
   }
 
@@ -719,20 +746,18 @@
 </script>
 
 <!-- =========================
-     CONTRÔLE DU SERVEUR : démarrage + uptime
-     Ouvert à tout le monde — pas de vérification d'identité.
+     STATUT SERVEUR : uptime en direct
      ⚠ Fonctionne uniquement si CONFIG.backendBaseUrl est renseigné.
 ========================= -->
 <script>
 (function(){
   "use strict";
 
-  const { CONFIG, showToast } = window.__zouplay;
+  const { CONFIG } = window.__zouplay;
 
+  const adminBar = document.getElementById("adminBar");
   const uptimeValue = document.getElementById("uptimeValue");
-  const btnStartServer = document.getElementById("btnStartServer");
 
-  let uptimeTickTimer = null;
   let onlineSinceMs = null;
 
   function formatElapsed(ms){
@@ -755,63 +780,29 @@
     uptimeValue.textContent = formatElapsed(Date.now() - onlineSinceMs);
   }
 
-  async function refreshUptimeAndButtonState(){
+  async function refreshUptime(){
     if(!CONFIG.backendBaseUrl){
-      uptimeValue.textContent = "backend requis";
-      btnStartServer.disabled = true;
-      btnStartServer.title = "Backend de contrôle non configuré";
+      adminBar.style.display = "none";
       return;
     }
     try{
       const res = await fetch(CONFIG.backendBaseUrl.replace(/\/$/, "") + "/uptime", { cache: "no-store" });
       const data = await res.json();
       if(data && data.onlineSince){
+        adminBar.style.display = "flex";
         onlineSinceMs = new Date(data.onlineSince).getTime();
         tickUptime();
-        btnStartServer.disabled = true;
-        btnStartServer.title = "Le serveur est déjà en ligne";
       }else{
-        onlineSinceMs = null;
-        uptimeValue.textContent = "serveur hors ligne";
-        btnStartServer.disabled = false;
-        btnStartServer.title = "";
+        adminBar.style.display = "none";
       }
     }catch(e){
-      uptimeValue.textContent = "indisponible";
+      adminBar.style.display = "none";
     }
   }
 
-  btnStartServer.addEventListener("click", async ()=>{
-    if(!CONFIG.backendBaseUrl) return;
-
-    btnStartServer.disabled = true;
-    const originalHtml = btnStartServer.innerHTML;
-    btnStartServer.innerHTML = '<svg class="spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"/></svg> Démarrage…';
-
-    try{
-      const res = await fetch(CONFIG.backendBaseUrl.replace(/\/$/, "") + "/start", { method: "POST" });
-      if(!res.ok){
-        const data = await res.json().catch(()=>({}));
-        if(res.status === 429){
-          showToast("Le serveur vient déjà d'être démarré, patiente un peu.");
-        }else{
-          throw new Error(data.error || ("HTTP " + res.status));
-        }
-      }else{
-        showToast("Démarrage du serveur lancé…");
-      }
-      setTimeout(refreshUptimeAndButtonState, 4000);
-    }catch(e){
-      showToast("Impossible de démarrer le serveur.");
-      btnStartServer.disabled = false;
-    }finally{
-      btnStartServer.innerHTML = originalHtml;
-    }
-  });
-
-  refreshUptimeAndButtonState();
-  uptimeTickTimer = setInterval(tickUptime, 1000);
-  setInterval(refreshUptimeAndButtonState, CONFIG.refreshIntervalMs);
+  refreshUptime();
+  setInterval(tickUptime, 1000);
+  setInterval(refreshUptime, CONFIG.refreshIntervalMs);
 
 })();
 </script>
